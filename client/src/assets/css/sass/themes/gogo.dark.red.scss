@@ -1,0 +1,47 @@
+$separator-color-light: #313131;
+$separator-color: #424242;
+$background-color: #1b191b;
+$foreground-color: #232223;
+$input-background: #232223;
+
+$dark-btn-background: #8d8d8d;
+$light-btn-background: #e4e4e4;
+$button-text-color: #d0d0d0;
+
+$theme-color-1: #8f2938;
+$theme-color-2: #aa5e6c;
+$theme-color-3: #a53949;
+$theme-color-4: #843a47;
+$theme-color-5: #9e777e;
+$theme-color-6: #c07a6c;
+
+$primary-color: #969696;
+$secondary-color: #757575;
+$muted-color: #5a5a5a;
+
+$gradient-color-1 : #612c34;
+$gradient-color-2 : #421e24;
+$gradient-color-3 : #662b34;
+
+$shadowOffsetsTop : 1 3 10 14 19;
+$shadowBlursTop: 2 6 10 14 19;
+$shadowOpacitiesTop: 0.1 0.3 0.6 0.7 0.8;
+
+$shadowOffsetsBottom : 1 3 6 10 15;
+$shadowBlursBottom: 3 6 6 5 6;
+$shadowOpacitiesBottom: 0.1 0.3 0.6 0.7 0.8;
+
+$logoPath: "/assets/img/logo-white.svg";
+$logoPathMobile: "/assets/img/logo-mobile.svg";
+
+$lpBackgroundHome: "/assets/img/landing-page/home-background-red-dark.png";
+$lpBackgroundSub: "/assets/img/landing-page/sub-background-red-dark.png";
+$lpBackgroundFooter: "/assets/img/landing-page/footer-background-red-dark.png";
+$lpBackgroundEllipsisBottom: "/assets/img/landing-page/dark-background-bottom.png";
+$lpBackgroundEllipsisTop: "/assets/img/landing-page/dark-background-top.png";
+
+$lpLogoPath: "/assets/img/logo-white.svg";
+$lpLogoPathPinned: "/assets/img/logo-white.svg";
+
+@import "../_mixins.scss";
+@import "../_gogo.style.scss";

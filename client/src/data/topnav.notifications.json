@@ -1,0 +1,29 @@
+{
+    "data": [
+      {
+        "image" : "/assets/img/profile-pic-l-2.jpg",
+        "message": "Joisse Kaycee just sent a new comment!",
+        "date" : "09.04.2018 - 12:45",
+        "id": 1
+      },
+      {
+        "image" : "/assets/img/notification-thumb.jpg",
+        "message": "1 item is out of stock!",
+        "date" : "09.04.2018 - 12:45",
+        "id": 2
+      },
+      {
+        "image" : "/assets/img/notification-thumb-2.jpg",
+        "message": "New order received! It is total $147,20.",
+        "date" : "09.04.2018 - 12:45",
+        "id": 3
+      },
+      {
+        "image" : "/assets/img/notification-thumb-3.jpg",
+        "message": "3 items just added to wish list by a user!",
+        "date" : "09.04.2018 - 12:45",
+        "id": 4
+      }
+    ]
+  }
+  
