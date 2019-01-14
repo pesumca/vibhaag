@@ -2,11 +2,15 @@ const express = require('express');
 
 const app = express();
 
+const mongoose = require('./config/db');
+
 const bodyParser = require('body-parser');
 
-const _ = require('lodash');
+const userRouter = require('./routes/users');
 
 const port = 3000;
+
+app.use(bodyParser.json());
 
 // middleware
 
@@ -20,6 +24,8 @@ app.use((req,res,next) => {
 app.get('/',(req,res) => {
     res.send('<h1>Hello world</h1>');
 });
+
+app.use('/users',userRouter);
 
 app.listen(port,function(){
     console.log(`listening on port ${port}`);
