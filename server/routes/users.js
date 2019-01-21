@@ -1,11 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
-
 const _ = require('lodash');
-
 const { Users } = require('../models/users');
-
 const bodyParser = require('body-parser');
 
 // get all the users

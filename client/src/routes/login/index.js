@@ -12,8 +12,8 @@ class LoginLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com",
-      password: "gogo123"
+      email: "nsudhanva@gmail.com",
+      password: "sudhanva"
     };
   }
   onUserLogin() {
