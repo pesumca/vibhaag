@@ -16,16 +16,24 @@ class RegisterLayout extends Component {
       password: "",
       name: ""
     };
+    this.handleNameChange = this.handleNameChange.bind(this)   
+    this.handleEmailChange = this.handleEmailChange.bind(this)   
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)   
   }
 
   onUserRegister() {
+    console.log("Calling axios");
+    console.log(this);
+    console.log(this.state.password);
+    
     if (this.state.email !== "" && this.state.password !== "") {
       // This is for adding user to Firebase. Commented out for demo purpose.  
       // this.props.registerUser(this.state, this.props.history);
       axios.post('http://localhost:3000/users', {
         name: this.state.name,
         email: this.state.email,
-        password: this.state.email
+        password: this.state.password,
+        roles: "admin"
       })
         .then(function (response) {
           console.log(response);

@@ -44,7 +44,7 @@ router.delete('/:id',(req,res) => {
 
 // create a user
 router.post('/',(req,res) => {
-    let body = _.pick(req.body,['name','email','roles']);
+    let body = _.pick(req.body,['name','email','password','roles']);
     let user = new Users(body);
     user.save().then((user) => {
         res.send(user);
