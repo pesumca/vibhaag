@@ -4,6 +4,8 @@ const app = express();
 
 const mongoose = require('./config/db');
 
+const { Users } = require('./models/users');
+
 const bodyParser = require('body-parser');
 
 const userRouter = require('./routes/users');
@@ -18,12 +20,6 @@ app.use((req,res,next) => {
     console.log(`${req.method} : ${req.url} : ${req.ip} : ${new Date()}`);
     next();
 })
-
-// route handler methods
-
-app.get('/',(req,res) => {
-    res.send('<h1>Hello world</h1>');
-});
 
 app.use('/users',userRouter);
 

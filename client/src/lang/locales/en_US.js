@@ -37,6 +37,9 @@ module.exports = {
   "menu.survey": "Survey",
   "menu.todo": "Todo",
   "menu.search": "Search",
+  "menu.department": "Department",
+  "menu.semester": "Semester",
+  "menu.batches": "Batches",
 
   /* 04.Error Page */
   "layouts.error-title": "Ooops... looks like an error occurred!",

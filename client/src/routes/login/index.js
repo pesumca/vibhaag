@@ -38,8 +38,9 @@ class LoginLayout extends Component {
               <Colxx xxs="12" md="10" className="mx-auto my-auto">
                 <Card className="auth-card">
                   <div className="position-relative image-side ">
-                    <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
+                    <p className="text-white h2">Welcome to Vibhaag</p>
                     <p className="white">
+                      PES University's College Mangagement and <br />Session Abstract Tool.<br />
                       Please use your credentials to login.
                       <br />
                       If you are not a member, please{" "}

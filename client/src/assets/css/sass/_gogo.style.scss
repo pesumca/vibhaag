@@ -76,7 +76,7 @@ $animation-time-short: 200ms;
 $border-radius: 0.1rem;
 
 $theme-color-purple: #922c88;
-$theme-color-blue: #145388;
+$theme-color-blue: #000063;
 $theme-color-green: #576a3d;
 $theme-color-orange: #e2863b;
 $theme-color-red: #880a1f;
@@ -292,7 +292,7 @@ hr {
 }
 
 .logo-single {
-  width: 110px;
+  width: 270px;
   height: 35px;
   background: url($logoPath) no-repeat;
   background-position: center center;
@@ -1694,7 +1694,7 @@ button {
   }
 
   .navbar-logo {
-    width: 110px;
+    width: 280px;
     height: 35px;
     position: absolute;
     left: 0;
