@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 mongoose.Promise = global.Promise;
-const Scheema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const SessionScheema = new Scheema({
+const SessionSchema = new Schema({
     start: {
         type: Date,
         default: Date.now   
@@ -21,7 +21,7 @@ const SessionScheema = new Scheema({
     }
 })
 
-const Sessions = mongoose.model('Sessions',SessionScheema);
+const Sessions = mongoose.model('Sessions',SessionSchema);
 
 module.exports = {
     Sessions

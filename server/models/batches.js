@@ -3,7 +3,7 @@ const validator = require('validator');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
-const BatchesScheema = new Schema({
+const BatchesSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -21,7 +21,7 @@ const BatchesScheema = new Schema({
     }
 });
 
-const Batches = mongoose.model('Batches',BatchesScheema);
+const Batches = mongoose.model('Batches',BatchesSchema);
 
 module.exports = {
     Batches
