@@ -1,11 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
-
 const _ = require('lodash');
-
 const { Users } = require('../models/users');
-
 const bodyParser = require('body-parser');
 
 // get all the users
@@ -48,7 +44,7 @@ router.delete('/:id',(req,res) => {
 
 // create a user
 router.post('/',(req,res) => {
-    let body = _.pick(req.body,['name','email','roles']);
+    let body = _.pick(req.body,['name','email','password','roles']);
     let user = new Users(body);
     user.save().then((user) => {
         res.send(user);
