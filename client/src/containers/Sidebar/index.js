@@ -29,7 +29,7 @@ class Sidebar extends Component {
 
     this.state = {
       selectedParentMenu: "",
-      viewingParentMenu:"", 
+      viewingParentMenu: "",
     };
   }
 
@@ -78,7 +78,7 @@ class Sidebar extends Component {
     }
     this.toggle(e);
     this.setState({
-      viewingParentMenu:""
+      viewingParentMenu: ""
     })
   }
 
@@ -129,7 +129,7 @@ class Sidebar extends Component {
   }
 
   handleProps() {
-      this.addEvents();   
+    this.addEvents();
   }
 
   addEvents() {
@@ -157,21 +157,21 @@ class Sidebar extends Component {
           "data-parent"
         )
       });
-    }else{
+    } else {
       var selectedParentNoSubItem = document.querySelector(".main-menu  li a.active");
-      if(selectedParentNoSubItem!=null){
+      if (selectedParentNoSubItem != null) {
         this.setState({
           selectedParentMenu: selectedParentNoSubItem.getAttribute(
             "data-flag"
           )
         });
-      }else if (this.state.selectedParentMenu == "") {
+      } else if (this.state.selectedParentMenu == "") {
         this.setState({
           selectedParentMenu: "gogo"
         });
       }
 
-    } 
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -237,11 +237,11 @@ class Sidebar extends Component {
       viewingParentMenu: selectedParent
     });
   }
-  changeViewingParentMenu(menu){
+  changeViewingParentMenu(menu) {
     this.toggle();
 
     this.setState({
-      viewingParentMenu:menu
+      viewingParentMenu: menu
     })
   }
 
@@ -256,7 +256,7 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="gogo")
+                    active: ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "gogo")
                   })}
                 >
                   <NavLink
@@ -269,16 +269,9 @@ class Sidebar extends Component {
                 </NavItem>
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="second-menu")
+                    active: ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "second-menu")
                   })}
                 >
-                  <NavLink
-                    to="/app/second-menu"
-                    onClick={e => this.openSubMenu(e, "second-menu")}
-                  >
-                    <i className="iconsmind-Chemical-3" />{" "}
-                    <IntlMessages id="menu.second-menu" />
-                  </NavLink>
                 </NavItem>
               </Nav>
             </PerfectScrollbar>
@@ -292,28 +285,14 @@ class Sidebar extends Component {
             >
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="gogo")
+                  "d-block": ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "gogo")
                 })}
                 data-parent="gogo"
               >
                 <NavItem>
                   <NavLink to="/app/gogo/start">
                     <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="menu.start" />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-
-              <Nav
-                className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="second-menu")
-                })}
-                data-parent="second-menu"
-              >
-                <NavItem>
-                  <NavLink to="/app/second-menu/second">
-                    <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="menu.second" />
+                    <IntlMessages id="menu.batches" />
                   </NavLink>
                 </NavItem>
               </Nav>
