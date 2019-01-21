@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import {
   Nav,
@@ -23,7 +23,7 @@ import {
 
 import notifications from "Data/topnav.notifications.json";
 
-import { menuHiddenBreakpoint,searchPath,localeOptions } from "Constants/defaultValues";
+import { menuHiddenBreakpoint, searchPath, localeOptions } from "Constants/defaultValues";
 
 
 class TopNav extends Component {
@@ -52,7 +52,7 @@ class TopNav extends Component {
       (document.msFullscreenElement && document.msFullscreenElement !== null)
     );
   };
-  
+
   handleChangeLocale = locale => {
     this.props.changeLocale(locale);
   };
@@ -126,12 +126,12 @@ class TopNav extends Component {
   }
   handleSearchInputKeyPress(e) {
     if (e.key === 'Enter') {
-      this.search() 
+      this.search()
     }
   }
-  
+
   search() {
-    this.props.history.push(searchPath+"/"+this.state.searchKeyword)
+    this.props.history.push(searchPath + "/" + this.state.searchKeyword)
     this.setState({
       searchKeyword: ""
     });
@@ -187,7 +187,7 @@ class TopNav extends Component {
 
   render() {
     const { containerClassnames, menuClickCount } = this.props;
-    const {messages} = this.props.intl;
+    const { messages } = this.props.intl;
 
     return (
       <nav className="navbar fixed-top">
@@ -229,45 +229,20 @@ class TopNav extends Component {
           </svg>
         </NavLink>
 
-    <div className="search" >
+        <div className="search" >
           <Input
             name="searchKeyword"
             id="searchKeyword"
             placeholder={messages["menu.search"]}
             value={this.state.searchKeyword}
             onChange={e => this.handleSearchInputChange(e)}
-            onKeyPress ={e=> this.handleSearchInputKeyPress(e)}
+            onKeyPress={e => this.handleSearchInputKeyPress(e)}
           />
           <span className="search-icon" onClick={e => this.handleSearchIconClick(e)}>
             <i className="simple-icon-magnifier" />
           </span>
         </div>
 
- <div className="d-inline-block">
-          <UncontrolledDropdown className="ml-2">
-            <DropdownToggle
-              caret
-              color="light"
-              size="sm"
-              className="language-button"
-            >
-              <span className="name">{this.props.locale.toUpperCase()}</span>
-            </DropdownToggle>
-            <DropdownMenu className="mt-3" right>
-            {
-              localeOptions.map((l)=>{
-                return(
-                  <DropdownItem onClick={() => this.handleChangeLocale(l.id)} key={l.id}>
-                  {l.name}
-                </DropdownItem>
-                )
-              })
-            }
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
-
-        
         <a className="navbar-logo" href="/">
           <span className="logo d-none d-xs-block" />
           <span className="logo-mobile d-block d-xs-none" />
@@ -369,8 +344,8 @@ class TopNav extends Component {
               {this.state.isInFullScreen ? (
                 <i className="simple-icon-size-actual d-block" />
               ) : (
-                <i className="simple-icon-size-fullscreen d-block" />
-              )}
+                  <i className="simple-icon-size-fullscreen d-block" />
+                )}
             </button>
           </div>
           <div className="user d-inline-block">
@@ -403,9 +378,9 @@ const mapStateToProps = ({ menu, settings }) => {
   const { containerClassnames, menuClickCount } = menu;
   const { locale } = settings;
 
-  return { containerClassnames, menuClickCount,locale };
+  return { containerClassnames, menuClickCount, locale };
 };
 export default injectIntl(connect(
   mapStateToProps,
-  { setContainerClassnames, clickOnMobileMenu, logoutUser,changeLocale }
+  { setContainerClassnames, clickOnMobileMenu, logoutUser, changeLocale }
 )(TopNav));
