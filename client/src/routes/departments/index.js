@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import {
   Row,
   Card,
@@ -45,210 +45,212 @@ const apiUrl = "http://localhost:3000/departments"
 // const apiUrl = "http://api.crealeaf.com/cakes/paging"
 
 class DataListLayout extends Component {
-    constructor(props) {
-      super(props);
-      this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
-      this.toggleSplit = this.toggleSplit.bind(this);
-      this.dataListRender = this.dataListRender.bind(this);
-      this.toggleModal = this.toggleModal.bind(this);
-      this.getIndex = this.getIndex.bind(this);
-      this.onContextMenuClick = this.onContextMenuClick.bind(this);
-      this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
-      this.createDepartment = this.createDepartment.bind(this);
+  constructor(props) {
+    super(props);
+    this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
+    this.toggleSplit = this.toggleSplit.bind(this);
+    this.dataListRender = this.dataListRender.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.getIndex = this.getIndex.bind(this);
+    this.onContextMenuClick = this.onContextMenuClick.bind(this);
+    this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
+    this.createDepartment = this.createDepartment.bind(this);
 
-      this.state = {
-        displayMode: "list",
-        pageSizes: [10, 20, 30, 50, 100],
-        selectedPageSize: 10,
-        categories:  [
-          {label:'Engineering',value:'Engineering',key:0},
-          {label:'Management',value:'Management',key:1},
-          {label:'Computer Applications',value:'Computer Applications',key:2},
-        ],
-        orderOptions:[
-          {column: "name", label: "Name"},
-          {column: "code", label: "Code"},
-        ],
-        selectedOrderOption:  {column: "name", label: "Name"},
-        dropdownSplitOpen: false,
-        modalOpen: false,
-        currentPage: 1,
-        totalItemCount: 0,
-        totalPage: 1,
-        search: "",
-        items: [],
-        selectedItems: [],
-        lastChecked: null,
-        displayOptionsIsOpen: false,
-        isLoading: false
-      };
-    }
-    componentWillMount() {
-      this.props.bindShortcut(["ctrl+a", "command+a"], () =>
-        this.handleChangeSelectAll(false)
-      );
-      this.props.bindShortcut(["ctrl+d", "command+d"], () => {
-        this.setState({
-          selectedItems: []
-        });
-        return false;
-      });
-    }
-  
-    // Function to create a department
-    createDepartment() {
-      this.toggleModal();
-      axios.post(`${apiUrl}`, {
-        name: this.state.departmentName,
-        departmentCode: this.state.departmentCode
-      })
-      .then(res => {
-        this.dataListRender();
-        console.log(res.data);
-      });
-    }
-
-    handleDepartmentChange(e) {
+    this.state = {
+      displayMode: "list",
+      pageSizes: [10, 20, 30, 50, 100],
+      selectedPageSize: 10,
+      categories: [
+        { label: 'Engineering', value: 'Engineering', key: 0 },
+        { label: 'Management', value: 'Management', key: 1 },
+        { label: 'Computer Applications', value: 'Computer Applications', key: 2 },
+      ],
+      orderOptions: [
+        { column: "name", label: "Name" },
+        { column: "code", label: "Code" },
+      ],
+      selectedOrderOption: { column: "name", label: "Name" },
+      dropdownSplitOpen: false,
+      modalOpen: false,
+      currentPage: 1,
+      totalItemCount: 0,
+      totalPage: 1,
+      search: "",
+      items: [],
+      selectedItems: [],
+      lastChecked: null,
+      displayOptionsIsOpen: false,
+      isLoading: false
+    };
+  }
+  componentWillMount() {
+    this.props.bindShortcut(["ctrl+a", "command+a"], () =>
+      this.handleChangeSelectAll(false)
+    );
+    this.props.bindShortcut(["ctrl+d", "command+d"], () => {
       this.setState({
-        [e.target.name]: e.target.value,
-      });
-    }
-
-    toggleModal() {
-      this.setState({
-        modalOpen: !this.state.modalOpen
-      });
-    }
-    toggleDisplayOptions() {
-      this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
-    }
-    toggleSplit() {
-      this.setState(prevState => ({
-        dropdownSplitOpen: !prevState.dropdownSplitOpen
-      }));
-    }
-    changeOrderBy(column) {
-      this.setState(
-        {
-          selectedOrderOption: this.state.orderOptions.find(
-            x => x.column === column
-          )
-        },
-        () => this.dataListRender()
-      );
-    }
-    changePageSize(size) {
-      this.setState(
-        {
-          selectedPageSize: size,
-          currentPage: 1
-        },
-        () => this.dataListRender()
-      );
-    }
-    changeDisplayMode(mode) {
-      this.setState({
-        displayMode: mode
+        selectedItems: []
       });
       return false;
-    }
-    onChangePage(page) {
+    });
+  }
+
+  // Function to create a department
+  createDepartment() {
+    this.toggleModal();
+    axios.post(`${apiUrl}`, {
+      name: this.state.departmentName,
+      departmentCode: this.state.departmentCode
+    })
+      .then(res => {
+        this.setState(prevState => ({
+          items: [...prevState.items, res.data]
+        }));
+        console.log(res.data);
+      });
+  }
+
+  handleDepartmentChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  toggleModal() {
+    this.setState({
+      modalOpen: !this.state.modalOpen
+    });
+  }
+  toggleDisplayOptions() {
+    this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
+  }
+  toggleSplit() {
+    this.setState(prevState => ({
+      dropdownSplitOpen: !prevState.dropdownSplitOpen
+    }));
+  }
+  changeOrderBy(column) {
+    this.setState(
+      {
+        selectedOrderOption: this.state.orderOptions.find(
+          x => x.column === column
+        )
+      },
+      () => this.dataListRender()
+    );
+  }
+  changePageSize(size) {
+    this.setState(
+      {
+        selectedPageSize: size,
+        currentPage: 1
+      },
+      () => this.dataListRender()
+    );
+  }
+  changeDisplayMode(mode) {
+    this.setState({
+      displayMode: mode
+    });
+    return false;
+  }
+  onChangePage(page) {
+    this.setState(
+      {
+        currentPage: page
+      },
+      () => this.dataListRender()
+    );
+  }
+
+  handleKeyPress(e) {
+    if (e.key === "Enter") {
       this.setState(
         {
-          currentPage: page
+          search: e.target.value.toLowerCase()
         },
         () => this.dataListRender()
       );
     }
+  }
 
-    handleKeyPress(e) {
-      if (e.key === "Enter") {
-        this.setState(
-          {
-            search: e.target.value.toLowerCase()
-          },
-          () => this.dataListRender()
-        );
-      }
+  handleCheckChange(event, id) {
+    if (
+      event.target.tagName == "A" ||
+      (event.target.parentElement &&
+        event.target.parentElement.tagName == "A")
+    ) {
+      return true;
+    }
+    if (this.state.lastChecked == null) {
+      this.setState({
+        lastChecked: id
+      });
     }
 
-    handleCheckChange(event, id) {
-      if (
-        event.target.tagName == "A" ||
-        (event.target.parentElement &&
-          event.target.parentElement.tagName == "A")
-      ) {
-        return true;
-      }
-      if (this.state.lastChecked == null) {
-        this.setState({
-          lastChecked: id
-        });
-      }
+    let selectedItems = this.state.selectedItems;
+    if (selectedItems.includes(id)) {
+      selectedItems = selectedItems.filter(x => x !== id);
+    } else {
+      selectedItems.push(id);
+    }
+    this.setState({
+      selectedItems
+    });
 
-      let selectedItems = this.state.selectedItems;
-      if (selectedItems.includes(id)) {
-        selectedItems = selectedItems.filter(x => x !== id);
-      } else {
-        selectedItems.push(id);
-      }
+    if (event.shiftKey) {
+      var items = this.state.items;
+      var start = this.getIndex(id, items, "id");
+      var end = this.getIndex(this.state.lastChecked, items, "id");
+      items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
+      selectedItems.push(
+        ...items.map(item => {
+          return item.id;
+        })
+      );
+      selectedItems = Array.from(new Set(selectedItems));
       this.setState({
         selectedItems
       });
+    }
+    document.activeElement.blur();
+  }
 
-      if (event.shiftKey) {
-        var items = this.state.items;
-        var start = this.getIndex(id, items, "id");
-        var end = this.getIndex(this.state.lastChecked, items, "id");
-        items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
-        selectedItems.push(
-          ...items.map(item => {
-            return item.id;
-          })
-        );
-        selectedItems = Array.from(new Set(selectedItems));
+  getIndex(value, arr, prop) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][prop] === value) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  handleChangeSelectAll(isToggle) {
+    if (this.state.selectedItems.length >= this.state.items.length) {
+      if (isToggle) {
         this.setState({
-          selectedItems
+          selectedItems: []
         });
       }
-      document.activeElement.blur();
+    } else {
+      this.setState({
+        selectedItems: this.state.items.map(x => x.id)
+      });
     }
+    document.activeElement.blur();
+    return false;
+  }
 
-    getIndex(value, arr, prop) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i][prop] === value) {
-          return i;
-        }
-      }
-      return -1;
-    }
-    handleChangeSelectAll(isToggle) {
-      if (this.state.selectedItems.length >= this.state.items.length) {
-        if (isToggle) {
-          this.setState({
-            selectedItems: []
-          });
-        }
-      } else {
-        this.setState({
-          selectedItems: this.state.items.map(x => x.id)
-        });
-      }
-      document.activeElement.blur();
-      return false;
-    }
+  componentDidMount() {
+    this.dataListRender();
+  }
 
-    componentDidMount() {
-      this.dataListRender();
-    }
-
-    dataListRender() {
-      const {selectedPageSize,currentPage,selectedOrderOption,search} = this.state;
-      axios.get(`${apiUrl}`)
+  dataListRender() {
+    const { selectedPageSize, currentPage, selectedOrderOption, search } = this.state;
+    axios.get(`${apiUrl}`)
       .then(res => {
         console.log(res.data);
-        return res.data        
-      }).then(data=>{
+        return res.data
+      }).then(data => {
         this.setState({
           // totalPage: data.totalPage,
           items: data,
@@ -256,32 +258,32 @@ class DataListLayout extends Component {
           isLoading: true
         });
       })
+  }
+
+  onContextMenuClick = (e, data, target) => {
+    console.log("onContextMenuClick - selected items", this.state.selectedItems)
+    console.log("onContextMenuClick - action : ", data.action);
+  };
+
+  onContextMenu = (e, data) => {
+    const clickedProductId = data.data;
+    if (!this.state.selectedItems.includes(clickedProductId)) {
+      this.setState({
+        selectedItems: [clickedProductId]
+      });
     }
 
-    onContextMenuClick = (e, data, target) => {
-      console.log("onContextMenuClick - selected items",this.state.selectedItems)
-      console.log("onContextMenuClick - action : ", data.action);
-    };
+    return true;
+  };
 
-    onContextMenu = (e, data) => {
-      const clickedProductId = data.data;
-      if (!this.state.selectedItems.includes(clickedProductId)) {
-        this.setState({
-          selectedItems :[clickedProductId]
-        });
-      }
-
-      return true;
-    };
-
-    render() {
-      const startIndex= (this.state.currentPage-1)*this.state.selectedPageSize
-      const endIndex= (this.state.currentPage)*this.state.selectedPageSize
-      const {messages} = this.props.intl;
-      return (
-        !this.state.isLoading?
-          <div className="loading"></div>
-       :
+  render() {
+    const startIndex = (this.state.currentPage - 1) * this.state.selectedPageSize
+    const endIndex = (this.state.currentPage) * this.state.selectedPageSize
+    const { messages } = this.props.intl;
+    return (
+      !this.state.isLoading ?
+        <div className="loading"></div>
+        :
         <Fragment>
           <div className="disable-text-selection">
             <Row>
@@ -315,11 +317,11 @@ class DataListLayout extends Component {
                         <Label>
                           <IntlMessages id="layouts.department-name" />
                         </Label>
-                        <Input name="departmentName" id="department-name" value={this.state.value} onChange={this.handleDepartmentChange}/>
+                        <Input name="departmentName" id="department-name" value={this.state.value} onChange={this.handleDepartmentChange} />
                         <Label className="mt-4">
                           <IntlMessages id="layouts.department-code" />
                         </Label>
-                        <Input name="departmentCode" id="department-code" value={this.state.value} onChange={this.handleDepartmentChange}/>
+                        <Input name="departmentCode" id="department-code" value={this.state.value} onChange={this.handleDepartmentChange} />
                       </ModalBody>
                       <ModalFooter>
                         <Button
@@ -356,11 +358,11 @@ class DataListLayout extends Component {
                           <span
                             className={`custom-control-label ${
                               this.state.selectedItems.length > 0 &&
-                              this.state.selectedItems.length <
+                                this.state.selectedItems.length <
                                 this.state.items.length
                                 ? "indeterminate"
                                 : ""
-                            }`}
+                              }`}
                           />
                         </Label>
                       </div>
@@ -397,45 +399,45 @@ class DataListLayout extends Component {
                     className="d-md-block"
                     id="displayOptions"
                   >
-                   <span className="mr-3 mb-2 d-inline-block float-md-left">
-                    <a
-                      className={`mr-2 view-icon ${
-                        this.state.displayMode === "list" ? "active" : ""
-                        }`}
-                      onClick={() => this.changeDisplayMode("list")}
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                    <path className="view-icon-svg" d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-                    <path className="view-icon-svg" d="M17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-                    <path className="view-icon-svg" d="M17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" /></svg>
-                    </a>
-                    <a
-                      className={`mr-2 view-icon ${
-                        this.state.displayMode === "thumblist" ? "active" : ""
-                        }`}
-                      onClick={() => this.changeDisplayMode("thumblist")}
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                    <path className="view-icon-svg" d="M17.5,3H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-                    <path className="view-icon-svg" d="M3,2V3H1V2H3m.12-1H.88A.87.87,0,0,0,0,1.88V3.12A.87.87,0,0,0,.88,4H3.12A.87.87,0,0,0,4,3.12V1.88A.87.87,0,0,0,3.12,1Z" />
-                    <path className="view-icon-svg" d="M3,9v1H1V9H3m.12-1H.88A.87.87,0,0,0,0,8.88v1.24A.87.87,0,0,0,.88,11H3.12A.87.87,0,0,0,4,10.12V8.88A.87.87,0,0,0,3.12,8Z" />
-                    <path className="view-icon-svg" d="M3,16v1H1V16H3m.12-1H.88a.87.87,0,0,0-.88.88v1.24A.87.87,0,0,0,.88,18H3.12A.87.87,0,0,0,4,17.12V15.88A.87.87,0,0,0,3.12,15Z" />
-                    <path className="view-icon-svg" d="M17.5,10H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-                    <path className="view-icon-svg" d="M17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" /></svg>
-                    </a>
-                    <a
-                      className={`mr-2 view-icon ${
-                        this.state.displayMode === "imagelist" ? "active" : ""
-                        }`}
-                      onClick={() => this.changeDisplayMode("imagelist")}
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                    <path className="view-icon-svg" d="M7,2V8H1V2H7m.12-1H.88A.87.87,0,0,0,0,1.88V8.12A.87.87,0,0,0,.88,9H7.12A.87.87,0,0,0,8,8.12V1.88A.87.87,0,0,0,7.12,1Z" />
-                    <path className="view-icon-svg" d="M17,2V8H11V2h6m.12-1H10.88a.87.87,0,0,0-.88.88V8.12a.87.87,0,0,0,.88.88h6.24A.87.87,0,0,0,18,8.12V1.88A.87.87,0,0,0,17.12,1Z" />
-                    <path className="view-icon-svg" d="M7,12v6H1V12H7m.12-1H.88a.87.87,0,0,0-.88.88v6.24A.87.87,0,0,0,.88,19H7.12A.87.87,0,0,0,8,18.12V11.88A.87.87,0,0,0,7.12,11Z" />
-                    <path className="view-icon-svg" d="M17,12v6H11V12h6m.12-1H10.88a.87.87,0,0,0-.88.88v6.24a.87.87,0,0,0,.88.88h6.24a.87.87,0,0,0,.88-.88V11.88a.87.87,0,0,0-.88-.88Z" /></svg>
-                    </a>
-                  </span>
+                    <span className="mr-3 mb-2 d-inline-block float-md-left">
+                      <a
+                        className={`mr-2 view-icon ${
+                          this.state.displayMode === "list" ? "active" : ""
+                          }`}
+                        onClick={() => this.changeDisplayMode("list")}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
+                          <path className="view-icon-svg" d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
+                          <path className="view-icon-svg" d="M17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
+                          <path className="view-icon-svg" d="M17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" /></svg>
+                      </a>
+                      <a
+                        className={`mr-2 view-icon ${
+                          this.state.displayMode === "thumblist" ? "active" : ""
+                          }`}
+                        onClick={() => this.changeDisplayMode("thumblist")}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
+                          <path className="view-icon-svg" d="M17.5,3H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
+                          <path className="view-icon-svg" d="M3,2V3H1V2H3m.12-1H.88A.87.87,0,0,0,0,1.88V3.12A.87.87,0,0,0,.88,4H3.12A.87.87,0,0,0,4,3.12V1.88A.87.87,0,0,0,3.12,1Z" />
+                          <path className="view-icon-svg" d="M3,9v1H1V9H3m.12-1H.88A.87.87,0,0,0,0,8.88v1.24A.87.87,0,0,0,.88,11H3.12A.87.87,0,0,0,4,10.12V8.88A.87.87,0,0,0,3.12,8Z" />
+                          <path className="view-icon-svg" d="M3,16v1H1V16H3m.12-1H.88a.87.87,0,0,0-.88.88v1.24A.87.87,0,0,0,.88,18H3.12A.87.87,0,0,0,4,17.12V15.88A.87.87,0,0,0,3.12,15Z" />
+                          <path className="view-icon-svg" d="M17.5,10H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
+                          <path className="view-icon-svg" d="M17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" /></svg>
+                      </a>
+                      <a
+                        className={`mr-2 view-icon ${
+                          this.state.displayMode === "imagelist" ? "active" : ""
+                          }`}
+                        onClick={() => this.changeDisplayMode("imagelist")}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
+                          <path className="view-icon-svg" d="M7,2V8H1V2H7m.12-1H.88A.87.87,0,0,0,0,1.88V8.12A.87.87,0,0,0,.88,9H7.12A.87.87,0,0,0,8,8.12V1.88A.87.87,0,0,0,7.12,1Z" />
+                          <path className="view-icon-svg" d="M17,2V8H11V2h6m.12-1H10.88a.87.87,0,0,0-.88.88V8.12a.87.87,0,0,0,.88.88h6.24A.87.87,0,0,0,18,8.12V1.88A.87.87,0,0,0,17.12,1Z" />
+                          <path className="view-icon-svg" d="M7,12v6H1V12H7m.12-1H.88a.87.87,0,0,0-.88.88v6.24A.87.87,0,0,0,.88,19H7.12A.87.87,0,0,0,8,18.12V11.88A.87.87,0,0,0,7.12,11Z" />
+                          <path className="view-icon-svg" d="M17,12v6H11V12h6m.12-1H10.88a.87.87,0,0,0-.88.88v6.24a.87.87,0,0,0,.88.88h6.24a.87.87,0,0,0,.88-.88V11.88a.87.87,0,0,0-.88-.88Z" /></svg>
+                      </a>
+                    </span>
 
                     <div className="d-block d-md-inline-block">
                       <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
@@ -469,7 +471,7 @@ class DataListLayout extends Component {
                     <div className="float-md-right">
                       <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${
                         this.state.totalItemCount
-                      } `}</span>
+                        } `}</span>
                       <UncontrolledDropdown className="d-inline-block">
                         <DropdownToggle caret color="outline-dark" size="xs">
                           {this.state.selectedPageSize}
@@ -545,7 +547,7 @@ class DataListLayout extends Component {
                                   checked={this.state.selectedItems.includes(
                                     department.id
                                   )}
-                                  onChange={() => {}}
+                                  onChange={() => { }}
                                   label=""
                                 />
                               </Colxx>
@@ -617,7 +619,7 @@ class DataListLayout extends Component {
                                 checked={this.state.selectedItems.includes(
                                   department.id
                                 )}
-                                onChange={() => {}}
+                                onChange={() => { }}
                                 label=""
                               />
                             </div>
@@ -674,7 +676,7 @@ class DataListLayout extends Component {
                                 checked={this.state.selectedItems.includes(
                                   department.id
                                 )}
-                                onChange={() => {}}
+                                onChange={() => { }}
                                 label=""
                               />
                             </div>
@@ -717,7 +719,7 @@ class DataListLayout extends Component {
             </MenuItem>
           </ContextMenu>
         </Fragment>
-      );
-    }
+    );
   }
-  export default injectIntl(mouseTrap(DataListLayout))
+}
+export default injectIntl(mouseTrap(DataListLayout))
