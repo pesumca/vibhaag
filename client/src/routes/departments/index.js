@@ -205,7 +205,7 @@ class DataListLayout extends Component {
       items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
       selectedItems.push(
         ...items.map(item => {
-          return item.id;
+          return item._id;
         })
       );
       selectedItems = Array.from(new Set(selectedItems));
@@ -233,7 +233,7 @@ class DataListLayout extends Component {
       }
     } else {
       this.setState({
-        selectedItems: this.state.items.map(x => x.id)
+        selectedItems: this.state.items.map(x => x._id)
       });
     }
     document.activeElement.blur();
@@ -375,9 +375,6 @@ class DataListLayout extends Component {
                         <DropdownItem>
                           <IntlMessages id="layouts.delete" />
                         </DropdownItem>
-                        <DropdownItem>
-                          <IntlMessages id="layouts.another-action" />
-                        </DropdownItem>
                       </DropdownMenu>
                     </ButtonDropdown>
                   </div>
@@ -504,31 +501,31 @@ class DataListLayout extends Component {
                       lg="4"
                       xl="3"
                       className="mb-3"
-                      key={department.id}
+                      key={department._id}
                     >
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={department.id}
+                        data={department._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, department.id)
+                            this.handleCheckChange(event, department._id)
                           }
                           className={classnames({
                             active: this.state.selectedItems.includes(
-                              department.id
+                              department._id
                             )
                           })}
                         >
                           <div className="position-relative">
                             <NavLink
-                              to={`?p=${department.id}`}
+                              to={`?p=${department._id}`}
                               className="w-40 w-sm-100"
                             >
                               <CardImg
                                 top
-                                alt={department.title}
+                                alt={department.name}
                               />
                             </NavLink>
                             <Badge
@@ -543,9 +540,9 @@ class DataListLayout extends Component {
                                 <CustomInput
                                   className="itemCheck mb-0"
                                   type="checkbox"
-                                  id={`check_${department.id}`}
+                                  id={`check_` + `${department._id}`}
                                   checked={this.state.selectedItems.includes(
-                                    department.id
+                                    department._id
                                   )}
                                   onChange={() => { }}
                                   label=""
@@ -565,24 +562,24 @@ class DataListLayout extends Component {
                   );
                 } else if (this.state.displayMode === "thumblist") {
                   return (
-                    <Colxx xxs="12" key={department.id} className="mb-3">
+                    <Colxx xxs="12" key={department._id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={department.id}
+                        data={department._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, department.id)
+                            this.handleCheckChange(event, department._id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              department.id
+                              department._id
                             )
                           })}
                         >
                           <NavLink
-                            to={`?p=${department.id}`}
+                            to={`?p=${department._id}`}
                             className="d-flex"
                           >
                             <img
@@ -593,7 +590,7 @@ class DataListLayout extends Component {
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${department.id}`}
+                                to={`?p=${department._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
@@ -615,9 +612,9 @@ class DataListLayout extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${department.id}`}
+                                id={`check_` + `${department._id}`}
                                 checked={this.state.selectedItems.includes(
-                                  department.id
+                                  department._id
                                 )}
                                 onChange={() => { }}
                                 label=""
@@ -630,26 +627,26 @@ class DataListLayout extends Component {
                   );
                 } else {
                   return (
-                    <Colxx xxs="12" key={department.id} className="mb-3">
+                    <Colxx xxs="12" key={department._id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={department.id}
+                        data={department._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, department.id)
+                            this.handleCheckChange(event, department._id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              department.id
+                              department._id
                             )
                           })}
                         >
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${department.id}`}
+                                to={`?p=${department._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
@@ -672,9 +669,9 @@ class DataListLayout extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${department.id}`}
+                                id={`check_` + `${department._id}`}
                                 checked={this.state.selectedItems.includes(
-                                  department.id
+                                  department._id
                                 )}
                                 onChange={() => { }}
                                 label=""
