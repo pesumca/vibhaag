@@ -264,7 +264,7 @@ class Sidebar extends Component {
                     onClick={e => this.openSubMenu(e, "all-departments")}
                   >
                     <i className="iconsmind-Air-Balloon" />{" "}
-                    <IntlMessages id="departments.title" />
+                    <IntlMessages id="menu.departments" />
                   </NavLink>
                 </NavItem>
               </Nav>

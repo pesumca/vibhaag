@@ -4,9 +4,7 @@ import { Route, withRouter, Switch,Redirect } from 'react-router-dom';
 import TopNav from 'Containers/TopNav'
 import Sidebar from 'Containers/Sidebar';
 
-import gogo from './gogo';
 import departments from './departments';
-import secondMenu from './second-menu';
 
 import { connect } from 'react-redux';
 

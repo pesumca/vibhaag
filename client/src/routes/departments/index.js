@@ -40,7 +40,9 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 function collect(props) {
   return { data: props.data };
 }
-const apiUrl ="http://api.crealeaf.com/cakes/paging"
+
+const apiUrl = "http://localhost:3000/departments"
+// const apiUrl = "http://api.crealeaf.com/cakes/paging"
 
 class DataListLayout extends Component {
     constructor(props) {
@@ -51,33 +53,34 @@ class DataListLayout extends Component {
       this.toggleModal = this.toggleModal.bind(this);
       this.getIndex = this.getIndex.bind(this);
       this.onContextMenuClick = this.onContextMenuClick.bind(this);
-
+      this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
+      this.createDepartment = this.createDepartment.bind(this);
 
       this.state = {
         displayMode: "list",
         pageSizes: [10, 20, 30, 50, 100],
         selectedPageSize: 10,
         categories:  [
-          {label:'Cakes',value:'Cakes',key:0},
-          {label:'Cupcakes',value:'Cupcakes',key:1},
-          {label:'Desserts',value:'Desserts',key:2},
+          {label:'Engineering',value:'Engineering',key:0},
+          {label:'Management',value:'Management',key:1},
+          {label:'Computer Applications',value:'Computer Applications',key:2},
         ],
         orderOptions:[
-          {column: "title",label: "Product Name"},
-          {column: "category",label: "Category"},
-          {column: "status",label: "Status"}
+          {column: "name", label: "Name"},
+          {column: "code", label: "Code"},
         ],
-        selectedOrderOption:  {column: "title",label: "Product Name"},
+        selectedOrderOption:  {column: "name", label: "Name"},
         dropdownSplitOpen: false,
         modalOpen: false,
         currentPage: 1,
         totalItemCount: 0,
         totalPage: 1,
         search: "",
+        items: [],
         selectedItems: [],
         lastChecked: null,
         displayOptionsIsOpen: false,
-        isLoading:false
+        isLoading: false
       };
     }
     componentWillMount() {
@@ -89,6 +92,25 @@ class DataListLayout extends Component {
           selectedItems: []
         });
         return false;
+      });
+    }
+  
+    // Function to create a department
+    createDepartment() {
+      this.toggleModal();
+      axios.post(`${apiUrl}`, {
+        name: this.state.departmentName,
+        departmentCode: this.state.departmentCode
+      })
+      .then(res => {
+        this.dataListRender();
+        console.log(res.data);
+      });
+    }
+
+    handleDepartmentChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value,
       });
     }
 
@@ -215,23 +237,23 @@ class DataListLayout extends Component {
       document.activeElement.blur();
       return false;
     }
+
     componentDidMount() {
       this.dataListRender();
     }
 
     dataListRender() {
-
       const {selectedPageSize,currentPage,selectedOrderOption,search} = this.state;
-      axios.get(`${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${selectedOrderOption.column}&search=${search}`)
+      axios.get(`${apiUrl}`)
       .then(res => {
+        console.log(res.data);
         return res.data        
       }).then(data=>{
         this.setState({
-          totalPage: data.totalPage,
-          items: data.data,
-          selectedItems:[],
-          totalItemCount : data.totalItem,
-          isLoading:true
+          // totalPage: data.totalPage,
+          items: data,
+          // totalItemCount : data.totalItem,
+          isLoading: true
         });
       })
     }
@@ -266,7 +288,7 @@ class DataListLayout extends Component {
               <Colxx xxs="12">
                 <div className="mb-2">
                   <h1>
-                    <IntlMessages id="menu.data-list" />
+                    <IntlMessages id="menu.departments" />
                   </h1>
 
                   <div className="float-sm-right">
@@ -291,38 +313,13 @@ class DataListLayout extends Component {
                       </ModalHeader>
                       <ModalBody>
                         <Label>
-                          <IntlMessages id="layouts.product-name" />
+                          <IntlMessages id="layouts.department-name" />
                         </Label>
-                        <Input />
+                        <Input name="departmentName" id="department-name" value={this.state.value} onChange={this.handleDepartmentChange}/>
                         <Label className="mt-4">
-                          <IntlMessages id="layouts.category" />
+                          <IntlMessages id="layouts.department-code" />
                         </Label>
-                        <Select
-                          components={{ Input: CustomSelectInput }}
-                          className="react-select"
-                          classNamePrefix="react-select"
-                          name="form-field-name"
-                          options={this.state.categories}
-                        />
-                        <Label className="mt-4">
-                          <IntlMessages id="layouts.description" />
-                        </Label>
-                        <Input type="textarea" name="text" id="exampleText" />
-                        <Label className="mt-4">
-                          <IntlMessages id="layouts.status" />
-                        </Label>
-                        <CustomInput
-                          type="radio"
-                          id="exCustomRadio"
-                          name="customRadio"
-                          label="ON HOLD"
-                        />
-                        <CustomInput
-                          type="radio"
-                          id="exCustomRadio2"
-                          name="customRadio"
-                          label="PROCESSED"
-                        />
+                        <Input name="departmentCode" id="department-code" value={this.state.value} onChange={this.handleDepartmentChange}/>
                       </ModalBody>
                       <ModalFooter>
                         <Button
@@ -332,7 +329,7 @@ class DataListLayout extends Component {
                         >
                           <IntlMessages id="layouts.cancel" />
                         </Button>
-                        <Button color="primary" onClick={this.toggleModal}>
+                        <Button color="primary" onClick={this.createDepartment}>
                           <IntlMessages id="layouts.submit" />
                         </Button>{" "}
                       </ModalFooter>
@@ -497,7 +494,7 @@ class DataListLayout extends Component {
               </Colxx>
             </Row>
             <Row>
-              {this.state.items.map(product => {
+              {this.state.items.map(department => {
                 if (this.state.displayMode === "imagelist") {
                   return (
                     <Colxx
@@ -505,40 +502,37 @@ class DataListLayout extends Component {
                       lg="4"
                       xl="3"
                       className="mb-3"
-                      key={product.id}
+                      key={department.id}
                     >
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={product.id}
+                        data={department.id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, product.id)
+                            this.handleCheckChange(event, department.id)
                           }
                           className={classnames({
                             active: this.state.selectedItems.includes(
-                              product.id
+                              department.id
                             )
                           })}
                         >
                           <div className="position-relative">
                             <NavLink
-                              to={`?p=${product.id}`}
+                              to={`?p=${department.id}`}
                               className="w-40 w-sm-100"
                             >
                               <CardImg
                                 top
-                                alt={product.title}
-                                src={product.img}
+                                alt={department.title}
                               />
                             </NavLink>
                             <Badge
-                              color={product.statusColor}
                               pill
                               className="position-absolute badge-top-left"
                             >
-                              {product.status}
                             </Badge>
                           </div>
                           <CardBody>
@@ -547,18 +541,18 @@ class DataListLayout extends Component {
                                 <CustomInput
                                   className="itemCheck mb-0"
                                   type="checkbox"
-                                  id={`check_${product.id}`}
+                                  id={`check_${department.id}`}
                                   checked={this.state.selectedItems.includes(
-                                    product.id
+                                    department.id
                                   )}
                                   onChange={() => {}}
                                   label=""
                                 />
                               </Colxx>
                               <Colxx xxs="10" className="mb-3">
-                                <CardSubtitle>{product.title}</CardSubtitle>
+                                <CardSubtitle>{department.name}</CardSubtitle>
                                 <CardText className="text-muted text-small mb-0 font-weight-light">
-                                  {product.date}
+                                  {department.created_at}
                                 </CardText>
                               </Colxx>
                             </Row>
@@ -569,61 +563,59 @@ class DataListLayout extends Component {
                   );
                 } else if (this.state.displayMode === "thumblist") {
                   return (
-                    <Colxx xxs="12" key={product.id} className="mb-3">
+                    <Colxx xxs="12" key={department.id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={product.id}
+                        data={department.id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, product.id)
+                            this.handleCheckChange(event, department.id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              product.id
+                              department.id
                             )
                           })}
                         >
                           <NavLink
-                            to={`?p=${product.id}`}
+                            to={`?p=${department.id}`}
                             className="d-flex"
                           >
                             <img
-                              alt={product.title}
-                              src={product.img}
+                              alt={department.title}
                               className="list-thumbnail responsive border-0"
                             />
                           </NavLink>
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${product.id}`}
+                                to={`?p=${department.id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
-                                  {product.title}
+                                  {department.name}
                                 </p>
                               </NavLink>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {product.category}
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {product.date}
+                                {department.created_at}
                               </p>
                               <div className="w-15 w-sm-100">
-                                <Badge color={product.statusColor} pill>
-                                  {product.status}
-                                </Badge>
+                                {/* <Badge color={department.statusColor} pill>
+                                  {department.status}
+                                </Badge> */}
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${product.id}`}
+                                id={`check_${department.id}`}
                                 checked={this.state.selectedItems.includes(
-                                  product.id
+                                  department.id
                                 )}
                                 onChange={() => {}}
                                 label=""
@@ -636,51 +628,51 @@ class DataListLayout extends Component {
                   );
                 } else {
                   return (
-                    <Colxx xxs="12" key={product.id} className="mb-3">
+                    <Colxx xxs="12" key={department.id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={product.id}
+                        data={department.id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, product.id)
+                            this.handleCheckChange(event, department.id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              product.id
+                              department.id
                             )
                           })}
                         >
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${product.id}`}
+                                to={`?p=${department.id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
-                                  {product.title}
+                                  {department.name}
                                 </p>
                               </NavLink>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {product.category}
+                                {/* {department.category} */}
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {product.date}
+                                {department.created_at}
                               </p>
                               <div className="w-15 w-sm-100">
-                                <Badge color={product.statusColor} pill>
-                                  {product.status}
-                                </Badge>
+                                {/* <Badge color={department.statusColor} pill>
+                                  {department.status}
+                                </Badge> */}
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${product.id}`}
+                                id={`check_${department.id}`}
                                 checked={this.state.selectedItems.includes(
-                                  product.id
+                                  department.id
                                 )}
                                 onChange={() => {}}
                                 label=""
