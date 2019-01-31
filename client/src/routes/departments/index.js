@@ -551,7 +551,7 @@ class DataListLayout extends Component {
                               <Colxx xxs="10" className="mb-3">
                                 <CardSubtitle>{department.name}</CardSubtitle>
                                 <CardText className="text-muted text-small mb-0 font-weight-light">
-                                  {department.created_at}
+                                  {department.createdAt}
                                 </CardText>
                               </Colxx>
                             </Row>
@@ -600,12 +600,12 @@ class DataListLayout extends Component {
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {department.created_at}
+                                {department.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                                {/* <Badge color={department.statusColor} pill>
-                                  {department.status}
-                                </Badge> */}
+                                {/* <Badge color={department.statusColor} pill> */}
+                                  {/* {department.departmentCode} */}
+                                {/* </Badge> */}
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
@@ -657,11 +657,11 @@ class DataListLayout extends Component {
                                 {/* {department.category} */}
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {department.created_at}
+                                {department.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
                                 {/* <Badge color={department.statusColor} pill>
-                                  {department.status}
+                                  {department.departmentCode}
                                 </Badge> */}
                               </div>
                             </div>
