@@ -1,20 +1,18 @@
 const express = require('express');
 const app = express();
-const mongoose = require('./config/db');
-const { Users } = require('./models/users');
+const cors = require('cors');
+
 const bodyParser = require('body-parser');
-const userRouter = require('./routes/users');
+const { routes } = require('./config/routes');
+
 const port = 3000;
 
+app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors());
 
-app.use((req,res,next) => {
-    console.log(`${req.method} : ${req.url} : ${req.ip} : ${new Date()}`);
-    next();
-});
+app.use('/', routes);
 
-app.use('/users', userRouter);
-
-app.listen(port,function(){
-    console.log(`listening on port ${port}`);
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });

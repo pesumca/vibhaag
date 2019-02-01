@@ -250,7 +250,7 @@ class TopNav extends Component {
 
         <div className="ml-auto">
           <div className="header-icons d-inline-block align-middle">
-            <div className="position-relative d-none d-sm-inline-block">
+            {/* <div className="position-relative d-none d-sm-inline-block">
               <UncontrolledDropdown className="dropdown-menu-right">
                 <DropdownToggle className="header-icon" color="empty">
                   <i className="simple-icon-grid" />
@@ -286,7 +286,7 @@ class TopNav extends Component {
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </div>
+            </div> */}
 
             <div className="position-relative d-inline-block">
               <UncontrolledDropdown className="dropdown-menu-right">
