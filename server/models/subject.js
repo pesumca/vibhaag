@@ -32,4 +32,4 @@ const Subjects = mongoose.model('Subjects',subjectSchema);
 
 module.exports = {
     Subjects
-}
+} 
