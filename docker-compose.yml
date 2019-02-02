@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  ##########################
+  ### SETUP SERVER CONTAINER
+  ##########################
+  server:
+    # Tells docker-compose which image to pull from docker hub
+    image: <your-docker-username>/<your-project-name>_server:latest
+    environment:
+      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_URI}
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - ${PORT}:${PORT}
+    command: node src/server.js
+    links:
+      - db
+    restart: always
+  ##########################
+  ### SETUP CLIENT CONTAINER
+  ##########################
+  client:
+    image: <your-docker-username>/<your-project-name>_client:latest
+    ports:
+      - 80:80
+    links:
+      - server
+    restart: always
+  ##########################
+  ### SETUP DB CONTAINER
+  ##########################
+  db:
+    image: mongo
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      # Map physical volume to virtual for data persistence
+      # On server could be /data/db
+      # For this case we will create a Docker volume and use it instead
+      # You need to run docker volume create yourproject-dbdata
+      - board-dbdata:/data/db
+# Add this to include data volume for mongo
+# Confirm this is working later
+volumes:
+  ? board-dbdata

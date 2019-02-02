@@ -1,6 +1,24 @@
-FROM node:alpine
-WORKDIR "/app"
-COPY ./package.json ./
+# server/Dockerfile-dev
+
+# Install node image in container
+FROM node
+
+# Install nodemon for hot reloading
+RUN npm install -g nodemon
+
+# Create and set the working directory
+RUN mkdir -p /app/server
+WORKDIR /app/server
+
+# Copy the dependency files over
+COPY package*.json /app/server/
+COPY package-lock* /app/server/
+
+# Install dependencies
 RUN npm install
-COPY . .
-CMD ["npm", "run", "dev"]
+
+# Copy the server files over
+COPY . /app/server/
+
+# Command to run them
+CMD ["nodemon", "index.js"]

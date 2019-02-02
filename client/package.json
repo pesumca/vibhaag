@@ -1,16 +1,17 @@
 {
-  "name": "gogo-react-start-with-auth",
+  "name": "vibhaag",
   "version": "2.0.2",
-  "description": "Gogo Start with Auth - React Bootstrap 4 Admin Dashboard",
+  "description": "Vibhaag App",
+  "proxy": "http://server:4000",
   "scripts": {
-    "start": "webpack-dev-server --mode development --hot --progress --open --port 3001",
+    "start": "webpack-dev-server --mode development --hot --progress --open --port 8080",
     "build": "webpack --mode production"
   },
   "keywords": [
     "reactjs"
   ],
-  "author": "Colored Strategies",
-  "license": "ISC",
+  "author": "Sudhanva Narayana",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
