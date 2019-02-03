@@ -1,4 +1,4 @@
-# server/Dockerfile-dev
+# server/Dockerfile.dev
 
 # Install node image in container
 FROM node

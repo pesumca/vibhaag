@@ -47,3 +47,5 @@ services:
 # Confirm this is working later
 volumes:
   ? board-dbdata
+
+# docker-compose -f docker-compose-test.yml up --build

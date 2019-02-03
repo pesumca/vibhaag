@@ -1,6 +1,18 @@
 version: "3"
 
 services:
+  ################
+  ### SETUP NGINX 
+  ################
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - '3050:80'
+
   ##########################
   ### SETUP SERVER CONTAINER
   ##########################
@@ -8,10 +20,10 @@ services:
     # Tell docker what file to build the server from
     build:
       context: ./server
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile.dev
     # The ports to expose
     expose:
-      - 4000
+      - 3000
     # Environment variables
     environment:
       - MONGO_URI=mongodb://db:27017/db
@@ -23,7 +35,7 @@ services:
       - NODE_ENV=development
     # Port mapping
     ports:
-      - 4000:4000
+      - 3000:3000
     # Volumes to mount
     volumes:
       - ./server/:/app/server
@@ -41,14 +53,14 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile.dev
     environment:
-      - REACT_APP_PORT=3000
+      - REACT_APP_PORT=8080
       - CHOKIDAR_USEPOLLING=true
     expose:
-      - 3000
+      - 8080
     ports:
-      - 3000:3000
+      - 8080:8080
     volumes:
       - ./client/src:/app/client/src
       - ./client/public:/app/client/public
@@ -64,3 +76,4 @@ services:
     ports:
       - 27017:27017
     restart: always
+  # docker-compose -f docker-compose-dev.yml up --build
