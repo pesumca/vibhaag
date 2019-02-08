@@ -1,0 +1,79 @@
+version: "3"
+
+services:
+  ################
+  ### SETUP NGINX 
+  ################
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - '3050:80'
+
+  ##########################
+  ### SETUP SERVER CONTAINER
+  ##########################
+  server:
+    # Tell docker what file to build the server from
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    # The ports to expose
+    expose:
+      - 3000
+    # Environment variables
+    environment:
+      - MONGO_URI=mongodb://db:27017/db
+      - PORT=4000
+      - JWT_SECRET=secretsecret
+      - JWT_EXPIRY=30d
+      - DEBUG=worker:*
+      - MORGAN=combined
+      - NODE_ENV=development
+    # Port mapping
+    ports:
+      - 3000:3000
+    # Volumes to mount
+    volumes:
+      - ./server/:/app/server
+    # Run command
+    # Nodemon for hot reloading (-L flag required for polling in Docker)
+    command: nodemon -L index.js
+    # Connect to other containers
+    links:
+      - db
+    # Restart action
+    restart: always
+  ##########################
+  ### SETUP CLIENT CONTAINER
+  ##########################
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    environment:
+      - REACT_APP_PORT=8080
+      - CHOKIDAR_USEPOLLING=true
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client/src:/app/client/src
+      - ./client/public:/app/client/public
+    links:
+      - server
+    command: npm run start
+    restart: always
+  ##########################
+  ### SETUP DB CONTAINER
+  ##########################
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+  # docker-compose -f docker-compose-dev.yml up --build
