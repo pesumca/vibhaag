@@ -62,8 +62,6 @@ function* registerWithEmailPassword({ payload }) {
     }
 }
 
-
-
 const logoutAsync = async (history) => {
     await auth.signOut().then(authUser => authUser).catch(error => error);
     history.push('/')

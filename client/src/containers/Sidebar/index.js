@@ -260,18 +260,12 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/gogo"
-                    onClick={e => this.openSubMenu(e, "gogo")}
+                    to="/app/departments"
+                    onClick={e => this.openSubMenu(e, "all-departments")}
                   >
                     <i className="iconsmind-Air-Balloon" />{" "}
-                    <IntlMessages id="menu.department" />
+                    <IntlMessages id="menu.departments" />
                   </NavLink>
-                </NavItem>
-                <NavItem
-                  className={classnames({
-                    active: ((this.state.selectedParentMenu == "second-menu" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "second-menu")
-                  })}
-                >
                 </NavItem>
               </Nav>
             </PerfectScrollbar>
@@ -290,9 +284,9 @@ class Sidebar extends Component {
                 data-parent="gogo"
               >
                 <NavItem>
-                  <NavLink to="/app/gogo/start">
+                  <NavLink to="/app/departments/all-departments">
                     <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="menu.batches" />
+                    <IntlMessages id="departments.all-departments" />
                   </NavLink>
                 </NavItem>
               </Nav>

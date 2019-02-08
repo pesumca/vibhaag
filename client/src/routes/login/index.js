@@ -16,6 +16,7 @@ class LoginLayout extends Component {
       password: "sudhanva"
     };
   }
+
   onUserLogin() {
     if (this.state.email !== "" && this.state.password !== "") {
       this.props.loginUser(this.state, this.props.history);
@@ -28,6 +29,7 @@ class LoginLayout extends Component {
   componentWillUnmount() {
     document.body.classList.remove("background");
   }
+  
   render() {
     return (
       <Fragment>
