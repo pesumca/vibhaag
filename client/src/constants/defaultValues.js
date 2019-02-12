@@ -3,7 +3,6 @@ export const menuHiddenBreakpoint = 768;
 export const defaultMenuType = 'menu-default'; //'menu-sub-hidden', 'menu-hidden'
 export const defaultStartPath = '/app/departments/all-departments'; 
 
-
 export const defaultLocale='en';
 export const localeOptions=[
     {id:'en',name:'English'},
@@ -19,6 +18,5 @@ export const firebaseConfig = {
     messagingSenderId: "216495999563"
 };
 
-export const apiUrl ="http://localhost:9000/api/"
-
+export const apiUrl = process.env.API_URL
 export const searchPath = "/app/departments/all-departments"

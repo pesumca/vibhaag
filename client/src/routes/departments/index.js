@@ -41,8 +41,7 @@ function collect(props) {
   return { data: props.data };
 }
 
-const apiUrl = "http://localhost:3000/departments"
-// const apiUrl = "http://api.crealeaf.com/cakes/paging"
+const apiUrl = process.env.API_URL + "users";
 
 class DataListLayout extends Component {
   constructor(props) {
