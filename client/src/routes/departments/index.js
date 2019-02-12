@@ -41,7 +41,7 @@ function collect(props) {
   return { data: props.data };
 }
 
-const apiUrl = process.env.API_URL + "users";
+const apiUrl = "http://localhost:3000/" + "users";
 
 class DataListLayout extends Component {
   constructor(props) {
