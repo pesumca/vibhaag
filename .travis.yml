@@ -1,12 +1,13 @@
 before_script:
-- cd server
-- npm install
+  - cd server
 language: node_js
 node_js:
-- stable
+  - stable
 cache:
   directories:
   - node_modules
+script:
+  - cd ..
 deploy:
   provider: heroku
   api_key:
