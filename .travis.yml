@@ -1,7 +1,12 @@
-before_script: cd server
+before_script: 
+  - cd server
+  - npm install
 language: node_js
 node_js: 
   - "stable"
 cache:
   directories:
     - "node_modules"
+script:
+  - npm install
+  - npm test
