@@ -1,8 +1,12 @@
 {
-    "name": "vibhaag",
-    "version": "0.1.0",
-    "scripts": { 
-      "heroku-postbuild": "npm install webpack webpack-bundle-analyzer --prefix client",
-      "postinstall": "npm install --prefix client && npm run build --prefix client && npm install --prefix server"
-    }
+  "name": "vibhaag",
+  "version": "0.1.0",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "npm install webpack webpack-bundle-analyzer --prefix client",
+    "postinstall": "npm install --prefix client && npm run build --prefix client && npm install --prefix server"
   }
+}
