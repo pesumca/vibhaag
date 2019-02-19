@@ -6,7 +6,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "npm install webpack webpack-bundle-analyzer --prefix client",
-    "postinstall": "npm install --prefix client && npm run build --prefix client && npm install --prefix server"
+    "heroku-prebuild": "npm install webpack webpack-bundle-analyzer --prefix client &&npm install --prefix client && npm run build --prefix client && npm install --prefix server"
   }
 }
