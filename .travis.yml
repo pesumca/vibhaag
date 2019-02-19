@@ -1,12 +1,17 @@
-before_script: 
-  - cd server
-  - npm install
+before_script:
+- cd server
+- npm install
 language: node_js
-node_js: 
-  - "stable"
+node_js:
+- stable
 cache:
   directories:
-    - "node_modules"
-script:
-  - npm install
-  - npm test
+  - node_modules
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_DEPLOY_KEY
+  app: vibhaag
+
+
+
