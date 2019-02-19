@@ -5,6 +5,13 @@
     "node": "10.x"
   },
   "scripts": {
+    "heroku-prebuild": "npm install", 
     "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "webpack": "^4.5.0",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.3"
   }
 }
