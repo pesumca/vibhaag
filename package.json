@@ -5,7 +5,7 @@
     "node": "10.x"
   },
   "scripts": {
-    "heroku-prebuild": "npm install", 
+    "heroku-prebuild": "npm install",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
@@ -82,6 +82,21 @@
     "redux": "4.0.0",
     "redux-saga": "^0.16.0",
     "sortablejs": "^1.6.1",
-    "video.js": "^7.3.0"
+    "video.js": "^7.3.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "lodash": "^4.17.11",
+    "mocha": "^6.0.0",
+    "mongodb": "^3.1.11",
+    "mongoose": "^5.4.4",
+    "nodemon": "^1.18.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "update": "^0.7.4",
+    "validator": "^10.11.0"
   }
 }
