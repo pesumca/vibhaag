@@ -1,18 +1,15 @@
 before_script:
-  - cd server
+- cd server
 language: node_js
 node_js:
-  - stable
+- stable
 cache:
   directories:
   - node_modules
 script:
-  - cd ..
+- cd ..
 deploy:
   provider: heroku
   api_key:
-    secure: $HEROKU_DEPLOY_KEY
+    secure: oFzEDs3IMyFHynXNxQiLcfs71Tr+8qE4s+zFPgL73YTLlpENBzBC5eaE7BKpuXPQNxiXoCG0SCdiXbOJl3173hi4C6HR9sRnPXn9oEeNWtHfI3mbCUyMd/YPHqEhwrD6GNiSCrjD+sVMaxy+02cEq8MjXZ1yoabKQfVjUQI5TnmgkdsINmsF2gp+Tqs8INP2mk/P+VdICNwVICSTMzk1T+Em8QZeLkmQEFxa6eXsXO4Rt7PAdRTtfGmhskiPI03Wv7ufEUZCvIIiIkbop7D/UT1FKlTefZSOEm0hz6HZzRrQC5zYv0BtvPWnjq6a6HIEgCNppjecN374dFPR5YoBLZMxhGLiVzz/Bpp8Zaoi9MxPCdLyImQx1Tp8tHqnljY/hnHIcJw8xkm4L0rGrui++AJNzn5yS0xZZaoK7ooaqvppuO/6InFP+vJ24FoevqCCRo0O6LUWyT0OGvMouftsv/C7NM5jRaMpr/oCcY+q7pId3LGuW5s+FYdar3dWjqIHeHWd3OQZMo+YoBmEufbGJpVRz4c/pmJtyMHYw1gUsMI3bu8y7p378/Yu1uNMyGd5zdONiOLE1j38TqHQjkqNip5yUw2IOfMkHQWFwPMn7TubhjW5awwL5st9/TNiK0Kwp1pgfyAbUZr6NzcfPStCJFqY1s8zcESKIIvg6FMD3uU=
   app: vibhaag
-
-
-
