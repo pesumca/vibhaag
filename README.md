@@ -2,11 +2,11 @@
 A college attendance, analytics and management application built on the MERN Stack as a part of MCA Mini Project
 
 # DevOps
-[![start with why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action) | 
-[![Build Status](https://travis-ci.org/pesumca/vibhaag.svg?branch=master)](https://travis-ci.org/pesumca/vibhaag) | 
-[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/) | 
-[![HitCount](http://hits.dwyl.io/pesumca/vibhaag.svg)](http://hits.dwyl.io/pesumca/vibhaag) | 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/pesumca/vibhaag/issues)
+[![start with why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action) 
+[![Build Status](https://travis-ci.org/pesumca/vibhaag.svg?branch=master)](https://travis-ci.org/pesumca/vibhaag) 
+[![Node version](https://img.shields.io/node/v/[NPM-MODULE-NAME].svg?style=flat)](http://nodejs.org/download/) 
+[![HitCount](http://hits.dwyl.io/pesumca/vibhaag.svg)](http://hits.dwyl.io/pesumca/vibhaag) 
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/pesumca/vibhaag/issues) 
 
 
 # Description
