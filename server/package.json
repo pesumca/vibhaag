@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "mocha": "^6.0.0",
     "mongodb": "^3.1.11",

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var verifyToken = require('../../auth/verify-token');
 
 const _ = require('lodash');
 const { User } = require('../models/user');
