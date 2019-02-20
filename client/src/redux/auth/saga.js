@@ -1,6 +1,6 @@
 
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { auth } from '../../firebase';
+import axios from 'axios';
 import {
     LOGIN_USER,
     REGISTER_USER,
@@ -12,18 +12,31 @@ import {
     registerUserSuccess
 } from './actions';
 
-const loginWithEmailPasswordAsync = async (email, password) =>
-    await auth.signInWithEmailAndPassword(email, password)
+const signInWithEmailAndPassword = async (email, password) => {
+    await axios.post('http://localhost:3000/' + 'auth/' + 'login', {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+}
+
+const loginWithEmailPasswordAsync = async (email, password) => {
+    await signInWithEmailAndPassword(email, password)
         .then(authUser => authUser)
         .catch(error => error);
-
-
+}
 
 function* loginWithEmailPassword({ payload }) {
     const { email, password } = payload.user;
     const { history } = payload;
     try {
         const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
+        console.log(loginUser);
         if (!loginUser.message) {
             localStorage.setItem('user_id', loginUser.user.uid);
             yield put(loginUserSuccess(loginUser));
