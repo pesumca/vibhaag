@@ -21,8 +21,8 @@ class LoginLayout extends Component {
 
   onUserLogin() {
     if (this.state.email !== "" && this.state.password !== "") {
-        this.props.loginUser(this.state, this.props.history);
-      }
+      this.props.loginUser(this.state, this.props.history);
+    }
   }
 
   componentDidMount() {
@@ -72,14 +72,13 @@ class LoginLayout extends Component {
                     </CardTitle>
                     <Form>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} onChange={this.handleEmailChange} />
+                        <Input type="email" onChange={this.handleEmailChange} />
                         <IntlMessages id="user.email" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
                         <Input type="password" onChange={this.handlePasswordChange} />
                         <IntlMessages
                           id="user.password"
-                          defaultValue={this.state.password}
                         />
                       </Label>
                       <div className="d-flex justify-content-between align-items-center">

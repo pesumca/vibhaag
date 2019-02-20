@@ -17,16 +17,16 @@ class RegisterLayout extends Component {
       password: "",
       name: ""
     };
-    this.handleNameChange = this.handleNameChange.bind(this)   
-    this.handleEmailChange = this.handleEmailChange.bind(this)   
-    this.handlePasswordChange = this.handlePasswordChange.bind(this)   
+    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
 
   onUserRegister() {
     console.log("Calling axios");
     console.log(this);
     console.log(this.state.password);
-    
+
     if (this.state.email !== "" && this.state.password !== "") {
       // This is for adding user to Firebase. Commented out for demo purpose.  
       // this.props.registerUser(this.state, this.props.history);
@@ -47,15 +47,15 @@ class RegisterLayout extends Component {
     }
   }
 
-  handleNameChange(e){
+  handleNameChange(e) {
     this.setState({ name: e.target.value });
   }
 
-  handleEmailChange(e){
+  handleEmailChange(e) {
     this.setState({ email: e.target.value });
   }
 
-  handlePasswordChange(e){
+  handlePasswordChange(e) {
     this.setState({ password: e.target.value });
   }
 
@@ -66,7 +66,7 @@ class RegisterLayout extends Component {
   componentWillUnmount() {
     document.body.classList.remove("background");
   }
-  
+
   render() {
     return (
       <Fragment>
@@ -100,7 +100,7 @@ class RegisterLayout extends Component {
                         <IntlMessages id="user.fullname" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} onChange={this.handleEmailChange}  />
+                        <Input type="email" defaultValue={this.state.email} onChange={this.handleEmailChange} />
                         <IntlMessages id="user.email" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">

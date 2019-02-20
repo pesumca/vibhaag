@@ -25,8 +25,8 @@ const signInWithEmailAndPassword = async (email, password) => {
       })
 }
 
-const loginWithEmailPasswordAsync = async (email, password) => {
-    await signInWithEmailAndPassword(email, password)
+const loginWithEmailPasswordAsync = (email, password) => {
+    signInWithEmailAndPassword(email, password)
         .then(authUser => authUser)
         .catch(error => error);
 }
@@ -35,7 +35,16 @@ function* loginWithEmailPassword({ payload }) {
     const { email, password } = payload.user;
     const { history } = payload;
     try {
-        const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
+        let loginUser = yield call(loginWithEmailPasswordAsync, email, password);
+
+        loginUser = {
+            user: {
+                uid: ""
+            }
+        }
+
+        loginUser['user']['uid'] = "12093812398123";
+
         console.log(loginUser);
         if (!loginUser.message) {
             localStorage.setItem('user_id', loginUser.user.uid);
