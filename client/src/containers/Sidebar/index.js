@@ -167,7 +167,7 @@ class Sidebar extends Component {
         });
       } else if (this.state.selectedParentMenu == "") {
         this.setState({
-          selectedParentMenu: "gogo"
+          selectedParentMenu: "departments"
         });
       }
 
@@ -256,12 +256,12 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "gogo")
+                    active: ((this.state.selectedParentMenu == "departments" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "departments")
                   })}
                 >
                   <NavLink
-                    to="/app/departments"
-                    onClick={e => this.openSubMenu(e, "all-departments")}
+                    to="/app/departments/"
+                    onClick={e => this.openSubMenu(e, "departments")}
                   >
                     <i className="iconsmind-Air-Balloon" />{" "}
                     <IntlMessages id="menu.departments" />
@@ -279,9 +279,9 @@ class Sidebar extends Component {
             >
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "gogo" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "gogo")
+                  "d-block": ((this.state.selectedParentMenu == "departments" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "departments")
                 })}
-                data-parent="gogo"
+                data-parent="departments"
               >
                 <NavItem>
                   <NavLink to="/app/departments/all-departments">

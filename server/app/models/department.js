@@ -17,7 +17,7 @@ const DepartmentSchema = new Schema({
         default: Date.now
     },
     updatedAt: {
-        type: Date,
+        type: Date
     }
 });
 
