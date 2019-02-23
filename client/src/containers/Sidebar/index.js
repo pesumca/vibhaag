@@ -260,34 +260,27 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/departments/"
-                    onClick={e => this.openSubMenu(e, "departments")}
-                  >
+                     to="/app/departments"
+                    onClick={()=>this.changeViewingParentMenu('departments')}
+                    data-flag="departments">
                     <i className="iconsmind-Air-Balloon" />{" "}
                     <IntlMessages id="menu.departments" />
                   </NavLink>
                 </NavItem>
-              </Nav>
-            </PerfectScrollbar>
-          </div>
-        </div>
 
-        <div className="sub-menu">
-          <div className="scroll">
-            <PerfectScrollbar
-              option={{ suppressScrollX: true, wheelPropagation: false }}
-            >
-              <Nav
-                className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "departments" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "departments")
-                })}
-                data-parent="departments"
-              >
-                <NavItem>
-                  <NavLink to="/app/departments/all-departments">
-                    <i className="simple-icon-paper-plane" />{" "}
-                    <IntlMessages id="departments.all-departments" />
+                <NavItem
+                  className={classnames({
+                    active: ((this.state.selectedParentMenu == "sessions" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="sessions")
+                  })}
+                >
+                  <NavLink
+                     to="/app/sessions"
+                    onClick={()=>this.changeViewingParentMenu('sessions')}
+                    data-flag="sessions">
+                    <i className="iconsmind-Blackboard" />{" "}
+                    <IntlMessages id="menu.sessions" />
                   </NavLink>
+
                 </NavItem>
               </Nav>
             </PerfectScrollbar>

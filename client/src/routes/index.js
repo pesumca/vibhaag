@@ -5,6 +5,7 @@ import TopNav from 'Containers/TopNav'
 import Sidebar from 'Containers/Sidebar';
 
 import departments from './departments';
+import sessions from './sessions';
 
 import { connect } from 'react-redux';
 
@@ -23,6 +24,7 @@ class MainApp extends Component {
 					<div className="container-fluid">
 						<Switch>
 							<Route path={`${match.url}/departments`} component={departments} />
+							<Route path={`${match.url}/sessions`} component={sessions} />
 							<Redirect to="/error" />
 						</Switch>
 					</div>

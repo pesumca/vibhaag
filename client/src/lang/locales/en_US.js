@@ -843,8 +843,9 @@ module.exports = {
   // Departments
 
   "menu.departments": "Departments",
+  "menu.all-departments": "All Departments",
   "layouts.department-name" : "Department Name",
   "layouts.department-code" : "Department Code",
   "departments.all-departments": "All Departments",
-
+  "menu.sessions": "Sessions"
 };
