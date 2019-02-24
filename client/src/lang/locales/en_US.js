@@ -847,5 +847,6 @@ module.exports = {
   "layouts.department-name" : "Department Name",
   "layouts.department-code" : "Department Code",
   "departments.all-departments": "All Departments",
-  "menu.sessions": "Sessions"
+  "menu.sessions": "Sessions",
+  "menu.users": "Users",
 };

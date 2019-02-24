@@ -6,6 +6,7 @@ import Sidebar from 'Containers/Sidebar';
 
 import departments from './departments';
 import sessions from './sessions';
+import users from './users';
 
 import { connect } from 'react-redux';
 
@@ -25,6 +26,7 @@ class MainApp extends Component {
 						<Switch>
 							<Route path={`${match.url}/departments`} component={departments} />
 							<Route path={`${match.url}/sessions`} component={sessions} />
+							<Route path={`${match.url}/users`} component={users} />
 							<Redirect to="/error" />
 						</Switch>
 					</div>

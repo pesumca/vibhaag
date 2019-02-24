@@ -282,6 +282,21 @@ class Sidebar extends Component {
                   </NavLink>
 
                 </NavItem>
+
+                <NavItem
+                  className={classnames({
+                    active: ((this.state.selectedParentMenu == "users" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="users")
+                  })}
+                >
+                  <NavLink
+                     to="/app/users"
+                    onClick={()=>this.changeViewingParentMenu('users')}
+                    data-flag="users">
+                    <i className="iconsmind-User" />{" "}
+                    <IntlMessages id="menu.users" />
+                  </NavLink>
+
+                </NavItem>
               </Nav>
             </PerfectScrollbar>
           </div>
