@@ -262,6 +262,8 @@ class DataListLayout extends Component {
   onContextMenuClick = (e, data, target) => {
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
     console.log("onContextMenuClick - action : ", data.action);
+
+    
   };
 
   onContextMenu = (e, data) => {
