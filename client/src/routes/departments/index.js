@@ -271,7 +271,7 @@ class DataListLayout extends Component {
         .then(res => {
           console.log("res.data" + res.data);
           let dele = this.state.items.find(ele => {return ele !== res.data._id}) 
-          // console.log("dele"+ JSON.stringify(dele));
+          console.log("dele"+ JSON.stringify(dele));
           this.setState({
             items: [dele],
             selectedItems: [],
