@@ -258,12 +258,30 @@ class DataListLayout extends Component {
         });
       })
   }
+  
 
   onContextMenuClick = (e, data, target) => {
+
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
     console.log("onContextMenuClick - action : ", data.action);
+    console.log(this.state.selectedItems);
 
-    
+    this.state.selectedItems.forEach(dep => {
+      axios.delete(`${apiUrl}/${dep}`)
+        .then(res => {
+          console.log("res.data" + res.data);
+          let dele = this.state.items.find(ele => {return ele !== res.data._id}) 
+          // console.log("dele"+ JSON.stringify(dele));
+          this.setState({
+            items: [dele],
+            selectedItems: [],
+          });
+          return res.data
+        }).catch(err => {
+          console.log(err);
+        })
+    });
+
   };
 
   onContextMenu = (e, data) => {
@@ -605,7 +623,7 @@ class DataListLayout extends Component {
                               </p>
                               <div className="w-15 w-sm-100">
                                 {/* <Badge color={department.statusColor} pill> */}
-                                  {/* {department.departmentCode} */}
+                                {/* {department.departmentCode} */}
                                 {/* </Badge> */}
                               </div>
                             </div>

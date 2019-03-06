@@ -70,3 +70,8 @@ router.put('/:id', (req, res) => {
 module.exports = {
     usersController: router
 }
+
+// nodemon index.js development
+
+// Mongo Server Command
+// mongod --dbpath d:\code\mongo-data
