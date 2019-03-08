@@ -259,7 +259,6 @@ class DataListLayout extends Component {
       })
   }
   
-
   onContextMenuClick = (e, data, target) => {
 
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
@@ -539,7 +538,7 @@ class DataListLayout extends Component {
                         >
                           <div className="position-relative">
                             <NavLink
-                              to={`?p=${department._id}`}
+                              to={`${this.props.location.pathname}/${department._id}`}
                               className="w-40 w-sm-100"
                             >
                               <CardImg
@@ -598,7 +597,7 @@ class DataListLayout extends Component {
                           })}
                         >
                           <NavLink
-                            to={`?p=${department._id}`}
+                            to={`${this.props.location.pathname}/${department._id}`}
                             className="d-flex"
                           >
                             <img
@@ -609,7 +608,7 @@ class DataListLayout extends Component {
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${department._id}`}
+                                to={`${this.props.location.pathname}/${department._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
@@ -665,7 +664,7 @@ class DataListLayout extends Component {
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`?p=${department._id}`}
+                                to={`${this.props.location.pathname}/${department._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
