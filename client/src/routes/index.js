@@ -10,6 +10,8 @@ import users from './users';
 
 import { connect } from 'react-redux';
 
+import DepartmentShow from './departments/show'
+
 class MainApp extends Component {
 	constructor(props) {
 		super(props);
@@ -24,7 +26,8 @@ class MainApp extends Component {
 				<main>
 					<div className="container-fluid">
 						<Switch>
-							<Route path={`${match.url}/departments`} component={departments} />
+							<Route path={`${match.url}/departments`} component={departments} exact={true} />
+							<Route path={`${match.url}/departments/:id`} component={DepartmentShow} exact={true} />
 							<Route path={`${match.url}/sessions`} component={sessions} />
 							<Route path={`${match.url}/users`} component={users} />
 							<Redirect to="/error" />
