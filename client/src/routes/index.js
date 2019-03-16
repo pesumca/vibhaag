@@ -5,12 +5,12 @@ import TopNav from 'Containers/TopNav'
 import Sidebar from 'Containers/Sidebar';
 
 import departments from './departments';
+import DepartmentShow from './departments/show'
 import sessions from './sessions';
 import users from './users';
 
 import { connect } from 'react-redux';
 
-import DepartmentShow from './departments/show'
 
 class MainApp extends Component {
 	constructor(props) {
