@@ -41,7 +41,7 @@ function collect(props) {
   return { data: props.data };
 }
 
-const apiUrl = "http://localhost:3000/" + "users";
+const apiUrl = "http://localhost:3000/" + "subjects";
 
 class DataListLayout extends Component {
   constructor(props) {
@@ -52,8 +52,8 @@ class DataListLayout extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.onContextMenuClick = this.onContextMenuClick.bind(this);
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.createUser = this.createUser.bind(this);
+    this.handleSubjectChange = this.handleSubjectChange.bind(this);
+    this.createSubject = this.createSubject.bind(this);
 
     this.state = {
       displayMode: "list",
@@ -94,8 +94,8 @@ class DataListLayout extends Component {
     });
   }
 
-  // Function to create a user
-  createUser() {
+  // Function to create a subject
+  createSubject() {
     this.toggleModal();
     axios.post(`${apiUrl}`, {
       name: this.state.subjectName,
@@ -109,7 +109,7 @@ class DataListLayout extends Component {
       });
   }
 
-  handleUserChange(e) {
+  handleSubjectChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -308,7 +308,7 @@ class DataListLayout extends Component {
               <Colxx xxs="12">
                 <div className="mb-2">
                   <h1>
-                    <IntlMessages id="menu.users" />
+                    <IntlMessages id="menu.subjects" />
                   </h1>
 
                   <div className="float-sm-right">
@@ -333,13 +333,13 @@ class DataListLayout extends Component {
                       </ModalHeader>
                       <ModalBody>
                         <Label>
-                          <IntlMessages id="layouts.user-name" />
+                          <IntlMessages id="layouts.subject-name" />
                         </Label>
-                        <Input name="subjectName" id="user-name" value={this.state.value} onChange={this.handleUserChange} />
+                        <Input name="subjectName" id="subject-name" value={this.state.value} onChange={this.handleSubjectChange} />
                         <Label className="mt-4">
-                          <IntlMessages id="layouts.user-code" />
+                          <IntlMessages id="layouts.subject-code" />
                         </Label>
-                        <Input name="subjectCode" id="user-code" value={this.state.value} onChange={this.handleUserChange} />
+                        <Input name="subjectCode" id="subject-code" value={this.state.value} onChange={this.handleSubjectChange} />
                       </ModalBody>
                       <ModalFooter>
                         <Button
@@ -349,7 +349,7 @@ class DataListLayout extends Component {
                         >
                           <IntlMessages id="layouts.cancel" />
                         </Button>
-                        <Button color="primary" onClick={this.createUser}>
+                        <Button color="primary" onClick={this.createSubject}>
                           <IntlMessages id="layouts.submit" />
                         </Button>{" "}
                       </ModalFooter>
@@ -511,7 +511,7 @@ class DataListLayout extends Component {
               </Colxx>
             </Row>
             <Row>
-              {this.state.items.map(user => {
+              {this.state.items.map(subject => {
                 if (this.state.displayMode === "imagelist") {
                   return (
                     <Colxx
@@ -519,31 +519,31 @@ class DataListLayout extends Component {
                       lg="4"
                       xl="3"
                       className="mb-3"
-                      key={user._id}
+                      key={subject._id}
                     >
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={user._id}
+                        data={subject._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, user._id)
+                            this.handleCheckChange(event, subject._id)
                           }
                           className={classnames({
                             active: this.state.selectedItems.includes(
-                              user._id
+                              subject._id
                             )
                           })}
                         >
                           <div className="position-relative">
                             <NavLink
-                              to={`${this.props.location.pathname}/${user._id}`}
+                              to={`${this.props.location.pathname}/${subject._id}`}
                               className="w-40 w-sm-100"
                             >
                               <CardImg
                                 top
-                                alt={user.name}
+                                alt={subject.name}
                               />
                             </NavLink>
                             <Badge
@@ -558,18 +558,18 @@ class DataListLayout extends Component {
                                 <CustomInput
                                   className="itemCheck mb-0"
                                   type="checkbox"
-                                  id={`check_` + `${user._id}`}
+                                  id={`check_` + `${subject._id}`}
                                   checked={this.state.selectedItems.includes(
-                                    user._id
+                                    subject._id
                                   )}
                                   onChange={() => { }}
                                   label=""
                                 />
                               </Colxx>
                               <Colxx xxs="10" className="mb-3">
-                                <CardSubtitle>{user.name}</CardSubtitle>
+                                <CardSubtitle>{subject.name}</CardSubtitle>
                                 <CardText className="text-muted text-small mb-0 font-weight-light">
-                                  {user.createdAt}
+                                  {subject.createdAt}
                                 </CardText>
                               </Colxx>
                             </Row>
@@ -580,49 +580,49 @@ class DataListLayout extends Component {
                   );
                 } else if (this.state.displayMode === "thumblist") {
                   return (
-                    <Colxx xxs="12" key={user._id} className="mb-3">
+                    <Colxx xxs="12" key={subject._id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={user._id}
+                        data={subject._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, user._id)
+                            this.handleCheckChange(event, subject._id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              user._id
+                              subject._id
                             )
                           })}
                         >
                           <NavLink
-                            to={`${this.props.location.pathname}/${user._id}`}
+                            to={`${this.props.location.pathname}/${subject._id}`}
                             className="d-flex"
                           >
                             <img
-                              alt={user.title}
+                              alt={subject.title}
                               className="list-thumbnail responsive border-0"
                             />
                           </NavLink>
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`${this.props.location.pathname}/${user._id}`}
+                                to={`${this.props.location.pathname}/${subject._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
-                                  {user.name}
+                                  {subject.name}
                                 </p>
                               </NavLink>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {user.createdAt}
+                                {subject.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                                {/* <Badge color={user.statusColor} pill> */}
-                                {/* {user.subjectCode} */}
+                                {/* <Badge color={subject.statusColor} pill> */}
+                                {/* {subject.subjectCode} */}
                                 {/* </Badge> */}
                               </div>
                             </div>
@@ -630,9 +630,9 @@ class DataListLayout extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_` + `${user._id}`}
+                                id={`check_` + `${subject._id}`}
                                 checked={this.state.selectedItems.includes(
-                                  user._id
+                                  subject._id
                                 )}
                                 onChange={() => { }}
                                 label=""
@@ -645,41 +645,41 @@ class DataListLayout extends Component {
                   );
                 } else {
                   return (
-                    <Colxx xxs="12" key={user._id} className="mb-3">
+                    <Colxx xxs="12" key={subject._id} className="mb-3">
                       <ContextMenuTrigger
                         id="menu_id"
-                        data={user._id}
+                        data={subject._id}
                         collect={collect}
                       >
                         <Card
                           onClick={event =>
-                            this.handleCheckChange(event, user._id)
+                            this.handleCheckChange(event, subject._id)
                           }
                           className={classnames("d-flex flex-row", {
                             active: this.state.selectedItems.includes(
-                              user._id
+                              subject._id
                             )
                           })}
                         >
                           <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                             <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                               <NavLink
-                                to={`${this.props.location.pathname}/${user._id}`}
+                                to={`${this.props.location.pathname}/${subject._id}`}
                                 className="w-40 w-sm-100"
                               >
                                 <p className="list-item-heading mb-1 truncate">
-                                  {user.name}
+                                  {subject.name}
                                 </p>
                               </NavLink>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {/* {user.category} */}
+                                {/* {subject.category} */}
                               </p>
                               <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                                {user.createdAt}
+                                {subject.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                                {/* <Badge color={user.statusColor} pill>
-                                  {user.subjectCode}
+                                {/* <Badge color={subject.statusColor} pill>
+                                  {subject.subjectCode}
                                 </Badge> */}
                               </div>
                             </div>
@@ -687,9 +687,9 @@ class DataListLayout extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_` + `${user._id}`}
+                                id={`check_` + `${subject._id}`}
                                 checked={this.state.selectedItems.includes(
-                                  user._id
+                                  subject._id
                                 )}
                                 onChange={() => { }}
                                 label=""

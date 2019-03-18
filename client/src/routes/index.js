@@ -7,7 +7,11 @@ import Sidebar from 'Containers/Sidebar';
 import departments from './departments';
 import DepartmentShow from './departments/show'
 import sessions from './sessions';
+import SessionShow from './sessions/show'
+import subjects from './subjects';
+import SubjectShow from './subjects/show';
 import users from './users';
+import UserShow from './users/show';
 
 import { connect } from 'react-redux';
 
@@ -28,8 +32,12 @@ class MainApp extends Component {
 						<Switch>
 							<Route path={`${match.url}/departments`} component={departments} exact={true} />
 							<Route path={`${match.url}/departments/:id`} component={DepartmentShow} exact={true} />
-							<Route path={`${match.url}/sessions`} component={sessions} />
-							<Route path={`${match.url}/users`} component={users} />
+							<Route path={`${match.url}/sessions`} component={sessions} exact={true} />
+							<Route path={`${match.url}/sessions/:id`} component={SessionShow} exact={true} />
+							<Route path={`${match.url}/subjects`} component={subjects} exact={true} />
+							<Route path={`${match.url}/subjects/:id`} component={SubjectShow} exact={true} />
+							<Route path={`${match.url}/users`} component={users} exact={true} />
+							<Route path={`${match.url}/users/:id`} component={UserShow} exact={true} />
 							<Redirect to="/error" />
 						</Switch>
 					</div>
