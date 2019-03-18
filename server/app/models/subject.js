@@ -28,8 +28,8 @@ const subjectSchema = new Schema({
     }
 });
 
-const Subjects = mongoose.model('Subjects',subjectSchema);
+const Subject = mongoose.model('Subject', subjectSchema);
 
 module.exports = {
-    Subjects
+    Subject
 } 
