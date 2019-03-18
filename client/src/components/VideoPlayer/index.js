@@ -1,5 +1,5 @@
 import React from 'react';
-import videojs from 'video.js'
+import videojs from 'video.js';
 import "video.js/dist/video-js.css";
 export default class VideoPlayer extends React.Component {
   componentDidMount() {
