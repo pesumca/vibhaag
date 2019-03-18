@@ -32,7 +32,7 @@ const timetableSchema = new Schema({
     ]
 });
 
-const timetable = mongoose.model('timetable',timetableSchema);
+const timetable = mongoose.model('timetable', timetableSchema);
 
 module.exports = {
     timetable

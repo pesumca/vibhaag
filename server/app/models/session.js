@@ -21,8 +21,8 @@ const SessionSchema = new Schema({
     }
 })
 
-const Sessions = mongoose.model('Sessions',SessionSchema);
+const Session = mongoose.model('Session', SessionSchema);
 
 module.exports = {
-    Sessions
+    Session
 }
