@@ -258,7 +258,7 @@ class DataListLayout extends Component {
         });
       })
   }
-  
+
   onContextMenuClick = (e, data, target) => {
 
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
@@ -269,8 +269,8 @@ class DataListLayout extends Component {
       axios.delete(`${apiUrl}/${dep}`)
         .then(res => {
           console.log("res.data" + res.data);
-          let dele = this.state.items.find(ele => {return ele !== res.data._id}) 
-          console.log("dele"+ JSON.stringify(dele));
+          let dele = this.state.items.find(ele => { return ele !== res.data._id })
+          console.log("dele" + JSON.stringify(dele));
           this.setState({
             items: [dele],
             selectedItems: [],
