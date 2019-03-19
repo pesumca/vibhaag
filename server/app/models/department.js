@@ -12,6 +12,18 @@ const DepartmentSchema = new Schema({
         type: String,
         required: true
     },
+    subjects:[{
+        type:Schema.Types.ObjectId,
+        ref:'Subject'
+    }],
+    users:[{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    }],
+    batches:[{
+        type:Schema.Types.ObjectId,
+        ref:'Batch'
+    }],
     createdAt: {
         type: Date,
         default: Date.now
