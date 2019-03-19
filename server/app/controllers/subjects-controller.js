@@ -44,7 +44,7 @@ router.delete('/:id', (req, res) => {
 
 // create a subject
 router.post('/', (req, res) => {
-    let body = _.pick(req.body, ['name', 'subjectCode']);
+    let body = req.body;
     let subject = new Subject(body);
     subject.save().then((subject) => {
         res.send(subject);
@@ -57,7 +57,7 @@ router.post('/', (req, res) => {
 // update a specific subject
 router.put('/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['name', 'subjectCode']);
+    let body = req.body;
     Subject.findByIdAndUpdate(id, { $set: body }, { new: true })
         .then(subject => {
             res.send(subject)

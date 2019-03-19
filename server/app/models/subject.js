@@ -7,17 +7,16 @@ const subjectSchema = new Schema({
     subjectCode: {
         type: String,
         required: true,
-        minlength: 4,
+        minlength: 1,
         maxlength: 20
     },
     name: {
         type: String,
-        required: true,
+        required: true
     },
     description: {
         type: String,
-        required: true,
-        minlength: 4,
+        minlength: 4
     },
     createdAt: {
         type: Date,
