@@ -8,13 +8,13 @@ const BatchSchema = new Schema({
         type: String,
         required: true,
     },
-    noOfStudents:{
+    noOfStudents: {
         type: Number,
         required: true
     },
-    semester:{
-        type:Schema.Types.ObjectId,
-        ref:'Semester'
+    semester: {
+        type: Schema.Types.ObjectId,
+        ref: 'Semester'
     },
     createdAt: {
         type: Date,

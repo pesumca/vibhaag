@@ -45,7 +45,7 @@ router.get('/logout', function (req, res) {
 
 router.post('/register', function (req, res) {
 
-    
+
     let body = _.pick(req.body, ['name', 'email', 'roles']);
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     body.password = hashedPassword;
