@@ -260,8 +260,8 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                     to="/app/departments"
-                    onClick={()=>this.changeViewingParentMenu('departments')}
+                    to="/app/departments"
+                    onClick={() => this.changeViewingParentMenu('departments')}
                     data-flag="departments">
                     <i className="iconsmind-Air-Balloon" />{" "}
                     <IntlMessages id="menu.departments" />
@@ -270,12 +270,12 @@ class Sidebar extends Component {
 
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "sessions" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="sessions")
+                    active: ((this.state.selectedParentMenu == "sessions" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "sessions")
                   })}
                 >
                   <NavLink
-                     to="/app/sessions"
-                    onClick={()=>this.changeViewingParentMenu('sessions')}
+                    to="/app/sessions"
+                    onClick={() => this.changeViewingParentMenu('sessions')}
                     data-flag="sessions">
                     <i className="iconsmind-Blackboard" />{" "}
                     <IntlMessages id="menu.sessions" />
@@ -285,12 +285,12 @@ class Sidebar extends Component {
 
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "users" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="users")
+                    active: ((this.state.selectedParentMenu == "users" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "users")
                   })}
                 >
                   <NavLink
-                     to="/app/users"
-                    onClick={()=>this.changeViewingParentMenu('users')}
+                    to="/app/users"
+                    onClick={() => this.changeViewingParentMenu('users')}
                     data-flag="users">
                     <i className="iconsmind-User" />{" "}
                     <IntlMessages id="menu.users" />
@@ -300,14 +300,14 @@ class Sidebar extends Component {
 
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "subjects" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="subjects")
+                    active: ((this.state.selectedParentMenu == "subjects" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "subjects")
                   })}
                 >
                   <NavLink
-                     to="/app/subjects"
-                    onClick={()=>this.changeViewingParentMenu('subjects')}
+                    to="/app/subjects"
+                    onClick={() => this.changeViewingParentMenu('subjects')}
                     data-flag="subjects">
-                    <i className="iconsmind-User" />{" "}
+                    <i className="iconsmind-Book" />{" "}
                     <IntlMessages id="menu.subjects" />
                   </NavLink>
 
