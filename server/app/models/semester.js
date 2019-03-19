@@ -8,6 +8,10 @@ const SemesterSchema = new Schema({
         type: Number,
         required: true
     },
+    department:{
+        type:Schema.Types.ObjectId,
+        ref:'Department'
+    },
     start: {
         type: Date,
         required: true

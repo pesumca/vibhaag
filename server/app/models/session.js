@@ -5,15 +5,15 @@ const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
     batch:{
-        type:Schema.types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'Batch'
     },
     user:{
-        type:Schema.types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'User'
     },
     subject:{
-        type:Schema.types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'Subject'
     },
     start: {

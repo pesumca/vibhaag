@@ -44,7 +44,7 @@ router.delete('/:id', (req, res) => {
 
 // create a department
 router.post('/', (req, res) => {
-    let body = _.pick(req.body, ['name', 'departmentCode']);
+    let body = req.body;
     let department = new Department(body);
     department.save().then((department) => {
         res.send(department);
@@ -57,7 +57,7 @@ router.post('/', (req, res) => {
 // update a specific department
 router.put('/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['name', 'departmentCode']);
+    let body = req.body;
     Department.findByIdAndUpdate(id, { $set: body }, { new: true })
         .then(department => {
             res.send(department)

@@ -12,6 +12,10 @@ const BatchSchema = new Schema({
         type: Number,
         required: true
     },
+    semester:{
+        type:Schema.Types.ObjectId,
+        ref:'Semester'
+    },
     createdAt: {
         type: Date,
         default: Date.now
