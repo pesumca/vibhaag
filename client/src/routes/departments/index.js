@@ -46,6 +46,7 @@ const apiUrl = "http://localhost:3000/" + "departments";
 class DataListLayout extends Component {
   constructor(props) {
     super(props);
+    this.toggle = this.toggle.bind(this);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.toggleSplit = this.toggleSplit.bind(this);
     this.dataListRender = this.dataListRender.bind(this);
@@ -71,6 +72,7 @@ class DataListLayout extends Component {
       selectedOrderOption: { column: "name", label: "Name" },
       dropdownSplitOpen: false,
       modalOpen: false,
+      modal: false,
       currentPage: 1,
       totalItemCount: 0,
       totalPage: 1,
@@ -112,6 +114,12 @@ class DataListLayout extends Component {
   handleDepartmentChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
+    });
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
     });
   }
 
@@ -262,18 +270,21 @@ class DataListLayout extends Component {
   onContextMenuClick = (e, data, target) => {
 
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
-    console.log("onContextMenuClick - action : ", data.action);
     console.log(this.state.selectedItems);
-
+    console.log(JSON.stringify(this.state.items));
+    
+    let dele;
+    
     this.state.selectedItems.forEach(dep => {
       axios.delete(`${apiUrl}/${dep}`)
-        .then(res => {
-          console.log("res.data" + res.data);
-          let dele = this.state.items.find(ele => {return ele !== res.data._id}) 
-          console.log("dele"+ JSON.stringify(dele));
+      .then(res => {
+        dele = this.state.items.find(ele => {return ele !== res.data._id}) 
+        console.log("res.data :" + JSON.stringify(res.data));
+          console.log("dele: "+ JSON.stringify(dele));
           this.setState({
             items: [dele],
             selectedItems: [],
+            modal: false
           });
           return res.data
         }).catch(err => {
@@ -321,6 +332,23 @@ class DataListLayout extends Component {
                       <IntlMessages id="layouts.add-new" />
                     </Button>
                     {"  "}
+
+                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>
+                      <IntlMessages id="departments.modal-title" />
+                    </ModalHeader>
+                    <ModalBody>
+                      Please note that this opeartion cannot be reversed
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" onClick={this.onContextMenuClick}>
+                        Delete
+                      </Button>{" "}
+                      <Button color="secondary" onClick={this.toggle}>
+                        Cancel
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
 
                     <Modal
                       isOpen={this.state.modalOpen}
@@ -715,19 +743,7 @@ class DataListLayout extends Component {
             onShow={e => this.onContextMenu(e, e.detail.data)}
           >
             <MenuItem
-              onClick={this.onContextMenuClick}
-              data={{ action: "copy" }}
-            >
-              <i className="simple-icon-docs" /> <span>Copy</span>
-            </MenuItem>
-            <MenuItem
-              onClick={this.onContextMenuClick}
-              data={{ action: "move" }}
-            >
-              <i className="simple-icon-drawer" /> <span>Move to archive</span>
-            </MenuItem>
-            <MenuItem
-              onClick={this.onContextMenuClick}
+              onClick={this.toggle}
               data={{ action: "delete" }}
             >
               <i className="simple-icon-trash" /> <span>Delete</span>

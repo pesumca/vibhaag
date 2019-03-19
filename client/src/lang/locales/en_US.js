@@ -852,4 +852,5 @@ module.exports = {
   "departments.subjects": "Subjects",
   "menu.sessions": "Sessions",
   "menu.users": "Users",
+  "departments.modal-title": "Are you sure that you want to delete?"
 };
