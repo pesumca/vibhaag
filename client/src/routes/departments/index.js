@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from 'react-intl';
 import {
+  Alert,
+  UncontrolledAlert,
   Row,
   Card,
   CustomInput,
@@ -31,6 +33,7 @@ import classnames from "classnames";
 import IntlMessages from "Util/IntlMessages";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import { BreadcrumbItems } from "Components/BreadcrumbContainer";
+import { NotificationManager } from "Components/ReactNotifications";
 
 import Pagination from "Components/List/Pagination";
 import mouseTrap from "react-mousetrap";
@@ -55,6 +58,7 @@ class DataListLayout extends Component {
     this.onContextMenuClick = this.onContextMenuClick.bind(this);
     this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
     this.createDepartment = this.createDepartment.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
 
     this.state = {
       displayMode: "list",
@@ -81,6 +85,7 @@ class DataListLayout extends Component {
       selectedItems: [],
       lastChecked: null,
       displayOptionsIsOpen: false,
+      visible: true,
       isLoading: false
     };
   }
@@ -115,6 +120,76 @@ class DataListLayout extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+  }
+
+  createNotification = (type, className) => {
+    let cName = className || "";
+    return () => {
+      switch (type) {
+        case "primary":
+          NotificationManager.primary(
+            "This is a notification!",
+            "Primary Notification",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "secondary":
+          NotificationManager.secondary(
+            "This is a notification!",
+            "Secondary Notification",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "info":
+          NotificationManager.info("Info message", "", 3000, null, null, cName);
+          break;
+        case "success":
+          NotificationManager.success(
+            "Succesfully",
+            "Item Deleted",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "warning":
+          NotificationManager.warning(
+            "Warning message",
+            "Close after 3000ms",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "error":
+          NotificationManager.error(
+            "Error message",
+            "Click me!",
+            5000,
+            () => {
+              alert("callback");
+            },
+            null,
+            cName
+          );
+          break;
+        default:
+          NotificationManager.info("Info message");
+          break;
+      }
+    };
+  };
+
+  onDismiss() {
+    this.setState({ visible: false });
   }
 
   toggle() {
@@ -266,27 +341,29 @@ class DataListLayout extends Component {
         });
       })
   }
-  
+
   onContextMenuClick = (e, data, target) => {
 
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
     console.log(this.state.selectedItems);
     console.log(JSON.stringify(this.state.items));
-    
+
     let dele;
-    
+
     this.state.selectedItems.forEach(dep => {
       axios.delete(`${apiUrl}/${dep}`)
-      .then(res => {
-        dele = this.state.items.find(ele => {return ele !== res.data._id}) 
-        console.log("res.data :" + JSON.stringify(res.data));
-          console.log("dele: "+ JSON.stringify(dele));
+        .then(res => {
+          dele = this.state.items.find(ele => { return ele !== res.data._id });
+          console.log("res.data :" + JSON.stringify(res.data));
+          console.log("dele: " + JSON.stringify(dele));
           this.setState({
             items: [dele],
             selectedItems: [],
             modal: false
           });
-          return res.data
+
+          this.createNotification("success", "filled");
+          console.log(res.data);
         }).catch(err => {
           console.log(err);
         })
@@ -334,21 +411,21 @@ class DataListLayout extends Component {
                     {"  "}
 
                     <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>
-                      <IntlMessages id="departments.modal-title" />
-                    </ModalHeader>
-                    <ModalBody>
-                      Please note that this opeartion cannot be reversed
+                      <ModalHeader toggle={this.toggle}>
+                        <IntlMessages id="departments.modal-title" />
+                      </ModalHeader>
+                      <ModalBody>
+                        Please note that this opeartion cannot be reversed
                     </ModalBody>
-                    <ModalFooter>
-                      <Button color="danger" onClick={this.onContextMenuClick}>
-                        Delete
+                      <ModalFooter>
+                        <Button color="danger" onClick={this.onContextMenuClick}>
+                          Delete
                       </Button>{" "}
-                      <Button color="secondary" onClick={this.toggle}>
-                        Cancel
+                        <Button color="secondary" onClick={this.toggle}>
+                          Cancel
                       </Button>
-                    </ModalFooter>
-                  </Modal>
+                      </ModalFooter>
+                    </Modal>
 
                     <Modal
                       isOpen={this.state.modalOpen}
