@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
 const _ = require('lodash');
 const { Department } = require('../models/department');
 
 // get all the departments
 router.get('/', (req, res) => {
-    Department.find().then(departments => {
+    Department.find().populate('subjects').populate('users').populate('sessions').then(departments => {
         res.send(departments);
     })
         .catch(err => {
@@ -17,8 +16,8 @@ router.get('/', (req, res) => {
 // get the specific department
 router.get('/:id', (req, res) => {
     let id = req.params.id;
-    Department.findById(id).then(department => {
-        res.send(department)
+    Department.findById(id).populate('subjects').populate('users').populate('sessions').then(department => {
+        res.send(department);
     })
 });
 
