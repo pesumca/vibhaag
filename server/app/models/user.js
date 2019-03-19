@@ -13,26 +13,26 @@ const userSchema = new Schema({
         required: true,
         unique: true,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return validator.isEmail(value);
             },
-            message: function(){
+            message: function () {
                 return 'Invalid email format'
             }
         }
     },
     roles: {
         type: String,
-        enum:['admin','principal','chairperson','faculty'],
+        enum: ['admin', 'principal', 'chairperson', 'faculty'],
         required: true
     },
-    password:{
+    password: {
         type: String,
         required: true
     },
     tokens: [
         {
-            token:{
+            token: {
                 type: String
             }
         }
@@ -41,6 +41,6 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema)
 
-module.exports={
+module.exports = {
     User
 }

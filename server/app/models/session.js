@@ -4,21 +4,21 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
-    batch:{
-        type:Schema.Types.ObjectId,
-        ref:'Batch'
+    batch: {
+        type: Schema.Types.ObjectId,
+        ref: 'Batch'
     },
-    user:{
-        type:Schema.Types.ObjectId,
-        ref:'User'
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
-    subject:{
-        type:Schema.Types.ObjectId,
-        ref:'Subject'
+    subject: {
+        type: Schema.Types.ObjectId,
+        ref: 'Subject'
     },
     start: {
         type: Date,
-        default: Date.now   
+        default: Date.now
     },
     end: {
         type: Date,

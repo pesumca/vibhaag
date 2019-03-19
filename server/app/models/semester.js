@@ -8,9 +8,9 @@ const SemesterSchema = new Schema({
         type: Number,
         required: true
     },
-    department:{
-        type:Schema.Types.ObjectId,
-        ref:'Department'
+    department: {
+        type: Schema.Types.ObjectId,
+        ref: 'Department'
     },
     start: {
         type: Date,
@@ -18,7 +18,7 @@ const SemesterSchema = new Schema({
     },
     end: {
         type: Date,
-        require: true 
+        require: true
     },
     createdAt: {
         type: Date,
@@ -29,7 +29,7 @@ const SemesterSchema = new Schema({
     }
 })
 
-const Semester = mongoose.model('Semester',SemesterSchema);
+const Semester = mongoose.model('Semester', SemesterSchema);
 
 module.exports = {
     Semester

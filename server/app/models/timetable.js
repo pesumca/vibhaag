@@ -8,7 +8,7 @@ const timetableSchema = new Schema({
         type: String,
         required: true,
     },
-    day:[
+    day: [
         {
             first: {
                 type: Date

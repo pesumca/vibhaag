@@ -6,23 +6,23 @@ const Schema = mongoose.Schema;
 const DepartmentSchema = new Schema({
     name: {
         type: String,
-        required:true
+        required: true
     },
-    departmentCode:{
+    departmentCode: {
         type: String,
-        required:true
+        required: true
     },
-    subjects:[{
-        type:Schema.Types.ObjectId,
-        ref:'Subject'
+    subjects: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Subject'
     }],
-    users:[{
-        type:Schema.Types.ObjectId,
-        ref:'User'
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }],
-    batches:[{
-        type:Schema.Types.ObjectId,
-        ref:'Batch'
+    batches: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Batch'
     }],
     createdAt: {
         type: Date,
