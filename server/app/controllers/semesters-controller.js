@@ -6,7 +6,7 @@ const { Semester } = require('../models/semester');
 
 // get all the semester
 router.get('/', (req, res) => {
-    Semester.find().then(semesters => {
+    Semester.find().populate('department').then(semesters => {
         res.send(semesters);
     })
         .catch(err => {
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // get the specific Semester
 router.get('/:id', (req, res) => {
     let id = req.params.id;
-    Semester.findById(id).then(semester => {
+    Semester.findById(id).populate('department').then(semester => {
         res.send(semester)
     })
 });
@@ -44,7 +44,7 @@ router.delete('/:id', (req, res) => {
 
 // create a semester
 router.post('/', (req, res) => {
-    let body = _.pick(req.body, ['number', 'start', 'end']);
+    let body = req.body;
     let semester = new Semester(body);
     semester.save().then((semester) => {
         res.send(semester);
@@ -57,7 +57,7 @@ router.post('/', (req, res) => {
 // update a specific semester
 router.put('/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['number', 'start', 'end']);
+    let body = req.body;
     Semester.findByIdAndUpdate(id, { $set: body }, { new: true })
         .then(semester => {
             res.send(semester)

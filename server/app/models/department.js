@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 const DepartmentSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required:true
     },
     departmentCode:{
         type: String,
-        required: true
+        required:true
     },
     subjects:[{
         type:Schema.Types.ObjectId,
