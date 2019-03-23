@@ -1,7 +1,7 @@
 export const subHiddenBreakpoint=1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultMenuType = 'menu-sub-hidden'; //'menu-sub-hidden', 'menu-hidden', 'menu-default'
-export const defaultStartPath = '/app/departments/'; 
+export const defaultStartPath = '/app/departments'; 
 
 export const defaultLocale='en';
 export const localeOptions=[
@@ -19,4 +19,4 @@ export const firebaseConfig = {
 };
 
 export const apiUrl = process.env.API_URL
-export const searchPath = "/app/departments/"
+export const searchPath = "/app/departments"

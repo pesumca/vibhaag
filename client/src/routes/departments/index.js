@@ -726,9 +726,14 @@ class DataListLayout extends Component {
                                 {department.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                                {/* <Badge color={department.statusColor} pill> */}
-                                {/* {department.departmentCode} */}
-                                {/* </Badge> */}
+                              <Button
+                                color="empty"
+                                className="pt-0 pl-0 d-inline-block d-md-none"
+                                onClick={this.toggleDisplayOptions}
+                              >
+                                <IntlMessages id="layouts.display-options" />{" "}
+                                <i className="simple-icon-arrow-down align-middle" />
+                              </Button>
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">

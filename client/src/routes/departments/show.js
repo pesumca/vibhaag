@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import axios from 'axios';
 import IntlMessages from "Util/IntlMessages";
 import {
   Row,
@@ -41,14 +42,36 @@ import classnames from "classnames";
 export default class DepartmentShow extends Component {
   constructor(props) {
     super(props);
-
+    
     this.toggleTab = this.toggleTab.bind(this);
     this.state = {
-      activeFirstTab: "1"
+      activeFirstTab: "1",
+      apiUrl: "http://localhost:3000/" + "departments" + "/" + this.props.match.params.id,
+      department: []
     };
-
-    console.log(this.props)
+    
+    console.log(this.props);
+    // console.log("Params: " + JSON.stringify(this.props.match.params.id));
   }
+
+
+  componentDidMount(){
+    console.log("APIURL: " + this.state.apiUrl);
+
+    axios.get(this.state.apiUrl)
+      .then((response) => {
+        console.log("Resposne: " + JSON.stringify(response.data));
+          this.setState({
+              department: response.data
+          }, () => {
+            console.log(this.state.department);
+          })   
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      console.log("Department: " + this.state.department);
+    }
 
   toggleTab(tab) {
     if (this.state.activeTab !== tab) {
@@ -63,7 +86,7 @@ export default class DepartmentShow extends Component {
       <Fragment>
         <Row>
           <Colxx xxs="12">
-            <h1>Chocolate Cake</h1>
+            <h1>{this.state.department.name}</h1>
             <div className="float-sm-right mb-2">
               <UncontrolledDropdown>
                 <DropdownToggle
