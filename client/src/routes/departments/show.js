@@ -106,11 +106,14 @@ export default class DepartmentShow extends Component {
                   <IntlMessages id="layouts.delete" />
                   </DropdownItem>
                   <DropdownItem>
-                  <IntlMessages id="layouts.another-action" />
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                  <IntlMessages id="layouts.another-action" />
+                  <NavLink
+                    to={`${this.props.location.pathname}/edit`}
+                    className="w-40 w-sm-100"
+                  >
+                    <p className="list-item-heading mb-1 truncate">
+                      <IntlMessages id="departments.edit" />
+                    </p>
+                  </NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

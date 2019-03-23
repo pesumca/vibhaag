@@ -6,6 +6,7 @@ import Sidebar from 'Containers/Sidebar';
 
 import departments from './departments';
 import DepartmentShow from './departments/show'
+import DepartmentEdit from './departments/edit'
 import sessions from './sessions';
 import SessionShow from './sessions/show'
 import subjects from './subjects';
@@ -32,6 +33,7 @@ class MainApp extends Component {
 						<Switch>
 							<Route path={`${match.url}/departments`} component={departments} exact={true} />
 							<Route path={`${match.url}/departments/:id`} component={DepartmentShow} exact={true} />
+							<Route path={`${match.url}/departments/:id/edit`} component={DepartmentEdit} exact={true} />
 							<Route path={`${match.url}/sessions`} component={sessions} exact={true} />
 							<Route path={`${match.url}/sessions/:id`} component={SessionShow} exact={true} />
 							<Route path={`${match.url}/subjects`} component={subjects} exact={true} />
