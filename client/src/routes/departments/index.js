@@ -362,7 +362,7 @@ class DataListLayout extends Component {
             modal: false
           });
 
-          this.createNotification("success", "filled");
+          // this.createNotification("success", "filled");
           console.log(res.data);
         }).catch(err => {
           console.log(err);
@@ -726,14 +726,6 @@ class DataListLayout extends Component {
                                 {department.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                              <Button
-                                color="empty"
-                                className="pt-0 pl-0 d-inline-block d-md-none"
-                                onClick={this.toggleDisplayOptions}
-                              >
-                                <IntlMessages id="layouts.display-options" />{" "}
-                                <i className="simple-icon-arrow-down align-middle" />
-                              </Button>
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">

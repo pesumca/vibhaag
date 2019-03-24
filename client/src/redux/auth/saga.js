@@ -97,7 +97,7 @@ function* logout({payload}) {
     } catch (error) {
     }
 }
-
+        
 
 
 export function* watchRegisterUser() {

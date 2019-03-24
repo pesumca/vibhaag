@@ -108,11 +108,22 @@ class FormsUi extends Component {
     });
   }
 
-  handleChange = (event) => {
+  handleNameChange = (event) => {
+    console.log(event.target.value);
+    
     this.setState({
-        name: event.target.name,
-        departmentCode: event.target.departmentCode,
+        name: event.target.value,
     });
+
+  }
+
+  handleCodeChange = (event) => {
+    console.log(event.target.value);
+    
+    this.setState({
+        departmentCode: event.target.value,
+    });
+
   }
 
   editDepartment = () => {
@@ -120,12 +131,16 @@ class FormsUi extends Component {
         name: this.state.name,
         departmentCode: this.state.departmentCode
       })
-      .then(function (response) {
+      .then((response) => {
+        this.props.history.push("/");
         console.log(response);
+        
       })
       .catch(function (error) {
         console.log(error);
       });
+
+
   }
 
   componentDidMount(){
@@ -133,7 +148,7 @@ class FormsUi extends Component {
 
     axios.get(this.state.apiUrl)
       .then((response) => {
-        console.log("Resposne: " + JSON.stringify(response.data));
+        console.log("Response: " + JSON.stringify(response.data));
           this.setState({
               department: response.data
           }, () => {
@@ -176,9 +191,10 @@ class FormsUi extends Component {
                       <Label className="av-label" for="avexampleNameTooltip">
                         <IntlMessages id="departments.name" />
                       </Label>
-                      <AvInput name="name" id={this.state.department.name + this.state.department._id} 
+                      <AvInput 
+                      name="name" id={this.state.department.name + this.state.department._id} 
                       value={this.state.department.name} 
-                      onChange={this.handleChange}
+                      onChange={this.handleNameChange}
                       required />
                       <AvFeedback>
                         <IntlMessages id="forms.firstname-message" />
@@ -198,7 +214,7 @@ class FormsUi extends Component {
                         name="departmentCode"
                         id={this.state.department.departmentCode + this.state.department._id}
                         value={this.state.department.departmentCode}
-                        onChange={this.handleChange}
+                        onChange={this.handleCodeChange}
                         required
                       />
                       <AvFeedback>
