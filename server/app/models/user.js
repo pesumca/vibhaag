@@ -32,6 +32,9 @@ const userSchema = new Schema({
     },
     tokens: [
         {
+            acess:{
+                type:String,
+            },
             token: {
                 type: String
             }
