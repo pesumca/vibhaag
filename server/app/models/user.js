@@ -61,6 +61,51 @@ userSchema.methods.generateAuthToken = function () {
     })
 }
 
+userSchema.statics.findByCredentials = function(email, password) {
+    var User = this
+    // console.log('inside findbycred')
+    // console.log(email)
+    // console.log(password)
+
+    return User.findOne({ email }).then((user) => {
+        if (!user) {
+            return Promise.reject()
+        }
+
+        // console.log('found email')
+
+        return new Promise((resolve, reject) => {
+            
+            // console.log(password)
+            // console.log(user.password)
+            
+            bcrypt.compare(password, user.password, (err, res) => {
+
+                if (res) {
+                    resolve(user)
+                } else {
+                    reject();
+                }
+            })
+        })
+    })
+}
+
+userSchema.pre('save', function(next) {
+    var user = this
+
+    if(user.isModified('password')) {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+                user.password = hash
+                next()
+            })
+        })
+    } else {
+        next()
+    }
+})
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = {
