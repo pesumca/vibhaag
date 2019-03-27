@@ -3,6 +3,10 @@ const validator = require('validator');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
+const bcrypt = require('bcryptjs');
+
 const userSchema = new Schema({
     name: {
         type: String,
@@ -30,17 +34,32 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    tokens: [
-        {
-            acess:{
-                type:String,
-            },
-            token: {
-                type: String
-            }
+    tokens: [{
+        access: {
+          type: String,
+          require: true
+        },
+        token: {
+          type: String,
+          require: true
         }
-    ]
+    }]
 });
+
+
+
+userSchema.methods.generateAuthToken = function () {
+    var user = this
+    var access = 'auth'
+    var token = jwt.sign({_id: user._id.toHexString(), access}, 'secret').toString()
+    // console.log(token)
+
+    user.tokens = user.tokens.concat([{ access, token }])
+
+    return user.save().then(() => {
+        return token
+    })
+}
 
 const User = mongoose.model('User', userSchema)
 

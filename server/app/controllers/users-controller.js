@@ -4,6 +4,7 @@ var verifyToken = require('../../auth/verify-token');
 
 const _ = require('lodash');
 const { User } = require('../models/user');
+var { authenticate } = require('../../auth/authenticate')
 
 // get all the users
 router.get('/', (req, res) => {
@@ -47,18 +48,23 @@ router.delete('/:id', (req, res) => {
 router.post('/', (req, res) => {
     let body = _.pick(req.body, ['name', 'email', 'password','roles']);
     let user = new User(body);
+
     user.save().then((user) => {
-        res.send(user);
+        // res.send(user);
+        console.log('before auth')
+        return user.generateAuthToken();
+    }).then((token) => {
+        console.log(token)
+        res.header('x-auth', token).send(user)
+    }).catch((e) => {
+        res.status(400).send(e)
     })
-        .catch(err => {
-            res.send(err);
-        })
 });
 
 // update a specific user
 router.put('/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['name', 'role', 'email']);
+    let body = _.pick(req.body, ['name', 'roles', 'email']);
     User.findByIdAndUpdate(id, { $set: body }, { new: true })
         .then(user => {
             res.send(user)
