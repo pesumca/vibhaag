@@ -54,7 +54,9 @@ userSchema.methods.generateAuthToken = function () {
     var token = jwt.sign({_id: user._id.toHexString(), access}, 'secret').toString()
     // console.log(token)
 
-    user.tokens = user.tokens.concat([{ access, token }])
+    // user.tokens = user.tokens.concat([{ access, token }]) // this will concatenate new token to the document after every login
+    
+    user.tokens = [{ access, token }] // replaces old token with new one
 
     return user.save().then(() => {
         return token
