@@ -6,11 +6,15 @@ const mongoose = require('./config/db');
 const cors = require('cors');
 const path = require('path')
 const bodyParser = require('body-parser');
+const passport = require('passport');
 // console.log(keys)
 const port = 3000;
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+require('./passport')(passport);
+
 app.use(cors());
 
 app.use('/', routes);
