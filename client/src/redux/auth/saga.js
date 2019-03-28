@@ -13,7 +13,7 @@ import {
 } from './actions';
 
 const signInWithEmailAndPassword = async (email, password) => {
-    await axios.post('http://localhost:3000/' + 'auth/' + 'login', {
+    await axios.post('http://localhost:3000/' + 'users/' + 'login', {
         email: email,
         password: password,
       })

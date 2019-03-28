@@ -30,7 +30,7 @@ class RegisterLayout extends Component {
     if (this.state.email !== "" && this.state.password !== "") {
       // This is for adding user to Firebase. Commented out for demo purpose.  
       // this.props.registerUser(this.state, this.props.history);
-      axios.post('http://localhost:3000/' + 'auth/' + 'register', {
+      axios.post('http://localhost:3000/' + 'users', {
         name: this.state.name,
         email: this.state.email,
         password: this.state.password,

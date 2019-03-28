@@ -9,6 +9,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "availity-reactstrap-validation": "^2.0.4",
     "axios": "^0.18.0",
     "babel-core": "^6.26.0",

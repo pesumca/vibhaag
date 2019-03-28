@@ -48,6 +48,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "availity-reactstrap-validation": "^2.5.1",
     "axios": "^0.18.0",
     "chart.js": "^2.8.0",
