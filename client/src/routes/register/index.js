@@ -12,17 +12,33 @@ class RegisterLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "nsudhanva@gmail.com ",
-      password: "sudhanva",
-      name: "Sudhanva Narayana"
+      name: "",
+      email: "",
+      password: ""
     };
+
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
+
   onUserRegister() {
     if (this.state.email !== "" && this.state.password !== "") {
       // This is for adding user to Firebase. Commented out for demo purpose.  
-      // this.props.registerUser(this.state, this.props.history);
-      this.props.history.push("/");
+      this.props.registerUser(this.state, this.props.history);
+      // this.props.history.push("/");
     }
+  }
+
+  handleNameChange(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
   }
 
   componentDidMount() {
@@ -60,15 +76,15 @@ class RegisterLayout extends Component {
                     </CardTitle>
                     <Form>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="name" defaultValue={this.state.name} />
+                        <Input type="name" onChange={this.handleNameChange} />
                         <IntlMessages id="user.fullname" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} />
+                        <Input type="email"  onChange={this.handleEmailChange} />
                         <IntlMessages id="user.email" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" />
+                        <Input type="password"  onChange={this.handlePasswordChange}  />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
