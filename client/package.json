@@ -56,7 +56,7 @@
     "classnames": "2.2.6",
     "draft-js": "^0.10.5",
     "fine-uploader": "^5.16.2",
-    "firebase": "^5.9.0",
+    "firebase": "^5.9.2",
     "generate-password": "^1.4.1",
     "moment": "2.22.2",
     "rc-slider": "^8.6.7",

@@ -10,13 +10,13 @@ export const localeOptions=[
 ];
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyBBksq-Asxq2M4Ot-75X19IyrEYJqNBPcg",
-    authDomain: "gogo-react-login.firebaseapp.com",
-    databaseURL: "https://gogo-react-login.firebaseio.com",
-    projectId: "gogo-react-login",
-    storageBucket: "gogo-react-login.appspot.com",
-    messagingSenderId: "216495999563"
+    apiKey: "AIzaSyDBu3ia88cMBR-5ahcY9C2Flsnn7mYDR8w",
+    authDomain: "vibhaag.firebaseapp.com",
+    databaseURL: "https://vibhaag.firebaseio.com",
+    projectId: "vibhaag",
+    storageBucket: "vibhaag.appspot.com",
+    messagingSenderId: "450213689259"
 };
 
-export const apiUrl = process.env.API_URL
+export const apiUrl = "http://localhost:3000"
 export const searchPath = "/app/departments"
