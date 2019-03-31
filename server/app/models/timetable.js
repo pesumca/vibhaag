@@ -147,6 +147,13 @@ const timetableSchema = new Schema({
                 description:{
                     type:String
                 }
+            },
+            createdAt:{
+                type:Date,
+                default:Date.now
+            },
+            updatedAt:{
+                type:Date,
             }
         }
     ]
