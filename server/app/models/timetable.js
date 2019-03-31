@@ -11,22 +11,142 @@ const timetableSchema = new Schema({
     day: [
         {
             first: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             },
             second: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             },
             third: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             },
             fourth: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             },
             fifth: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             },
             sixth: {
-                type: Date
+                start:{
+                    type: Date
+                },
+                end:{
+                    type: Date
+                },
+                subject:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'Subject'
+                },
+                user:{
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
+                },
+                taken:{
+                    type:Boolean,
+                    default:true
+                },
+                description:{
+                    type:String
+                }
             }
         }
     ]
