@@ -18,8 +18,6 @@ const loginWithEmailPasswordAsync = async (email, password) =>
         .then(authUser => authUser)
         .catch(error => error);
 
-
-
 function* loginWithEmailPassword({ payload }) {
     const { email, password } = payload.user;
     const { history } = payload;
@@ -29,7 +27,16 @@ function* loginWithEmailPassword({ payload }) {
             localStorage.setItem('user_id', loginUser.user.uid);
             yield put(loginUserSuccess(loginUser));
             history.push('/');
-            // axios.post('')
+            axios.post('http://localhost:3000/' + 'login', {
+                email: email,
+                password: password,
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
 
         } else {
             // catch throw
