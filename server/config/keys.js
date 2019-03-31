@@ -1,5 +1,13 @@
 let keys = {};
 
+if(process.env.NODE_ENV === 'test') {
+    console.log(process.env.NODE_ENV)
+    keys['apiUrl'] = "http://localhost:3000";
+    keys['contentType'] = "application/json";
+    keys['secret'] = "supersecret";
+    keys['MONGODB_URI'] = "mongodb://localhost:27017/vibhaagTest";
+}
+
 if(process.argv.slice(2) == 'development'){
     keys['apiUrl'] = "http://localhost:3000";
     keys['contentType'] = "application/json";
