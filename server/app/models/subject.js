@@ -18,6 +18,13 @@ const subjectSchema = new Schema({
         type: String,
         minlength: 4
     },
+    credits:{
+        type: Number
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     createdAt: {
         type: Date,
         default: Date.now
