@@ -1,5 +1,6 @@
 
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import axios from 'axios';
 import { auth } from '../../firebase';
 import {
     LOGIN_USER,
@@ -28,6 +29,8 @@ function* loginWithEmailPassword({ payload }) {
             localStorage.setItem('user_id', loginUser.user.uid);
             yield put(loginUserSuccess(loginUser));
             history.push('/');
+            // axios.post('')
+
         } else {
             // catch throw
             console.log('login failed :', loginUser.message)
