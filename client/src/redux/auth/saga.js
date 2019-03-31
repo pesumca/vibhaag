@@ -27,7 +27,7 @@ function* loginWithEmailPassword({ payload }) {
             localStorage.setItem('user_id', loginUser.user.uid);
             yield put(loginUserSuccess(loginUser));
             history.push('/');
-            axios.post('http://localhost:3000/' + 'login', {
+            axios.post('http://localhost:3000/' + 'auth/' + 'login', {
                 email: email,
                 password: password,
             })
@@ -61,7 +61,19 @@ function* registerWithEmailPassword({ payload }) {
         if (!registerUser.message) {
             localStorage.setItem('user_id', registerUser.user.uid);
             yield put(registerUserSuccess(registerUser));
-            history.push('/')
+            history.push('/');
+            axios.post('http://localhost:3000/' + 'auth/' + 'register', {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                roles: "admin"
+              })
+                .then(function (response) {
+                  console.log(response);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
         } else {
             // catch throw
             console.log('register failed :', registerUser.message)
