@@ -44,7 +44,6 @@ function collect(props) {
   return { data: props.data };
 }
 
-const apiUrl = "http://localhost:3000/" + "departments";
 
 class DataListLayout extends Component {
   constructor(props) {
@@ -62,6 +61,7 @@ class DataListLayout extends Component {
 
     this.state = {
       displayMode: "list",
+      apiUrl: "http://localhost:3000/" + "departments",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
       categories: [
@@ -104,7 +104,7 @@ class DataListLayout extends Component {
   // Function to create a department
   createDepartment() {
     this.toggleModal();
-    axios.post(`${apiUrl}`, {
+    axios.post(`${this.state.apiUrl}`, {
       name: this.state.departmentName,
       departmentCode: this.state.departmentCode
     })
@@ -323,12 +323,28 @@ class DataListLayout extends Component {
   }
 
   componentDidMount() {
+    console.log("APIURL: " + this.state.apiUrl);
+
+    axios.get(this.state.apiUrl)
+      .then((response) => {
+        console.log("Response: " + JSON.stringify(response.data));
+        this.setState({
+          department: response.data
+        }, () => {
+          console.log(this.state.department);
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log("Department: " + this.state.department);
+
     this.dataListRender();
   }
 
   dataListRender() {
     const { selectedPageSize, currentPage, selectedOrderOption, search } = this.state;
-    axios.get(`${apiUrl}`)
+    axios.get(`${this.state.apiUrl}`)
       .then(res => {
         console.log(res.data);
         return res.data
@@ -351,7 +367,7 @@ class DataListLayout extends Component {
     let dele;
 
     this.state.selectedItems.forEach(dep => {
-      axios.delete(`${apiUrl}/${dep}`)
+      axios.delete(`${this.state.apiUrl}/${dep}`)
         .then(res => {
           dele = this.state.items.find(ele => { return ele !== res.data._id });
           console.log("res.data :" + JSON.stringify(res.data));
@@ -514,7 +530,7 @@ class DataListLayout extends Component {
                     <IntlMessages id="layouts.display-options" />{" "}
                     <i className="simple-icon-arrow-down align-middle" />
                   </Button>
-              </div>
+                </div>
                 <Separator className="mb-5" />
               </Colxx>
             </Row>
