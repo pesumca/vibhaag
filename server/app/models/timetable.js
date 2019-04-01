@@ -27,7 +27,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
@@ -50,7 +50,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
@@ -73,7 +73,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
@@ -96,7 +96,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
@@ -119,7 +119,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
@@ -142,7 +142,7 @@ const timetableSchema = new Schema({
                 },
                 taken:{
                     type:Boolean,
-                    default:true
+                    default:false
                 },
                 description:{
                     type:String
