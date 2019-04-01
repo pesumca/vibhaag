@@ -6,13 +6,11 @@ const Schema = mongoose.Schema;
 const subjectSchema = new Schema({
     subjectCode: {
         type: String,
-        required: true,
         minlength: 1,
         maxlength: 20
     },
     name: {
         type: String,
-        required: true
     },
     description: {
         type: String,

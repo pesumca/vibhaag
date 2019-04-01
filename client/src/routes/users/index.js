@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from 'react-intl';
 import {
+  Alert,
+  UncontrolledAlert,
   Row,
   Card,
   CustomInput,
@@ -31,6 +33,7 @@ import classnames from "classnames";
 import IntlMessages from "Util/IntlMessages";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import { BreadcrumbItems } from "Components/BreadcrumbContainer";
+import { NotificationManager } from "Components/ReactNotifications";
 
 import Pagination from "Components/List/Pagination";
 import mouseTrap from "react-mousetrap";
@@ -41,22 +44,24 @@ function collect(props) {
   return { data: props.data };
 }
 
-const apiUrl = "http://localhost:3000/" + "users";
 
 class DataListLayout extends Component {
   constructor(props) {
     super(props);
+    this.toggle = this.toggle.bind(this);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.toggleSplit = this.toggleSplit.bind(this);
     this.dataListRender = this.dataListRender.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.onContextMenuClick = this.onContextMenuClick.bind(this);
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.createUser = this.createUser.bind(this);
+    this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
+    this.createDepartment = this.createDepartment.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
 
     this.state = {
       displayMode: "list",
+      apiUrl: "http://localhost:3000/" + "users",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
       categories: [
@@ -71,14 +76,17 @@ class DataListLayout extends Component {
       selectedOrderOption: { column: "name", label: "Name" },
       dropdownSplitOpen: false,
       modalOpen: false,
+      modal: false,
       currentPage: 1,
       totalItemCount: 0,
       totalPage: 1,
       search: "",
+      users: [],
       items: [],
       selectedItems: [],
       lastChecked: null,
       displayOptionsIsOpen: false,
+      visible: true,
       isLoading: false
     };
   }
@@ -95,11 +103,11 @@ class DataListLayout extends Component {
   }
 
   // Function to create a user
-  createUser() {
+  createDepartment() {
     this.toggleModal();
-    axios.post(`${apiUrl}`, {
-      name: this.state.subjectName,
-      subjectCode: this.state.subjectCode
+    axios.post(`${this.state.apiUrl}`, {
+      name: this.state.departmentName,
+      departmentCode: this.state.departmentCode
     })
       .then(res => {
         this.setState(prevState => ({
@@ -109,9 +117,85 @@ class DataListLayout extends Component {
       });
   }
 
-  handleUserChange(e) {
+  handleDepartmentChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
+    });
+  }
+
+  createNotification = (type, className) => {
+    let cName = className || "";
+    return () => {
+      switch (type) {
+        case "primary":
+          NotificationManager.primary(
+            "This is a notification!",
+            "Primary Notification",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "secondary":
+          NotificationManager.secondary(
+            "This is a notification!",
+            "Secondary Notification",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "info":
+          NotificationManager.info("Info message", "", 3000, null, null, cName);
+          break;
+        case "success":
+          NotificationManager.success(
+            "Succesfully",
+            "Item Deleted",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "warning":
+          NotificationManager.warning(
+            "Warning message",
+            "Close after 3000ms",
+            3000,
+            null,
+            null,
+            cName
+          );
+          break;
+        case "error":
+          NotificationManager.error(
+            "Error message",
+            "Click me!",
+            5000,
+            () => {
+              alert("callback");
+            },
+            null,
+            cName
+          );
+          break;
+        default:
+          NotificationManager.info("Info message");
+          break;
+      }
+    };
+  };
+
+  onDismiss() {
+    this.setState({ visible: false });
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
     });
   }
 
@@ -240,12 +324,28 @@ class DataListLayout extends Component {
   }
 
   componentDidMount() {
+    console.log("APIURL: " + this.state.apiUrl);
+
+    axios.get(this.state.apiUrl)
+      .then((response) => {
+        console.log("Response: " + JSON.stringify(response.data));
+        this.setState({
+          users: response.data
+        }, () => {
+          console.log(this.state.users);
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log("User: " + this.state.users);
+
     this.dataListRender();
   }
 
   dataListRender() {
     const { selectedPageSize, currentPage, selectedOrderOption, search } = this.state;
-    axios.get(`${apiUrl}`)
+    axios.get(`${this.state.apiUrl}`)
       .then(res => {
         console.log(res.data);
         return res.data
@@ -262,20 +362,25 @@ class DataListLayout extends Component {
   onContextMenuClick = (e, data, target) => {
 
     console.log("onContextMenuClick - selected items", this.state.selectedItems)
-    console.log("onContextMenuClick - action : ", data.action);
     console.log(this.state.selectedItems);
+    console.log(JSON.stringify(this.state.items));
+
+    let dele;
 
     this.state.selectedItems.forEach(dep => {
-      axios.delete(`${apiUrl}/${dep}`)
+      axios.delete(`${this.state.apiUrl}/${dep}`)
         .then(res => {
-          console.log("res.data" + res.data);
-          let dele = this.state.items.find(ele => { return ele !== res.data._id })
-          console.log("dele" + JSON.stringify(dele));
+          dele = this.state.items.find(ele => { return ele !== res.data._id });
+          console.log("res.data :" + JSON.stringify(res.data));
+          console.log("dele: " + JSON.stringify(dele));
           this.setState({
             items: [dele],
             selectedItems: [],
+            modal: false
           });
-          return res.data
+
+          // this.createNotification("success", "filled");
+          console.log(res.data);
         }).catch(err => {
           console.log(err);
         })
@@ -322,6 +427,23 @@ class DataListLayout extends Component {
                     </Button>
                     {"  "}
 
+                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                      <ModalHeader toggle={this.toggle}>
+                        <IntlMessages id="users.modal-title" />
+                      </ModalHeader>
+                      <ModalBody>
+                        Please note that this opeartion cannot be reversed
+                    </ModalBody>
+                      <ModalFooter>
+                        <Button color="danger" onClick={this.onContextMenuClick}>
+                          Delete
+                      </Button>{" "}
+                        <Button color="secondary" onClick={this.toggle}>
+                          Cancel
+                      </Button>
+                      </ModalFooter>
+                    </Modal>
+
                     <Modal
                       isOpen={this.state.modalOpen}
                       toggle={this.toggleModal}
@@ -335,11 +457,11 @@ class DataListLayout extends Component {
                         <Label>
                           <IntlMessages id="layouts.user-name" />
                         </Label>
-                        <Input name="subjectName" id="user-name" value={this.state.value} onChange={this.handleUserChange} />
+                        <Input name="departmentName" id="user-name" value={this.state.value} onChange={this.handleDepartmentChange} />
                         <Label className="mt-4">
                           <IntlMessages id="layouts.user-code" />
                         </Label>
-                        <Input name="subjectCode" id="user-code" value={this.state.value} onChange={this.handleUserChange} />
+                        <Input name="departmentCode" id="user-code" value={this.state.value} onChange={this.handleDepartmentChange} />
                       </ModalBody>
                       <ModalFooter>
                         <Button
@@ -349,7 +471,7 @@ class DataListLayout extends Component {
                         >
                           <IntlMessages id="layouts.cancel" />
                         </Button>
-                        <Button color="primary" onClick={this.createUser}>
+                        <Button color="primary" onClick={this.createDepartment}>
                           <IntlMessages id="layouts.submit" />
                         </Button>{" "}
                       </ModalFooter>
@@ -409,103 +531,6 @@ class DataListLayout extends Component {
                     <IntlMessages id="layouts.display-options" />{" "}
                     <i className="simple-icon-arrow-down align-middle" />
                   </Button>
-                  <Collapse
-                    isOpen={this.state.displayOptionsIsOpen}
-                    className="d-md-block"
-                    id="displayOptions"
-                  >
-                    <span className="mr-3 mb-2 d-inline-block float-md-left">
-                      <a
-                        className={`mr-2 view-icon ${
-                          this.state.displayMode === "list" ? "active" : ""
-                          }`}
-                        onClick={() => this.changeDisplayMode("list")}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                          <path className="view-icon-svg" d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-                          <path className="view-icon-svg" d="M17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-                          <path className="view-icon-svg" d="M17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" /></svg>
-                      </a>
-                      <a
-                        className={`mr-2 view-icon ${
-                          this.state.displayMode === "thumblist" ? "active" : ""
-                          }`}
-                        onClick={() => this.changeDisplayMode("thumblist")}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                          <path className="view-icon-svg" d="M17.5,3H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-                          <path className="view-icon-svg" d="M3,2V3H1V2H3m.12-1H.88A.87.87,0,0,0,0,1.88V3.12A.87.87,0,0,0,.88,4H3.12A.87.87,0,0,0,4,3.12V1.88A.87.87,0,0,0,3.12,1Z" />
-                          <path className="view-icon-svg" d="M3,9v1H1V9H3m.12-1H.88A.87.87,0,0,0,0,8.88v1.24A.87.87,0,0,0,.88,11H3.12A.87.87,0,0,0,4,10.12V8.88A.87.87,0,0,0,3.12,8Z" />
-                          <path className="view-icon-svg" d="M3,16v1H1V16H3m.12-1H.88a.87.87,0,0,0-.88.88v1.24A.87.87,0,0,0,.88,18H3.12A.87.87,0,0,0,4,17.12V15.88A.87.87,0,0,0,3.12,15Z" />
-                          <path className="view-icon-svg" d="M17.5,10H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-                          <path className="view-icon-svg" d="M17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" /></svg>
-                      </a>
-                      <a
-                        className={`mr-2 view-icon ${
-                          this.state.displayMode === "imagelist" ? "active" : ""
-                          }`}
-                        onClick={() => this.changeDisplayMode("imagelist")}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-                          <path className="view-icon-svg" d="M7,2V8H1V2H7m.12-1H.88A.87.87,0,0,0,0,1.88V8.12A.87.87,0,0,0,.88,9H7.12A.87.87,0,0,0,8,8.12V1.88A.87.87,0,0,0,7.12,1Z" />
-                          <path className="view-icon-svg" d="M17,2V8H11V2h6m.12-1H10.88a.87.87,0,0,0-.88.88V8.12a.87.87,0,0,0,.88.88h6.24A.87.87,0,0,0,18,8.12V1.88A.87.87,0,0,0,17.12,1Z" />
-                          <path className="view-icon-svg" d="M7,12v6H1V12H7m.12-1H.88a.87.87,0,0,0-.88.88v6.24A.87.87,0,0,0,.88,19H7.12A.87.87,0,0,0,8,18.12V11.88A.87.87,0,0,0,7.12,11Z" />
-                          <path className="view-icon-svg" d="M17,12v6H11V12h6m.12-1H10.88a.87.87,0,0,0-.88.88v6.24a.87.87,0,0,0,.88.88h6.24a.87.87,0,0,0,.88-.88V11.88a.87.87,0,0,0-.88-.88Z" /></svg>
-                      </a>
-                    </span>
-
-                    <div className="d-block d-md-inline-block">
-                      <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                        <DropdownToggle caret color="outline-dark" size="xs">
-                          <IntlMessages id="layouts.orderby" />
-                          {this.state.selectedOrderOption.label}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {this.state.orderOptions.map((order, index) => {
-                            return (
-                              <DropdownItem
-                                key={index}
-                                onClick={() => this.changeOrderBy(order.column)}
-                              >
-                                {order.label}
-                              </DropdownItem>
-                            );
-                          })}
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                      <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                        <input
-                          type="text"
-                          name="keyword"
-                          id="search"
-                          placeholder={messages["menu.search"]}
-                          onKeyPress={e => this.handleKeyPress(e)}
-                        />
-                      </div>
-                    </div>
-                    <div className="float-md-right">
-                      <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${
-                        this.state.totalItemCount
-                        } `}</span>
-                      <UncontrolledDropdown className="d-inline-block">
-                        <DropdownToggle caret color="outline-dark" size="xs">
-                          {this.state.selectedPageSize}
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                          {this.state.pageSizes.map((size, index) => {
-                            return (
-                              <DropdownItem
-                                key={index}
-                                onClick={() => this.changePageSize(size)}
-                              >
-                                {size}
-                              </DropdownItem>
-                            );
-                          })}
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </div>
-                  </Collapse>
                 </div>
                 <Separator className="mb-5" />
               </Colxx>
@@ -621,9 +646,6 @@ class DataListLayout extends Component {
                                 {user.createdAt}
                               </p>
                               <div className="w-15 w-sm-100">
-                                {/* <Badge color={user.statusColor} pill> */}
-                                {/* {user.subjectCode} */}
-                                {/* </Badge> */}
                               </div>
                             </div>
                             <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
@@ -679,7 +701,7 @@ class DataListLayout extends Component {
                               </p>
                               <div className="w-15 w-sm-100">
                                 {/* <Badge color={user.statusColor} pill>
-                                  {user.subjectCode}
+                                  {user.departmentCode}
                                 </Badge> */}
                               </div>
                             </div>
@@ -715,19 +737,7 @@ class DataListLayout extends Component {
             onShow={e => this.onContextMenu(e, e.detail.data)}
           >
             <MenuItem
-              onClick={this.onContextMenuClick}
-              data={{ action: "copy" }}
-            >
-              <i className="simple-icon-docs" /> <span>Copy</span>
-            </MenuItem>
-            <MenuItem
-              onClick={this.onContextMenuClick}
-              data={{ action: "move" }}
-            >
-              <i className="simple-icon-drawer" /> <span>Move to archive</span>
-            </MenuItem>
-            <MenuItem
-              onClick={this.onContextMenuClick}
+              onClick={this.toggle}
               data={{ action: "delete" }}
             >
               <i className="simple-icon-trash" /> <span>Delete</span>

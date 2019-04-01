@@ -270,21 +270,6 @@ class Sidebar extends Component {
 
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "sessions" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "sessions")
-                  })}
-                >
-                  <NavLink
-                    to="/app/sessions"
-                    onClick={() => this.changeViewingParentMenu('sessions')}
-                    data-flag="sessions">
-                    <i className="iconsmind-Blackboard" />{" "}
-                    <IntlMessages id="menu.sessions" />
-                  </NavLink>
-
-                </NavItem>
-
-                <NavItem
-                  className={classnames({
                     active: ((this.state.selectedParentMenu == "users" && this.state.viewingParentMenu == "") || this.state.viewingParentMenu == "users")
                   })}
                 >

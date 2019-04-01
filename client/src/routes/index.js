@@ -7,6 +7,14 @@ import Department from './departments';
 import DepartmentShow from './departments/show'
 import DepartmentEdit from './departments/edit'
 
+import User from './users';
+import UserShow from './users/show'
+import UserEdit from './users/edit'
+
+import Subject from './subjects';
+import SubjectShow from './subjects/show'
+import SubjectEdit from './subjects/edit'
+
 import DepartmentUser from './departments/users';
 import DepartmentUserShow from './departments/users/show'
 import DepartmentUserEdit from './departments/users/edit'
@@ -47,6 +55,14 @@ class MainApp extends Component {
 							<Route path={`${match.url}/departments`} component={Department} exact={true} />
 							<Route path={`${match.url}/departments/:id`} component={DepartmentShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/edit`} component={DepartmentEdit} exact={true} />
+
+							<Route path={`${match.url}/users`} component={User} exact={true} />
+							<Route path={`${match.url}/users/:id`} component={UserShow} exact={true} />
+							<Route path={`${match.url}/users/:id/edit`} component={UserEdit} exact={true} />
+
+							<Route path={`${match.url}/subjects`} component={Subject} exact={true} />
+							<Route path={`${match.url}/subjects/:id`} component={SubjectShow} exact={true} />
+							<Route path={`${match.url}/subjects/:id/edit`} component={SubjectEdit} exact={true} />
 
 							<Route path={`${match.url}/departments/:id/users`} component={DepartmentUser} exact={true} />
 							<Route path={`${match.url}/departments/:id/users/:id`} component={DepartmentUserShow} exact={true} />
