@@ -20,6 +20,10 @@ const DepartmentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
+    semesters: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Semester'
+    }],
     batches: [{
         type: Schema.Types.ObjectId,
         ref: 'Batch'

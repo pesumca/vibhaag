@@ -81,6 +81,7 @@ class DataListLayout extends Component {
       totalItemCount: 0,
       totalPage: 1,
       search: "",
+      departments: [],
       items: [],
       selectedItems: [],
       lastChecked: null,
@@ -329,15 +330,15 @@ class DataListLayout extends Component {
       .then((response) => {
         console.log("Response: " + JSON.stringify(response.data));
         this.setState({
-          department: response.data
+          departments: response.data
         }, () => {
-          console.log(this.state.department);
+          console.log(this.state.departments);
         })
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log("Department: " + this.state.department);
+    console.log("Department: " + this.state.departments);
 
     this.dataListRender();
   }
