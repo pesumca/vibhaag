@@ -45,7 +45,9 @@ router.delete('/:id', (req, res) => {
 
 // create a session
 router.post('/', (req, res) => {
+    console.log(req.params);
     let body = req.body;
+    console.log(body);
     let session = new Session(body);
     session.save().then((session) => {
         res.send(session);

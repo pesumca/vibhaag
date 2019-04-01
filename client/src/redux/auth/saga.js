@@ -1,5 +1,6 @@
 
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import axios from 'axios';
 import { auth } from '../../firebase';
 import {
     LOGIN_USER,
@@ -17,8 +18,6 @@ const loginWithEmailPasswordAsync = async (email, password) =>
         .then(authUser => authUser)
         .catch(error => error);
 
-
-
 function* loginWithEmailPassword({ payload }) {
     const { email, password } = payload.user;
     const { history } = payload;
@@ -28,6 +27,17 @@ function* loginWithEmailPassword({ payload }) {
             localStorage.setItem('user_id', loginUser.user.uid);
             yield put(loginUserSuccess(loginUser));
             history.push('/');
+            axios.post('http://localhost:3000/' + 'auth/' + 'login', {
+                email: email,
+                password: password,
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
         } else {
             // catch throw
             console.log('login failed :', loginUser.message)
@@ -51,7 +61,19 @@ function* registerWithEmailPassword({ payload }) {
         if (!registerUser.message) {
             localStorage.setItem('user_id', registerUser.user.uid);
             yield put(registerUserSuccess(registerUser));
-            history.push('/')
+            history.push('/');
+            axios.post('http://localhost:3000/' + 'auth/' + 'register', {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                roles: "admin"
+              })
+                .then(function (response) {
+                  console.log(response);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
         } else {
             // catch throw
             console.log('register failed :', registerUser.message)
