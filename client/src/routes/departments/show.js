@@ -85,33 +85,89 @@ export default class DepartmentShow extends Component {
     return (
       <Fragment>
         <Row>
-          <Colxx xxs="12">
-            <h1>{this.state.department.name}</h1>
+          <Colxx lg="12" md="12" xl="12">
+              <h1>
+                The department of {`${this.state.department.name}`}
+              </h1>
+              <Row>
+              <Colxx lg="12" xl="12" className="mb-12">
+                <Card className="progress-banner">
+                  <CardBody className="justify-content-between d-flex flex-row align-items-center">
+                    <div>
+                      <div>
+                        <i className="iconsmind-Male mr-2 text-white align-text-bottom d-inline-block" />
+                        <p className="lead text-white">
+                          <NavLink
+                            to={`${this.props.location.pathname}/users`}
+                            className=""
+                          >
+                            <span className="text-white">
+                              Faculty
+                            </span>
+                          </NavLink>
+                        </p>
+                        <p className="text-small text-white">
+                          All the faculty of this department
+                        </p>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Colxx>
 
-            <BreadcrumbItems match={this.props.match} />
+              <Colxx lg="12" xl="12" className="mb-12">
+                <Card className="progress-banner">
+                  <CardBody className="justify-content-between d-flex flex-row align-items-center">
+                    <div>
+                      <div>
+                        <i className="iconsmind-Male mr-2 text-white align-text-bottom d-inline-block" />
+                        <p className="lead text-white">
+                          <NavLink
+                            to={`${this.props.location.pathname}/semesters`}
+                            className=""
+                          >
+                            <span className="text-white">
+                              Semesters
+                            </span>
+                          </NavLink>
+                        </p>
+                        <p className="text-small text-white">
+                          All the semesters of this department
+                        </p>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Colxx>
 
-            <Separator className="mb-5" />
-            <Colxx xxs="12" className="mb-3">
-
-              <Card>
-                <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                  <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                    <NavLink
-                      to={`${this.props.location.pathname}/users`}
-                      className="w-40 w-sm-100"
-                    >
-                      <p className="list-item-heading mb-1 truncate">
-
-                      </p>
-                    </NavLink>
-                  </div>
-                </div>
-              </Card>
-            </Colxx>
-
+              <Colxx lg="12" xl="12" className="mb-12">
+                <Card className="progress-banner">
+                  <CardBody className="justify-content-between d-flex flex-row align-items-center">
+                    <div>
+                      <div>
+                        <i className="iconsmind-Male mr-2 text-white align-text-bottom d-inline-block" />
+                        <p className="lead text-white">
+                          <NavLink
+                            to={`${this.props.location.pathname}/subjects`}
+                            className=""
+                          >
+                            <span className="text-white">
+                              Subjects
+                            </span>
+                          </NavLink>
+                        </p>
+                        <p className="text-small text-white">
+                          All the subjects of this department
+                        </p>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Colxx>
+            </Row>
           </Colxx>
+
         </Row>
-        <Row />
       </Fragment>
     );
   }
