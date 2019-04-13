@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from 'axios';
 import { injectIntl } from 'react-intl';
-import { Colxx, Separator } from "Components/CustomBootstrap";
+import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import {
 	Row,
@@ -32,8 +32,10 @@ class FormsUi extends Component {
 		super(props);
 
 		this.state = {
-			apiUrl: "http://localhost:3000/" + "departments" + "/" + this.props.match.params.id,
+			apiUrl: "http://localhost:3000/" + "departments",
 			department: [],
+			name: "",
+			departmentCode: ""
 		};
 	}
 
@@ -43,8 +45,8 @@ class FormsUi extends Component {
 		});
 	}
 
-	editDepartment = () => {
-		axios.put(this.state.apiUrl, {
+	createDepartment = () => {
+		axios.post(this.state.apiUrl, {
 			name: this.state.name,
 			departmentCode: this.state.departmentCode
 		})
@@ -60,20 +62,6 @@ class FormsUi extends Component {
 
 	componentDidMount() {
 		console.log("APIURL: " + this.state.apiUrl);
-
-		axios.get(this.state.apiUrl)
-			.then((response) => {
-				console.log("Response: " + JSON.stringify(response.data));
-				this.setState({
-					department: response.data
-				}, () => {
-					console.log(this.state.department);
-				})
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-		console.log("Department: " + this.state.department);
 	}
 
 	render() {
@@ -87,7 +75,7 @@ class FormsUi extends Component {
 									<IntlMessages id="menu.departments" />
 								</CardTitle>
 
-								<CardSubtitle>Edit: {this.state.department.name}</CardSubtitle>
+								<CardSubtitle>Create New Department</CardSubtitle>
 
 								<AvForm className="av-tooltip mb-5 row">
 									<Colxx sm={6}>
@@ -97,7 +85,7 @@ class FormsUi extends Component {
 											</Label>
 											<AvInput
 												name="name" id={this.state.department.name + this.state.department._id}
-												value={this.state.department.name}
+												value=""
 												onChange={this.handleDepartmentChange}
 												required />
 											<AvFeedback>
@@ -117,7 +105,7 @@ class FormsUi extends Component {
 											<AvInput
 												name="departmentCode"
 												id={this.state.department.departmentCode + this.state.department._id}
-												value={this.state.department.departmentCode}
+												value=""
 												onChange={this.handleDepartmentChange}
 												required
 											/>
@@ -129,7 +117,7 @@ class FormsUi extends Component {
 
 									<Colxx sm={12}>
 										<FormGroup>
-											<Button outline color="primary" onClick={this.editDepartment}>
+											<Button outline color="primary" onClick={this.createDepartment}>
 												<IntlMessages id="forms.submit" />
 											</Button>
 										</FormGroup>

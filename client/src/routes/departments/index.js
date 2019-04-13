@@ -4,11 +4,14 @@ import {
   Row,
   Card,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 
 import { NavLink } from "react-router-dom";
 import classnames from "classnames";
-
 import IntlMessages from "Util/IntlMessages";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import { BreadcrumbItems } from "Components/BreadcrumbContainer";
@@ -18,48 +21,53 @@ import axios from 'axios';
 class DataListLayout extends Component {
   constructor(props) {
     super(props);
-    this.handleDepartmentChange = this.handleDepartmentChange.bind(this);
-    this.createDepartment = this.createDepartment.bind(this);
 
     this.state = {
       apiUrl: "http://localhost:3000/" + "departments",
       visible: true,
-      isLoading: false
+      isLoading: false,
+      modal: false,
+      department: ""
     };
+  }
+
+  handleDepartmentChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  departmentSelected = (id) => {
+    this.setState({
+      department: id
+    });
+  }
+
+  deleteDepartment = () => {
+    axios.delete(this.state.apiUrl + "/" + this.state.department)
+      .then((response) => {
+        this.props.history.push("/");
+        console.log(response);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   componentWillMount() {
 
   }
 
-  createDepartment() {
-
-  }
-
-  handleDepartmentChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  }
-
   componentDidMount() {
     console.log("APIURL: " + this.state.apiUrl);
-
-    axios.get(this.state.apiUrl)
-      .then((response) => {
-        console.log("Response: " + JSON.stringify(response.data));
-        this.setState({
-          departments: response.data
-        }, () => {
-          console.log(this.state.departments);
-        })
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log("Department: " + this.state.departments);
-
     this.dataListRender();
+  }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   dataListRender() {
@@ -78,7 +86,6 @@ class DataListLayout extends Component {
   }
 
   render() {
-
     return (
       !this.state.isLoading ?
         <div className="loading"></div>
@@ -92,11 +99,41 @@ class DataListLayout extends Component {
                     <IntlMessages id="menu.departments" />
                   </h1>
 
+                  <div className="float-sm-right">
+                    <NavLink
+                      to={`${this.props.location.pathname}/new`}
+                      className="w-30 w-sm-100"
+                    >
+                      <Button color="primary">
+                        Add New
+                      </Button>
+                    </NavLink>
+                  </div>
+
                   <BreadcrumbItems match={this.props.match} />
                 </div>
+
                 <Separator className="mb-5" />
               </Colxx>
             </Row>
+
+            <Modal isOpen={this.state.modal} toggle={this.toggle}>
+              <ModalHeader toggle={this.toggle}>
+                <IntlMessages id="departments.modal-title" />
+              </ModalHeader>
+              <ModalBody>
+                Please note that this opeartion cannot be reversed
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" onClick={this.deleteDepartment}>
+                  Delete
+                </Button>{" "}
+                <Button color="secondary" onClick={this.toggle}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </Modal>
+
             <Row>
               {this.state.items.map(department => {
                 return (
@@ -124,18 +161,25 @@ class DataListLayout extends Component {
                               to={`${this.props.location.pathname}/${department._id}`}
                               className="w-30 w-sm-100"
                             >
-                              <Button color="primary">
+                              <Button color="info">
                                 View
                             </Button>
                             </NavLink>
                           </div>
                           <div className="w-sm-100">
-                            <Button color="secondary">
-                              Edit
+                            <NavLink
+                              to={`${this.props.location.pathname}/${department._id}/edit`}
+                              className="w-30 w-sm-100"
+                            >
+                              <Button color="secondary">
+                                Edit
                             </Button>
+                            </NavLink>
                           </div>
                           <div className="w-sm-100">
-                            <Button color="danger">
+                            <Button color="danger"
+                              onClick={() => { this.toggle(); this.departmentSelected(department._id) }}
+                            >
                               Delete
                             </Button>
                           </div>

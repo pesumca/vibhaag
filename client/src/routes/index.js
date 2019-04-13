@@ -6,6 +6,7 @@ import Sidebar from 'Containers/Sidebar';
 import Department from './departments';
 import DepartmentShow from './departments/show'
 import DepartmentEdit from './departments/edit'
+import DepartmentNew from './departments/new'
 
 import User from './users';
 import UserShow from './users/show'
@@ -53,6 +54,7 @@ class MainApp extends Component {
 					<div className="container-fluid">
 						<Switch>
 							<Route path={`${match.url}/departments`} component={Department} exact={true} />
+							<Route path={`${match.url}/departments/new`} component={DepartmentNew} exact={true} />
 							<Route path={`${match.url}/departments/:id`} component={DepartmentShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/edit`} component={DepartmentEdit} exact={true} />
 
@@ -67,7 +69,7 @@ class MainApp extends Component {
 							<Route path={`${match.url}/departments/:id/users`} component={DepartmentUser} exact={true} />
 							<Route path={`${match.url}/departments/:id/users/:id`} component={DepartmentUserShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/users/:id/edit`} component={DepartmentUserEdit} exact={true} />
-							
+
 							<Route path={`${match.url}/departments/:id/subjects`} component={DepartmentSubject} exact={true} />
 							<Route path={`${match.url}/departments/:id/subjects/:id`} component={DepartmentSubjectShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/subjects/:id/edit`} component={DepartmentSubjectEdit} exact={true} />

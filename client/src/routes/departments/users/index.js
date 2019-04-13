@@ -339,245 +339,314 @@ class DataListLayout extends Component {
       });
     console.log("Faculty: " + this.state.faculty);
     this.dataListRender();
-}
-
-dataListRender() {
-  const { selectedPageSize, currentPage, selectedOrderOption, search } = this.state;
-  axios.get(`${apiUrl}`)
-    .then(res => {
-      console.log(res.data);
-      return res.data
-    }).then(data => {
-      this.setState({
-        // totalPage: data.totalPage,
-        items: data,
-        // totalItemCount : data.totalItem,
-        isLoading: true
-      });
-    })
-}
-
-onContextMenuClick = (e, data, target) => {
-
-  console.log("onContextMenuClick - selected items", this.state.selectedItems)
-  console.log(this.state.selectedItems);
-  console.log(JSON.stringify(this.state.items));
-
-  let dele;
-
-  this.state.selectedItems.forEach(dep => {
-    axios.delete(`${apiUrl}/${dep}`)
-      .then(res => {
-        dele = this.state.items.find(ele => { return ele !== res.data._id });
-        console.log("res.data :" + JSON.stringify(res.data));
-        console.log("dele: " + JSON.stringify(dele));
-        this.setState({
-          items: [dele],
-          selectedItems: [],
-          modal: false
-        });
-
-        // this.createNotification("success", "filled");
-        console.log(res.data);
-      }).catch(err => {
-        console.log(err);
-      })
-  });
-
-};
-
-onContextMenu = (e, data) => {
-  const clickedProductId = data.data;
-  if (!this.state.selectedItems.includes(clickedProductId)) {
-    this.setState({
-      selectedItems: [clickedProductId]
-    });
   }
 
-  return true;
-};
+  dataListRender() {
+    const { selectedPageSize, currentPage, selectedOrderOption, search } = this.state;
+    axios.get(`${apiUrl}`)
+      .then(res => {
+        console.log(res.data);
+        return res.data
+      }).then(data => {
+        this.setState({
+          // totalPage: data.totalPage,
+          items: data,
+          // totalItemCount : data.totalItem,
+          isLoading: true
+        });
+      })
+  }
 
-render() {
-  const startIndex = (this.state.currentPage - 1) * this.state.selectedPageSize
-  const endIndex = (this.state.currentPage) * this.state.selectedPageSize
-  const { messages } = this.props.intl;
-  return (
-    !this.state.isLoading ?
-      <div className="loading"></div>
-      :
-      <Fragment>
-        <div className="disable-text-selection">
-          <Row>
-            <Colxx xxs="12">
-              <div className="mb-2">
-                <h1>
-                  Listing all faculty of department of {this.state.department.name}
-                </h1>
+  onContextMenuClick = (e, data, target) => {
 
-                <div className="float-sm-right">
-                  <Button
-                    color="primary"
-                    size="lg"
-                    className="top-right-button"
-                    onClick={this.toggleModal}
-                  >
-                    <IntlMessages id="layouts.add-new" />
-                  </Button>
-                  {"  "}
+    console.log("onContextMenuClick - selected items", this.state.selectedItems)
+    console.log(this.state.selectedItems);
+    console.log(JSON.stringify(this.state.items));
 
-                  <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>
-                      <IntlMessages id="departments.modal-title" />
-                    </ModalHeader>
-                    <ModalBody>
-                      Please note that this opeartion cannot be reversed
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="danger" onClick={this.onContextMenuClick}>
-                        Delete
-                      </Button>{" "}
-                      <Button color="secondary" onClick={this.toggle}>
-                        Cancel
-                      </Button>
-                    </ModalFooter>
-                  </Modal>
+    let dele;
 
-                  <Modal
-                    isOpen={this.state.modalOpen}
-                    toggle={this.toggleModal}
-                    wrapClassName="modal-right"
-                    backdrop="static"
-                  >
-                    <ModalHeader toggle={this.toggleModal}>
-                      <IntlMessages id="layouts.add-new-modal-title" />
-                    </ModalHeader>
-                    <ModalBody>
-                      <Label>
-                        <IntlMessages id="layouts.faculty-name" />
-                      </Label>
-                      <Input name="departmentName" id="faculty-name" value={this.state.value} onChange={this.handleDepartmentChange} />
-                      <Label className="mt-4">
-                        <IntlMessages id="layouts.faculty-code" />
-                      </Label>
-                      <Input name="departmentCode" id="faculty-code" value={this.state.value} onChange={this.handleDepartmentChange} />
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button
-                        color="secondary"
-                        outline
-                        onClick={this.toggleModal}
-                      >
-                        <IntlMessages id="layouts.cancel" />
-                      </Button>
-                      <Button color="primary" onClick={this.createDepartment}>
-                        <IntlMessages id="layouts.submit" />
-                      </Button>{" "}
-                    </ModalFooter>
-                  </Modal>
-                  <ButtonDropdown
-                    isOpen={this.state.dropdownSplitOpen}
-                    toggle={this.toggleSplit}
-                  >
-                    <div className="btn btn-primary pl-4 pr-0 check-button">
-                      <Label
-                        for="checkAll"
-                        className="custom-control custom-checkbox mb-0 d-inline-block"
-                      >
-                        <Input
-                          className="custom-control-input"
-                          type="checkbox"
-                          id="checkAll"
-                          checked={
-                            this.state.selectedItems.length >=
-                            this.state.items.length
-                          }
-                          onClick={() => this.handleChangeSelectAll(true)}
-                        />
-                        <span
-                          className={`custom-control-label ${
-                            this.state.selectedItems.length > 0 &&
-                              this.state.selectedItems.length <
-                              this.state.items.length
-                              ? "indeterminate"
-                              : ""
-                            }`}
-                        />
-                      </Label>
-                    </div>
-                    <DropdownToggle
-                      caret
+    this.state.selectedItems.forEach(dep => {
+      axios.delete(`${apiUrl}/${dep}`)
+        .then(res => {
+          dele = this.state.items.find(ele => { return ele !== res.data._id });
+          console.log("res.data :" + JSON.stringify(res.data));
+          console.log("dele: " + JSON.stringify(dele));
+          this.setState({
+            items: [dele],
+            selectedItems: [],
+            modal: false
+          });
+
+          // this.createNotification("success", "filled");
+          console.log(res.data);
+        }).catch(err => {
+          console.log(err);
+        })
+    });
+
+  };
+
+  onContextMenu = (e, data) => {
+    const clickedProductId = data.data;
+    if (!this.state.selectedItems.includes(clickedProductId)) {
+      this.setState({
+        selectedItems: [clickedProductId]
+      });
+    }
+
+    return true;
+  };
+
+  render() {
+    const startIndex = (this.state.currentPage - 1) * this.state.selectedPageSize
+    const endIndex = (this.state.currentPage) * this.state.selectedPageSize
+    const { messages } = this.props.intl;
+    return (
+      !this.state.isLoading ?
+        <div className="loading"></div>
+        :
+        <Fragment>
+          <div className="disable-text-selection">
+            <Row>
+              <Colxx xxs="12">
+                <div className="mb-2">
+                  <h1>
+                    Listing all faculty of department of {this.state.department.name}
+                  </h1>
+
+                  <div className="float-sm-right">
+                    <Button
                       color="primary"
-                      className="dropdown-toggle-split pl-2 pr-2"
-                    />
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        <IntlMessages id="layouts.delete" />
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
+                      size="lg"
+                      className="top-right-button"
+                      onClick={this.toggleModal}
+                    >
+                      <IntlMessages id="layouts.add-new" />
+                    </Button>
+                    {"  "}
+
+                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                      <ModalHeader toggle={this.toggle}>
+                        <IntlMessages id="departments.modal-title" />
+                      </ModalHeader>
+                      <ModalBody>
+                        Please note that this opeartion cannot be reversed
+                    </ModalBody>
+                      <ModalFooter>
+                        <Button color="danger" onClick={this.onContextMenuClick}>
+                          Delete
+                      </Button>{" "}
+                        <Button color="secondary" onClick={this.toggle}>
+                          Cancel
+                      </Button>
+                      </ModalFooter>
+                    </Modal>
+
+                    <Modal
+                      isOpen={this.state.modalOpen}
+                      toggle={this.toggleModal}
+                      wrapClassName="modal-right"
+                      backdrop="static"
+                    >
+                      <ModalHeader toggle={this.toggleModal}>
+                        <IntlMessages id="layouts.add-new-modal-title" />
+                      </ModalHeader>
+                      <ModalBody>
+                        <Label>
+                          <IntlMessages id="layouts.faculty-name" />
+                        </Label>
+                        <Input name="departmentName" id="faculty-name" value={this.state.value} onChange={this.handleDepartmentChange} />
+                        <Label className="mt-4">
+                          <IntlMessages id="layouts.faculty-code" />
+                        </Label>
+                        <Input name="departmentCode" id="faculty-code" value={this.state.value} onChange={this.handleDepartmentChange} />
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          color="secondary"
+                          outline
+                          onClick={this.toggleModal}
+                        >
+                          <IntlMessages id="layouts.cancel" />
+                        </Button>
+                        <Button color="primary" onClick={this.createDepartment}>
+                          <IntlMessages id="layouts.submit" />
+                        </Button>{" "}
+                      </ModalFooter>
+                    </Modal>
+                    <ButtonDropdown
+                      isOpen={this.state.dropdownSplitOpen}
+                      toggle={this.toggleSplit}
+                    >
+                      <div className="btn btn-primary pl-4 pr-0 check-button">
+                        <Label
+                          for="checkAll"
+                          className="custom-control custom-checkbox mb-0 d-inline-block"
+                        >
+                          <Input
+                            className="custom-control-input"
+                            type="checkbox"
+                            id="checkAll"
+                            checked={
+                              this.state.selectedItems.length >=
+                              this.state.items.length
+                            }
+                            onClick={() => this.handleChangeSelectAll(true)}
+                          />
+                          <span
+                            className={`custom-control-label ${
+                              this.state.selectedItems.length > 0 &&
+                                this.state.selectedItems.length <
+                                this.state.items.length
+                                ? "indeterminate"
+                                : ""
+                              }`}
+                          />
+                        </Label>
+                      </div>
+                      <DropdownToggle
+                        caret
+                        color="primary"
+                        className="dropdown-toggle-split pl-2 pr-2"
+                      />
+                      <DropdownMenu right>
+                        <DropdownItem>
+                          <IntlMessages id="layouts.delete" />
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                  </div>
+
+                  <BreadcrumbItems match={this.props.match} />
                 </div>
 
-                <BreadcrumbItems match={this.props.match} />
-              </div>
-
-              <div className="mb-2">
-                <Button
-                  color="empty"
-                  className="pt-0 pl-0 d-inline-block d-md-none"
-                  onClick={this.toggleDisplayOptions}
-                >
-                  <IntlMessages id="layouts.display-options" />{" "}
-                  <i className="simple-icon-arrow-down align-middle" />
-                </Button>
-              </div>
-              <Separator className="mb-5" />
-            </Colxx>
-          </Row>
-          <Row>
-            {this.state.department.users.map(faculty => {
-              if (this.state.displayMode === "imagelist") {
-                return (
-                  <Colxx
-                    sm="6"
-                    lg="4"
-                    xl="3"
-                    className="mb-3"
-                    key={faculty._id}
+                <div className="mb-2">
+                  <Button
+                    color="empty"
+                    className="pt-0 pl-0 d-inline-block d-md-none"
+                    onClick={this.toggleDisplayOptions}
                   >
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={faculty._id}
-                      collect={collect}
+                    <IntlMessages id="layouts.display-options" />{" "}
+                    <i className="simple-icon-arrow-down align-middle" />
+                  </Button>
+                </div>
+                <Separator className="mb-5" />
+              </Colxx>
+            </Row>
+            <Row>
+              {this.state.department.users.map(faculty => {
+                if (this.state.displayMode === "imagelist") {
+                  return (
+                    <Colxx
+                      sm="6"
+                      lg="4"
+                      xl="3"
+                      className="mb-3"
+                      key={faculty._id}
                     >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, faculty._id)
-                        }
-                        className={classnames({
-                          active: this.state.selectedItems.includes(
-                            faculty._id
-                          )
-                        })}
+                      <ContextMenuTrigger
+                        id="menu_id"
+                        data={faculty._id}
+                        collect={collect}
                       >
-                        <div className="position-relative">
+                        <Card
+                          onClick={event =>
+                            this.handleCheckChange(event, faculty._id)
+                          }
+                          className={classnames({
+                            active: this.state.selectedItems.includes(
+                              faculty._id
+                            )
+                          })}
+                        >
+                          <div className="position-relative">
+                            <NavLink
+                              to={`${this.props.location.pathname}/${faculty._id}`}
+                              className="w-40 w-sm-100"
+                            >
+                              <CardImg
+                                top
+                                alt={faculty.number}
+                              />
+                            </NavLink>
+                            <Badge
+                              pill
+                              className="position-absolute badge-top-left"
+                            >
+                            </Badge>
+                          </div>
+                          <CardBody>
+                            <Row>
+                              <Colxx xxs="2">
+                                <CustomInput
+                                  className="itemCheck mb-0"
+                                  type="checkbox"
+                                  id={`check_` + `${faculty._id}`}
+                                  checked={this.state.selectedItems.includes(
+                                    faculty._id
+                                  )}
+                                  onChange={() => { }}
+                                  label=""
+                                />
+                              </Colxx>
+                              <Colxx xxs="10" className="mb-3">
+                                <CardSubtitle>{faculty.number}</CardSubtitle>
+                                <CardText className="text-muted text-small mb-0 font-weight-light">
+                                  {faculty.createdAt}
+                                </CardText>
+                              </Colxx>
+                            </Row>
+                          </CardBody>
+                        </Card>
+                      </ContextMenuTrigger>
+                    </Colxx>
+                  );
+                } else if (this.state.displayMode === "thumblist") {
+                  return (
+                    <Colxx xxs="12" key={faculty._id} className="mb-3">
+                      <ContextMenuTrigger
+                        id="menu_id"
+                        data={faculty._id}
+                        collect={collect}
+                      >
+                        <Card
+                          onClick={event =>
+                            this.handleCheckChange(event, faculty._id)
+                          }
+                          className={classnames("d-flex flex-row", {
+                            active: this.state.selectedItems.includes(
+                              faculty._id
+                            )
+                          })}
+                        >
                           <NavLink
                             to={`${this.props.location.pathname}/${faculty._id}`}
-                            className="w-40 w-sm-100"
+                            className="d-flex"
                           >
-                            <CardImg
-                              top
-                              alt={faculty.number}
+                            <img
+                              alt={faculty.title}
+                              className="list-thumbnail responsive border-0"
                             />
                           </NavLink>
-                          <Badge
-                            pill
-                            className="position-absolute badge-top-left"
-                          >
-                          </Badge>
-                        </div>
-                        <CardBody>
-                          <Row>
-                            <Colxx xxs="2">
+                          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                              <NavLink
+                                to={`${this.props.location.pathname}/${faculty._id}`}
+                                className="w-40 w-sm-100"
+                              >
+                                <p className="list-item-heading mb-1 truncate">
+                                  {faculty.number}
+                                </p>
+                              </NavLink>
+                              <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              </p>
+                              <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                                {faculty.createdAt}
+                              </p>
+                              <div className="w-15 w-sm-100">
+                              </div>
+                            </div>
+                            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
@@ -588,161 +657,92 @@ render() {
                                 onChange={() => { }}
                                 label=""
                               />
-                            </Colxx>
-                            <Colxx xxs="10" className="mb-3">
-                              <CardSubtitle>{faculty.number}</CardSubtitle>
-                              <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {faculty.createdAt}
-                              </CardText>
-                            </Colxx>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else if (this.state.displayMode === "thumblist") {
-                return (
-                  <Colxx xxs="12" key={faculty._id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={faculty._id}
-                      collect={collect}
-                    >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, faculty._id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(
-                            faculty._id
-                          )
-                        })}
-                      >
-                        <NavLink
-                          to={`${this.props.location.pathname}/${faculty._id}`}
-                          className="d-flex"
-                        >
-                          <img
-                            alt={faculty.title}
-                            className="list-thumbnail responsive border-0"
-                          />
-                        </NavLink>
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`${this.props.location.pathname}/${faculty._id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {faculty.number}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {faculty.createdAt}
-                            </p>
-                            <div className="w-15 w-sm-100">
                             </div>
                           </div>
-                          <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_` + `${faculty._id}`}
-                              checked={this.state.selectedItems.includes(
-                                faculty._id
-                              )}
-                              onChange={() => { }}
-                              label=""
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else {
-                return (
-                  <Colxx xxs="12" key={faculty._id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={faculty._id}
-                      collect={collect}
-                    >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, faculty._id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(
-                            faculty._id
-                          )
-                        })}
+                        </Card>
+                      </ContextMenuTrigger>
+                    </Colxx>
+                  );
+                } else {
+                  return (
+                    <Colxx xxs="12" key={faculty._id} className="mb-3">
+                      <ContextMenuTrigger
+                        id="menu_id"
+                        data={faculty._id}
+                        collect={collect}
                       >
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`${this.props.location.pathname}/${faculty._id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {faculty.number}
+                        <Card
+                          onClick={event =>
+                            this.handleCheckChange(event, faculty._id)
+                          }
+                          className={classnames("d-flex flex-row", {
+                            active: this.state.selectedItems.includes(
+                              faculty._id
+                            )
+                          })}
+                        >
+                          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                              <NavLink
+                                to={`${this.props.location.pathname}/${faculty._id}`}
+                                className="w-40 w-sm-100"
+                              >
+                                <p className="list-item-heading mb-1 truncate">
+                                  {faculty.number}
+                                </p>
+                              </NavLink>
+                              <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                                {/* {faculty.category} */}
                               </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {/* {faculty.category} */}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {faculty.createdAt}
-                            </p>
-                            <div className="w-15 w-sm-100">
-                              {/* <Badge color={faculty.statusColor} pill>
+                              <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                                {faculty.createdAt}
+                              </p>
+                              <div className="w-15 w-sm-100">
+                                {/* <Badge color={faculty.statusColor} pill>
                                   {faculty.departmentCode}
                                 </Badge> */}
+                              </div>
+                            </div>
+                            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
+                              <CustomInput
+                                className="itemCheck mb-0"
+                                type="checkbox"
+                                id={`check_` + `${faculty._id}`}
+                                checked={this.state.selectedItems.includes(
+                                  faculty._id
+                                )}
+                                onChange={() => { }}
+                                label=""
+                              />
                             </div>
                           </div>
-                          <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_` + `${faculty._id}`}
-                              checked={this.state.selectedItems.includes(
-                                faculty._id
-                              )}
-                              onChange={() => { }}
-                              label=""
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              }
-            })}
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalPage={this.state.totalPage}
-              onChangePage={i => this.onChangePage(i)}
-            />
-          </Row>
-        </div>
+                        </Card>
+                      </ContextMenuTrigger>
+                    </Colxx>
+                  );
+                }
+              })}
+              <Pagination
+                currentPage={this.state.currentPage}
+                totalPage={this.state.totalPage}
+                onChangePage={i => this.onChangePage(i)}
+              />
+            </Row>
+          </div>
 
-        <ContextMenu
-          id="menu_id"
-          onShow={e => this.onContextMenu(e, e.detail.data)}
-        >
-          <MenuItem
-            onClick={this.toggle}
-            data={{ action: "delete" }}
+          <ContextMenu
+            id="menu_id"
+            onShow={e => this.onContextMenu(e, e.detail.data)}
           >
-            <i className="simple-icon-trash" /> <span>Delete</span>
-          </MenuItem>
-        </ContextMenu>
-      </Fragment>
-  );
-}
+            <MenuItem
+              onClick={this.toggle}
+              data={{ action: "delete" }}
+            >
+              <i className="simple-icon-trash" /> <span>Delete</span>
+            </MenuItem>
+          </ContextMenu>
+        </Fragment>
+    );
+  }
 }
 export default injectIntl(mouseTrap(DataListLayout))
