@@ -1,7 +1,6 @@
 let keys = {};
 
 if(process.env.NODE_ENV === 'test') {
-    console.log(process.env.NODE_ENV)
     keys['apiUrl'] = "http://localhost:3000";
     keys['contentType'] = "application/json";
     keys['secret'] = "supersecret";
