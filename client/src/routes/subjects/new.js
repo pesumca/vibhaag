@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from 'axios';
 import { injectIntl } from 'react-intl';
-import { Colxx, Separator } from "Components/CustomBootstrap";
+import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import {
 	Row,
@@ -32,22 +32,22 @@ class FormsUi extends Component {
 		super(props);
 
 		this.state = {
-			apiUrl: "http://localhost:3000/" + "users" + "/" + this.props.match.params.id,
-			user: [],
+			apiUrl: "http://localhost:3000/" + "subjects",
+			subject: [],
 		};
 	}
 
-	handleUserChange = (e) => {
+	handleSubjectChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
 	}
 
-	editUser = () => {
-		axios.put(this.state.apiUrl, {
+	createSubject = () => {
+		axios.post(this.state.apiUrl, {
 			name: this.state.name,
-			email: this.state.email,
-			roles: this.state.roles,
+			subjectCode: this.state.subjectCode,
+			description: this.state.description
 		})
 			.then((response) => {
 				this.props.history.push("/");
@@ -61,20 +61,6 @@ class FormsUi extends Component {
 
 	componentDidMount() {
 		console.log("APIURL: " + this.state.apiUrl);
-
-		axios.get(this.state.apiUrl)
-			.then((response) => {
-				console.log("Response: " + JSON.stringify(response.data));
-				this.setState({
-					user: response.data
-				}, () => {
-					console.log(this.state.user);
-				})
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-		console.log("User: " + this.state.user);
 	}
 
 	render() {
@@ -85,21 +71,21 @@ class FormsUi extends Component {
 						<Card>
 							<CardBody>
 								<CardTitle>
-									<IntlMessages id="menu.users" />
+									<IntlMessages id="menu.subjects" />
 								</CardTitle>
 
-								<CardSubtitle>Edit: {this.state.user.name}</CardSubtitle>
+								<CardSubtitle>Create New Subject</CardSubtitle>
 
 								<AvForm className="av-tooltip mb-5 row">
 									<Colxx sm={6}>
 										<AvGroup>
 											<Label className="av-label" for="avexampleNameTooltip">
-												<IntlMessages id="users.name" />
+												<IntlMessages id="subjects.name" />
 											</Label>
 											<AvInput
-												name="name" id={this.state.user.name + this.state.user._id}
-												value={this.state.user.name}
-												onChange={this.handleUserChange}
+												name="name" id={this.state.subject.name + this.state.subject._id}
+												value=""
+												onChange={this.handleSubjectChange}
 												required />
 											<AvFeedback>
 												<IntlMessages id="forms.firstname-message" />
@@ -113,13 +99,13 @@ class FormsUi extends Component {
 												className="av-label"
 												for="avexampleLastNameTooltip"
 											>
-												<IntlMessages id="users.code" />
+												<IntlMessages id="subjects.code" />
 											</Label>
 											<AvInput
-												name="email"
-												id={this.state.user.email + this.state.user._id}
-												value={this.state.user.email}
-												onChange={this.handleUserChange}
+												name="subjectCode"
+												id={this.state.subject.subjectCode + this.state.subject._id}
+												value=""
+												onChange={this.handleSubjectChange}
 												required
 											/>
 											<AvFeedback>
@@ -128,19 +114,19 @@ class FormsUi extends Component {
 										</AvGroup>
 									</Colxx>
 
-                  <Colxx sm={12}>
+									<Colxx sm={12}>
 										<AvGroup>
 											<Label
 												className="av-label"
 												for="avexampleLastNameTooltip"
 											>
-												<IntlMessages id="users.code" />
+												<IntlMessages id="subjects.code" />
 											</Label>
 											<AvInput
-												name="roles"
-												id={this.state.user.roles + this.state.user._id}
-												value={this.state.user.roles}
-												onChange={this.handleUserChange}
+												name="description"
+												id={this.state.subject.description + this.state.subject._id}
+												value=""
+												onChange={this.handleSubjectChange}
 												required
 											/>
 											<AvFeedback>
@@ -151,7 +137,7 @@ class FormsUi extends Component {
 
 									<Colxx sm={12}>
 										<FormGroup>
-											<Button outline color="primary" onClick={this.editUser}>
+											<Button outline color="primary" onClick={this.createSubject}>
 												<IntlMessages id="forms.submit" />
 											</Button>
 										</FormGroup>

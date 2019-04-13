@@ -34,8 +34,6 @@ class FormsUi extends Component {
 		this.state = {
 			apiUrl: "http://localhost:3000/" + "departments",
 			department: [],
-			name: "",
-			departmentCode: ""
 		};
 	}
 
