@@ -99,15 +99,26 @@ class DataListLayout extends Component {
           items: data,
           isLoading: true
         });
+        this.getAllUsers();
       });
   }
 
   addOneUserToDepartment = () => {
     axios.put(this.state.apiUrl, {
-      users: this.state.selectedOption.key,
+      users: [this.state.selectedOption.key],
     })
       .then((response) => {
         console.log(response);
+        let newItems = this.state.items;
+
+        console.log(this.state.users);
+        let user = this.state.users.find(x => x._id === this.state.selectedOption.key)
+        newItems.users.push(user);
+
+        this.setState({
+          items: newItems
+        });
+
         this.toggleAddUsers();
       })
       .catch(function (error) {
@@ -125,16 +136,14 @@ class DataListLayout extends Component {
           users: data,
           isLoading: true
         });
+      this.createSelectData();
       })
   }
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
+    console.log(selectedOption);
   };
-
-  componentWillMount() {
-
-  }
 
   render() {
     return (
@@ -152,7 +161,7 @@ class DataListLayout extends Component {
 
                   <div className="float-sm-right">
                     <Button color="primary"
-                    onClick={this.toggleAddUsers}>
+                      onClick={this.toggleAddUsers}>
                       Add New
                     </Button>
                   </div>
@@ -191,14 +200,14 @@ class DataListLayout extends Component {
                     Add Users
                   </label>
                   <Select
-                      components={{ Input: CustomSelectInput }}
-                      className="react-select"
-                      classNamePrefix="react-select"
-                      name="form-field-name"
-                      value={this.state.selectedOption}
-                      onChange={this.handleChange}
-                      options={this.state.selectData}
-                    />
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    name="form-field-name"
+                    value={this.state.selectedOption}
+                    onChange={this.handleChange}
+                    options={this.state.selectData}
+                  />
                 </Colxx>
               </ModalBody>
               <ModalFooter>
@@ -222,37 +231,12 @@ class DataListLayout extends Component {
                     >
                       <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                         <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                          <NavLink
-                            to={`${this.props.location.pathname}/${department._id}`}
-                            className="w-30 w-sm-100"
-                          >
-                            <p className="list-item-heading mb-1 truncate">
-                              {department.name}
-                            </p>
-                          </NavLink>
+                          <p className="list-item-heading mb-1 truncate">
+                            {department.name}
+                          </p>
                           <p className="mb-1 text-muted text-small w-15 w-sm-100">
                             {department.createdAt}
                           </p>
-                          <div className="w-sm-100">
-                            <NavLink
-                              to={`${this.props.location.pathname}/${department._id}`}
-                              className="w-30 w-sm-100"
-                            >
-                              <Button color="info">
-                                View
-                            </Button>
-                            </NavLink>
-                          </div>
-                          <div className="w-sm-100">
-                            <NavLink
-                              to={`${this.props.location.pathname}/${department._id}/edit`}
-                              className="w-30 w-sm-100"
-                            >
-                              <Button color="secondary">
-                                Edit
-                            </Button>
-                            </NavLink>
-                          </div>
                           <div className="w-sm-100">
                             <Button color="danger"
                               onClick={() => { this.toggle(); this.departmentSelected(department._id) }}
