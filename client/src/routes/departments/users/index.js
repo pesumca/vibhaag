@@ -12,6 +12,8 @@ import {
 
 import { NavLink } from "react-router-dom";
 import classnames from "classnames";
+import Select from "react-select";
+import CustomSelectInput from "Components/CustomSelectInput";
 import IntlMessages from "Util/IntlMessages";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import { BreadcrumbItems } from "Components/BreadcrumbContainer";
@@ -23,11 +25,17 @@ class DataListLayout extends Component {
     super(props);
 
     this.state = {
-      apiUrl: "http://localhost:3000/" + "departments",
+      apiUrl: "http://localhost:3000/" + "departments" + "/" + this.props.match.params.id,
+      apiUrlForAllUsers: "http://localhost:3000/" + "users",
       visible: true,
       isLoading: false,
       modal: false,
-      department: ""
+      modalAddUsers: false,
+      department: "",
+      selectedOptions: [],
+      selectData: [],
+      users: [],
+      updateData: []
     };
   }
 
@@ -43,18 +51,6 @@ class DataListLayout extends Component {
     });
   }
 
-  deleteDepartment = () => {
-    axios.delete(this.state.apiUrl + "/" + this.state.department)
-      .then((response) => {
-        this.props.history.push("/");
-        console.log(response);
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   componentWillMount() {
 
   }
@@ -62,6 +58,7 @@ class DataListLayout extends Component {
   componentDidMount() {
     console.log("APIURL: " + this.state.apiUrl);
     this.dataListRender();
+    this.getAllUsers();
   }
 
   toggle = () => {
@@ -70,19 +67,76 @@ class DataListLayout extends Component {
     });
   }
 
-  dataListRender() {
+  toggleAddUsers = () => {
+    this.setState({
+      modalAddUsers: !this.state.modalAddUsers
+    });
+  }
+
+  createSelectData = () => {
+    let options = [];
+    console.log("Users: " + this.state.users)
+
+    this.state.users.map(user => {
+      let tempDict = {}
+      tempDict['label'] = user.name;
+      tempDict['value'] = user.name;
+      tempDict['key'] = user._id;
+      options.push(tempDict);
+    });
+
+    this.setState({
+      selectData: options,
+    });
+
+  }
+
+  dataListRender = () => {
     axios.get(`${this.state.apiUrl}`)
       .then(res => {
         console.log(res.data);
         return res.data
       }).then(data => {
         this.setState({
-          // totalPage: data.totalPage,
           items: data,
-          // totalItemCount : data.totalItem,
           isLoading: true
         });
       })
+  }
+
+  getAllUsers = () => {
+    axios.get(`${this.state.apiUrlForAllUsers}`)
+      .then(res => {
+        console.log(res.data);
+        return res.data
+      }).then(data => {
+        this.setState({
+          users: data,
+          isLoading: true
+        });
+      }).then(data => {
+        this.createSelectData();
+      })
+  }
+
+  handleChangeMulti = selectedOptions => {
+    this.setState({ selectedOptions });
+
+    // updateData = []
+
+    // this.state.selectedOptions.map(id => {
+    //   updateData.push(selectedOptions['key']);
+    // })
+
+    // this.setState({
+    //   updateData: updateData
+    // });
+
+    // console.log(this.state.updateData);
+  };
+
+  componentWillMount() {
+
   }
 
   render() {
@@ -96,18 +150,14 @@ class DataListLayout extends Component {
               <Colxx xxs="12">
                 <div className="mb-2">
                   <h1>
-                    <IntlMessages id="menu.departments" />
+                    Faculty of the department of {this.state.items.name}
                   </h1>
 
                   <div className="float-sm-right">
-                    <NavLink
-                      to={`${this.props.location.pathname}/new`}
-                      className="w-30 w-sm-100"
-                    >
-                      <Button color="primary">
-                        Add New
-                      </Button>
-                    </NavLink>
+                    <Button color="primary"
+                    onClick={this.toggleAddUsers}>
+                      Add New
+                    </Button>
                   </div>
 
                   <BreadcrumbItems match={this.props.match} />
@@ -134,8 +184,39 @@ class DataListLayout extends Component {
               </ModalFooter>
             </Modal>
 
+            <Modal isOpen={this.state.modalAddUsers} toggle={this.modalAddUsers}>
+              <ModalHeader toggle={this.toggleAddUsers}>
+                <IntlMessages id="departments.modal-title" />
+              </ModalHeader>
+              <ModalBody>
+                <Colxx xxs="12" md="6">
+                  <label>
+                    Add Users
+                  </label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    isMulti
+                    name="form-field-name"
+                    value={this.state.selectedOptions}
+                    onChange={this.handleChangeMulti}
+                    options={this.state.selectData}
+                  />
+                </Colxx>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" onClick={this.addAllUsersToDepartment}>
+                  Add Faculty
+                </Button>{" "}
+                <Button color="secondary" onClick={this.toggleAddUsers}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </Modal>
+
             <Row>
-              {this.state.items.map(department => {
+              {this.state.items.users.map(department => {
                 return (
                   <Colxx xxs="12" key={department._id} className="mb-3">
 
