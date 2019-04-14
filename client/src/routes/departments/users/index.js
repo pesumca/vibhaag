@@ -58,7 +58,6 @@ class DataListLayout extends Component {
   componentDidMount() {
     console.log("APIURL: " + this.state.apiUrl);
     this.dataListRender();
-    this.getAllUsers();
   }
 
   toggle = () => {
@@ -94,7 +93,7 @@ class DataListLayout extends Component {
     axios.get(`${this.state.apiUrl}`)
       .then(res => {
         console.log(res.data);
-        // return res.data
+        return res.data
       }).then(data => {
         this.setState({
           items: data,
@@ -103,14 +102,13 @@ class DataListLayout extends Component {
       });
   }
 
-  addAllUserToDepartment = () => {
+  addOneUserToDepartment = () => {
     axios.put(this.state.apiUrl, {
       users: this.state.selectedOption.key,
     })
       .then((response) => {
         console.log(response);
         this.toggleAddUsers();
-
       })
       .catch(function (error) {
         console.log(error);
@@ -127,11 +125,7 @@ class DataListLayout extends Component {
           users: data,
           isLoading: true
         });
-      }).then(data => {
-        this.createSelectData();
-      }).then(data => {
-        this.addAllUserToDepartment();
-      });
+      })
   }
 
   handleChange = selectedOption => {
@@ -208,7 +202,7 @@ class DataListLayout extends Component {
                 </Colxx>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onClick={this.addAllUserToDepartment}>
+                <Button color="danger" onClick={this.addOneUserToDepartment}>
                   Add Faculty
                 </Button>{" "}
                 <Button color="secondary" onClick={this.toggleAddUsers}>
