@@ -32,7 +32,7 @@ class DataListLayout extends Component {
       modal: false,
       modalAddUsers: false,
       department: "",
-      selectedOptions: [],
+      selectedOption: "",
       selectData: [],
       users: [],
       updateData: []
@@ -88,20 +88,33 @@ class DataListLayout extends Component {
     this.setState({
       selectData: options,
     });
-
   }
 
   dataListRender = () => {
     axios.get(`${this.state.apiUrl}`)
       .then(res => {
         console.log(res.data);
-        return res.data
+        // return res.data
       }).then(data => {
         this.setState({
           items: data,
           isLoading: true
         });
+      });
+  }
+
+  addAllUserToDepartment = () => {
+    axios.put(this.state.apiUrl, {
+      users: this.state.selectedOption.key,
+    })
+      .then((response) => {
+        console.log(response);
+        this.toggleAddUsers();
+
       })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   getAllUsers = () => {
@@ -116,23 +129,13 @@ class DataListLayout extends Component {
         });
       }).then(data => {
         this.createSelectData();
-      })
+      }).then(data => {
+        this.addAllUserToDepartment();
+      });
   }
 
-  handleChangeMulti = selectedOptions => {
-    this.setState({ selectedOptions });
-
-    // updateData = []
-
-    // this.state.selectedOptions.map(id => {
-    //   updateData.push(selectedOptions['key']);
-    // })
-
-    // this.setState({
-    //   updateData: updateData
-    // });
-
-    // console.log(this.state.updateData);
+  handleChange = selectedOption => {
+    this.setState({ selectedOption });
   };
 
   componentWillMount() {
@@ -194,19 +197,18 @@ class DataListLayout extends Component {
                     Add Users
                   </label>
                   <Select
-                    components={{ Input: CustomSelectInput }}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    isMulti
-                    name="form-field-name"
-                    value={this.state.selectedOptions}
-                    onChange={this.handleChangeMulti}
-                    options={this.state.selectData}
-                  />
+                      components={{ Input: CustomSelectInput }}
+                      className="react-select"
+                      classNamePrefix="react-select"
+                      name="form-field-name"
+                      value={this.state.selectedOption}
+                      onChange={this.handleChange}
+                      options={this.state.selectData}
+                    />
                 </Colxx>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onClick={this.addAllUsersToDepartment}>
+                <Button color="danger" onClick={this.addAllUserToDepartment}>
                   Add Faculty
                 </Button>{" "}
                 <Button color="secondary" onClick={this.toggleAddUsers}>
