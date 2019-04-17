@@ -10,6 +10,16 @@ const BatchSchema = new Schema({
     noOfStudents: {
         type: Number,
     },
+    department: {
+        type: Schema.Types.ObjectId,
+        ref: 'Department'
+    },
+    start: {
+        type: Date,
+    },
+    end: {
+        type: Date,
+    },
     semester: {
         type: Schema.Types.ObjectId,
         ref: 'Semester'

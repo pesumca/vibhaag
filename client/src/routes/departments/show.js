@@ -123,16 +123,16 @@ export default class DepartmentShow extends Component {
                         <i className="iconsmind-Male mr-2 text-white align-text-bottom d-inline-block" />
                         <p className="lead text-white">
                           <NavLink
-                            to={`${this.props.location.pathname}/semesters`}
+                            to={`${this.props.location.pathname}/batches`}
                             className=""
                           >
                             <span className="text-white">
-                              Semesters
+                              Batches
                             </span>
                           </NavLink>
                         </p>
                         <p className="text-small text-white">
-                          All the semesters of this department
+                          All the batches of this department
                         </p>
                       </div>
                     </div>

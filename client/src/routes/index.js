@@ -26,17 +26,13 @@ import DepartmentSubject from './departments/subjects';
 import DepartmentSubjectShow from './departments/subjects/show'
 import DepartmentSubjectEdit from './departments/subjects/edit'
 
-import DepartmentSemester from './departments/semesters'
-import DepartmentSemesterShow from './departments/semesters/show'
-import DepartmentSemesterEdit from './departments/semesters/edit'
+import DepartmentBatch from './departments/batches'
+import DepartmentBatchShow from './departments/batches/show'
+import DepartmentBatchEdit from './departments/batches/edit'
 
-import DepartmentSemesterBatch from './departments/semesters/batches'
-import DepartmentSemesterBatchShow from './departments/semesters/batches/show'
-import DepartmentSemesterBatchEdit from './departments/semesters/batches/edit'
-
-import DepartmentSemesterBatchSession from './departments/semesters/batches/sessions'
-import DepartmentSemesterBatchSessionShow from './departments/semesters/batches/sessions/show'
-import DepartmentSemesterBatchSessionEdit from './departments/semesters/batches/sessions/edit'
+import DepartmentBatchSession from './departments/batches/sessions'
+import DepartmentBatchSessionShow from './departments/batches/sessions/show'
+import DepartmentBatchSessionEdit from './departments/batches/sessions/edit'
 
 import { connect } from 'react-redux';
 
@@ -78,17 +74,13 @@ class MainApp extends Component {
 							<Route path={`${match.url}/departments/:id/subjects/:id`} component={DepartmentSubjectShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/subjects/:id/edit`} component={DepartmentSubjectEdit} exact={true} />
 
-							<Route path={`${match.url}/departments/:id/semesters`} component={DepartmentSemester} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id`} component={DepartmentSemesterShow} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id/edit`} component={DepartmentSemesterEdit} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches`} component={DepartmentBatch} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/:id`} component={DepartmentBatchShow} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/:id/edit`} component={DepartmentBatchEdit} exact={true} />
 
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches`} component={DepartmentSemesterBatch} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches/:id`} component={DepartmentSemesterBatchShow} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches/:id/edit`} component={DepartmentSemesterBatchEdit} exact={true} />
-
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches/:id/sessions`} component={DepartmentSemesterBatchSession} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches/:id/sessions/:id`} component={DepartmentSemesterBatchSessionShow} exact={true} />
-							<Route path={`${match.url}/departments/:id/semesters/:id/batches/:id/sessions/:id/edit`} component={DepartmentSemesterBatchSessionEdit} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/:id/sessions`} component={DepartmentBatchSession} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/:id/sessions/:id`} component={DepartmentBatchSessionShow} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/:id/sessions/:id/edit`} component={DepartmentBatchSessionEdit} exact={true} />
 
 							<Redirect to="/error" />
 						</Switch>
