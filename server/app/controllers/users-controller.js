@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
 
 // user login
 router.post('/login', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password'])
+    var body = _.pick(req.body, ['email', 'password', 'uid'])
     
     // console.log(body)
     

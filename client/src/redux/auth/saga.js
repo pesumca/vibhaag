@@ -30,6 +30,7 @@ function* loginWithEmailPassword({ payload }) {
             axios.post('http://localhost:3000/' + 'auth/' + 'login', {
                 email: email,
                 password: password,
+                uid: loginUser.user.uid,
             })
             .then(function (response) {
                 console.log(response);

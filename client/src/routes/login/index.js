@@ -11,6 +11,7 @@ class LoginLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       email: "",
       password: ""
     };
@@ -58,7 +59,7 @@ class LoginLayout extends Component {
                       <br />
                       If you are not a member, please{" "}
                       <NavLink to={`/register`} className="white">
-                        register
+                        Click Here To Register
                       </NavLink>
                       .
                     </p>

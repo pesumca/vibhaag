@@ -10,11 +10,12 @@ const bcrypt = require('bcryptjs');
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true,
+    },
+    uid: {
+        type: String,
     },
     email: {
         type: String,
-        required: true,
         unique: true,
         validate: {
             validator: function (value) {
@@ -28,7 +29,6 @@ const userSchema = new Schema({
     roles: {
         type: String,
         enum: ['admin', 'principal', 'chairperson', 'faculty'],
-        required: true
     },
     password: {
         type: String,

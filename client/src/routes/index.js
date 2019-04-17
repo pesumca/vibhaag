@@ -35,8 +35,6 @@ import DepartmentBatchSessionShow from './departments/batches/sessions/show'
 import DepartmentBatchSessionEdit from './departments/batches/sessions/edit'
 
 import { connect } from 'react-redux';
-
-
 class MainApp extends Component {
 	constructor(props) {
 		super(props);
