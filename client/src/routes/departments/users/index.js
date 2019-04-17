@@ -29,6 +29,7 @@ class DataListLayout extends Component {
       apiUrlForAllUsers: "http://localhost:3000/" + "users",
       visible: true,
       isLoading: false,
+      items: [],
       modal: false,
       modalAddUsers: false,
       department: "",
@@ -104,26 +105,79 @@ class DataListLayout extends Component {
   }
 
   addOneUserToDepartment = () => {
-    axios.put(this.state.apiUrl, {
-      users: [this.state.selectedOption.key],
+    // selectedOption
+    let currentUsers = this.state.items.users;
+    let allUsers = this.state.users;
+    
+    let currentUserIDs = [];
+    
+    currentUsers.map(user => {
+      currentUserIDs.push(user._id);
     })
-      .then((response) => {
-        console.log(response);
-        let newItems = this.state.items;
 
-        console.log(this.state.users);
-        let user = this.state.users.find(x => x._id === this.state.selectedOption.key)
-        newItems.users.push(user);
+    currentUserIDs.push(this.state.selectedOption.key);
+    currentUserIDs = [...new Set(currentUserIDs)]    
 
-        this.setState({
-          items: newItems
-        });
+    console.log(currentUserIDs);
 
-        this.toggleAddUsers();
-      })
-      .catch(function (error) {
-        console.log(error);
+    axios.put(this.state.apiUrl, {
+      users: currentUserIDs
+    })
+    .then((response) => {
+      console.log(response);
+
+      let newItem = allUsers.find(e => e._id == this.state.selectedOption.key);
+      currentUsers.push(newItem);
+
+      let newItems = this.state.items;
+      newItems["users"] = currentUsers
+
+      this.setState({
+        items: newItems
       });
+
+      this.toggleAddUsers();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  deleteUserFromDepartment = () => {
+    // departmentSelected
+    let currentUsers = this.state.items.users;
+    let allUsers = this.state.users;
+    
+    let currentUserIDs = [];
+    
+    currentUsers.map(user => {
+      currentUserIDs.push(user._id);
+    })
+
+    currentUserIDs = currentUserIDs.filter(e => e != this.state.department);
+    currentUserIDs = [...new Set(currentUserIDs)]    
+
+    console.log(currentUserIDs);
+
+    axios.put(this.state.apiUrl, {
+      users: currentUserIDs
+    })
+    .then((response) => {
+      console.log(response); 
+
+      currentUsers = currentUsers.filter(e => e._id != this.state.department);
+      let newItems = this.state.items;
+      newItems["users"] = currentUsers
+
+      this.setState({
+        items: newItems
+      });
+
+      this.toggle();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   getAllUsers = () => {
@@ -136,7 +190,7 @@ class DataListLayout extends Component {
           users: data,
           isLoading: true
         });
-      this.createSelectData();
+        this.createSelectData();
       })
   }
 
@@ -181,7 +235,7 @@ class DataListLayout extends Component {
                 Please note that this opeartion cannot be reversed
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onClick={this.deleteDepartment}>
+                <Button color="danger" onClick={this.deleteUserFromDepartment}>
                   Delete
                 </Button>{" "}
                 <Button color="secondary" onClick={this.toggle}>
@@ -211,7 +265,7 @@ class DataListLayout extends Component {
                 </Colxx>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onClick={this.addOneUserToDepartment}>
+                <Button color="primary" onClick={this.addOneUserToDepartment}>
                   Add Faculty
                 </Button>{" "}
                 <Button color="secondary" onClick={this.toggleAddUsers}>
