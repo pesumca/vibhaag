@@ -29,6 +29,7 @@ import DepartmentSubjectEdit from './departments/subjects/edit'
 import DepartmentBatch from './departments/batches'
 import DepartmentBatchShow from './departments/batches/show'
 import DepartmentBatchEdit from './departments/batches/edit'
+import DepartmentBatchNew from './departments/batches/new'
 
 import DepartmentBatchSession from './departments/batches/sessions'
 import DepartmentBatchSessionShow from './departments/batches/sessions/show'
@@ -73,6 +74,7 @@ class MainApp extends Component {
 							<Route path={`${match.url}/departments/:id/subjects/:id/edit`} component={DepartmentSubjectEdit} exact={true} />
 
 							<Route path={`${match.url}/departments/:id/batches`} component={DepartmentBatch} exact={true} />
+							<Route path={`${match.url}/departments/:id/batches/new`} component={DepartmentBatchNew} exact={true} />
 							<Route path={`${match.url}/departments/:id/batches/:id`} component={DepartmentBatchShow} exact={true} />
 							<Route path={`${match.url}/departments/:id/batches/:id/edit`} component={DepartmentBatchEdit} exact={true} />
 
