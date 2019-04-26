@@ -108,76 +108,76 @@ class DataListLayout extends Component {
     // selectedOption
     let currentSubjects = this.state.items.subjects;
     let allSubjects = this.state.subjects;
-    
+
     let currentSubjectIDs = [];
-    
+
     currentSubjects.map(subject => {
       currentSubjectIDs.push(subject._id);
     })
 
     currentSubjectIDs.push(this.state.selectedOption.key);
-    currentSubjectIDs = [...new Set(currentSubjectIDs)]    
+    currentSubjectIDs = [...new Set(currentSubjectIDs)]
 
     console.log(currentSubjectIDs);
 
     axios.put(this.state.apiUrl, {
       subjects: currentSubjectIDs
     })
-    .then((response) => {
-      console.log(response);
+      .then((response) => {
+        console.log(response);
 
-      let newItem = allSubjects.find(e => e._id == this.state.selectedOption.key);
-      currentSubjects.push(newItem);
+        let newItem = allSubjects.find(e => e._id == this.state.selectedOption.key);
+        currentSubjects.push(newItem);
 
-      let newItems = this.state.items;
-      newItems["subjects"] = currentSubjects
+        let newItems = this.state.items;
+        newItems["subjects"] = currentSubjects
 
-      this.setState({
-        items: newItems
+        this.setState({
+          items: newItems
+        });
+
+        this.toggleAddSubjects();
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      this.toggleAddSubjects();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
   }
 
   deleteSubjectFromDepartment = () => {
     // departmentSelected
     let currentSubjects = this.state.items.subjects;
     let allSubjects = this.state.subjects;
-    
+
     let currentSubjectIDs = [];
-    
+
     currentSubjects.map(subject => {
       currentSubjectIDs.push(subject._id);
     })
 
     currentSubjectIDs = currentSubjectIDs.filter(e => e != this.state.department);
-    currentSubjectIDs = [...new Set(currentSubjectIDs)]    
+    currentSubjectIDs = [...new Set(currentSubjectIDs)]
 
     console.log(currentSubjectIDs);
 
     axios.put(this.state.apiUrl, {
       subjects: currentSubjectIDs
     })
-    .then((response) => {
-      console.log(response); 
+      .then((response) => {
+        console.log(response);
 
-      currentSubjects = currentSubjects.filter(e => e._id != this.state.department);
-      let newItems = this.state.items;
-      newItems["subjects"] = currentSubjects
+        currentSubjects = currentSubjects.filter(e => e._id != this.state.department);
+        let newItems = this.state.items;
+        newItems["subjects"] = currentSubjects
 
-      this.setState({
-        items: newItems
+        this.setState({
+          items: newItems
+        });
+
+        this.toggle();
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      this.toggle();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
   }
 
   getAllSubjects = () => {
