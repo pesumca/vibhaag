@@ -22,7 +22,7 @@ const userSchema = new Schema({
                 return validator.isEmail(value);
             },
             message: function () {
-                return 'Invalid email format'
+                return 'Invalid email format';
             }
         }
     },
