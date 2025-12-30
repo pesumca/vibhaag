@@ -47,24 +47,26 @@ export default function StudentAttendancePage() {
         <div className="section-title">
           <h3>Recent check-ins</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Check-in</th>
-            </tr>
-          </thead>
-          <tbody>
-            {attendance.map((row) => (
-              <tr key={row._id}>
-                <td>{row.date}</td>
-                <td>{row.status}</td>
-                <td>{row.checkInAt ? new Date(row.checkInAt).toLocaleTimeString() : "--"}</td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Check-in</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {attendance.map((row) => (
+                <tr key={row._id}>
+                  <td>{row.date}</td>
+                  <td>{row.status}</td>
+                  <td>{row.checkInAt ? new Date(row.checkInAt).toLocaleTimeString() : "--"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

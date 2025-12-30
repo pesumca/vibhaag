@@ -92,7 +92,7 @@ export default function SessionsPage() {
         <div className="section-title">
           <h3>Create course</h3>
         </div>
-        <form className="grid" onSubmit={handleCourse}>
+        <form className="form-grid" onSubmit={handleCourse}>
           <label className="input">
             Course name
             <input value={courseName} onChange={(event) => setCourseName(event.target.value)} />
@@ -122,7 +122,7 @@ export default function SessionsPage() {
         <div className="section-title">
           <h3>Create session</h3>
         </div>
-        <form className="grid" onSubmit={handleSession}>
+        <form className="form-grid" onSubmit={handleSession}>
           <label className="input">
             Title
             <input value={title} onChange={(event) => setTitle(event.target.value)} />
@@ -182,26 +182,28 @@ export default function SessionsPage() {
         <div className="section-title">
           <h3>Timetable</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Session</th>
-              <th>Day</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sessions.map((session) => (
-              <tr key={session._id}>
-                <td>{session.title}</td>
-                <td>{days[session.dayOfWeek]}</td>
-                <td>
-                  {session.startTime} - {session.endTime}
-                </td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Day</th>
+                <th>Time</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sessions.map((session) => (
+                <tr key={session._id}>
+                  <td>{session.title}</td>
+                  <td>{days[session.dayOfWeek]}</td>
+                  <td>
+                    {session.startTime} - {session.endTime}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

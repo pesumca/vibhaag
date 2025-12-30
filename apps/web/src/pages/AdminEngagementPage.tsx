@@ -79,7 +79,7 @@ export default function AdminEngagementPage() {
         <div className="section-title">
           <h3>Broadcast announcements</h3>
         </div>
-        <form className="grid" onSubmit={handleCreate}>
+        <form className="form-grid" onSubmit={handleCreate}>
           <label className="input">
             Title
             <input value={title} onChange={(event) => setTitle(event.target.value)} />
@@ -134,55 +134,61 @@ export default function AdminEngagementPage() {
         <div className="section-title">
           <h3>Leave requests</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Reason</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaveRequests.map((item) => (
-              <tr key={item._id}>
-                <td>{item.date}</td>
-                <td>{item.status}</td>
-                <td>{item.reason}</td>
-                <td>
-                  <button className="button" onClick={() => handleDecision(item._id, "approved")}>
-                    Approve
-                  </button>
-                  <button className="button secondary" onClick={() => handleDecision(item._id, "denied")}>
-                    Deny
-                  </button>
-                </td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leaveRequests.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.date}</td>
+                  <td>{item.status}</td>
+                  <td>{item.reason}</td>
+                  <td>
+                    <div className="button-group">
+                      <button className="button" onClick={() => handleDecision(item._id, "approved")}>
+                        Approve
+                      </button>
+                      <button className="button secondary" onClick={() => handleDecision(item._id, "denied")}>
+                        Deny
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="card">
         <div className="section-title">
           <h3>Student feedback</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Rating</th>
-              <th>Comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {feedback.map((item) => (
-              <tr key={item._id}>
-                <td>{item.rating}★</td>
-                <td>{item.comment ?? "--"}</td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Rating</th>
+                <th>Comment</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {feedback.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.rating}★</td>
+                  <td>{item.comment ?? "--"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

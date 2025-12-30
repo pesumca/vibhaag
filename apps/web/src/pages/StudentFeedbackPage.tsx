@@ -34,7 +34,7 @@ export default function StudentFeedbackPage() {
       <div className="section-title">
         <h3>Session feedback</h3>
       </div>
-      <form onSubmit={handleSubmit} className="grid">
+      <form onSubmit={handleSubmit} className="form-grid">
         <label className="input">
           Session
           <select value={sessionId} onChange={(event) => setSessionId(event.target.value)}>

@@ -61,26 +61,28 @@ export default function StudentHomePage() {
         <div className="section-title">
           <h3>Upcoming sessions</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Session</th>
-              <th>Day</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {upcoming.map((session) => (
-              <tr key={session._id}>
-                <td>{session.title}</td>
-                <td>{days[session.dayOfWeek]}</td>
-                <td>
-                  {session.startTime} - {session.endTime}
-                </td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Day</th>
+                <th>Time</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {upcoming.map((session) => (
+                <tr key={session._id}>
+                  <td>{session.title}</td>
+                  <td>{days[session.dayOfWeek]}</td>
+                  <td>
+                    {session.startTime} - {session.endTime}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </>
   );

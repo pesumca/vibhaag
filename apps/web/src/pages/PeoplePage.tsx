@@ -118,7 +118,7 @@ export default function PeoplePage() {
         <div className="section-title">
           <h3>Departments & batches</h3>
         </div>
-        <form className="grid" onSubmit={handleDepartment}>
+        <form className="form-grid" onSubmit={handleDepartment}>
           <label className="input">
             Department name
             <input value={deptName} onChange={(event) => setDeptName(event.target.value)} />
@@ -131,7 +131,7 @@ export default function PeoplePage() {
             Create department
           </button>
         </form>
-        <form className="grid" onSubmit={handleBatch}>
+        <form className="form-grid" onSubmit={handleBatch}>
           <label className="input">
             Batch name
             <input value={batchName} onChange={(event) => setBatchName(event.target.value)} />
@@ -161,7 +161,7 @@ export default function PeoplePage() {
         <div className="section-title">
           <h3>Add staff or students</h3>
         </div>
-        <form className="grid" onSubmit={handleCreate}>
+        <form className="form-grid" onSubmit={handleCreate}>
           <label className="input">
             Name
             <input value={name} onChange={(event) => setName(event.target.value)} />
@@ -227,37 +227,38 @@ export default function PeoplePage() {
           Columns: name, email, role, departmentCode, batchName, rollNumber, password. Use department code like CSE
           and batch name like CSE 2026.
         </p>
-        <textarea
-          style={{ minHeight: 180, padding: 12, borderRadius: 12, border: "1px solid var(--line)" }}
-          value={csv}
-          onChange={(event) => setCsv(event.target.value)}
-        />
+        <label className="input">
+          CSV data
+          <textarea value={csv} onChange={(event) => setCsv(event.target.value)} />
+        </label>
       </div>
 
       <div className="card">
         <div className="section-title">
           <h3>Directory</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Roll no</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>{user.rollNumber ?? "--"}</td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Roll no</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td>{user.rollNumber ?? "--"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

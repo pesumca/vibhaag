@@ -125,6 +125,13 @@ input {
   gap: 20px;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
 .card {
   background: var(--card);
   border-radius: 18px;
@@ -168,6 +175,18 @@ input {
   border: 1px solid var(--line);
 }
 
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+.table-wrap .table {
+  border: none;
+  border-radius: 0;
+}
+
 .table th,
 .table td {
   text-align: left;
@@ -206,6 +225,12 @@ input {
   box-shadow: 0 12px 26px -18px var(--shadow);
 }
 
+.button-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .login-shell {
   min-height: 100vh;
   display: grid;
@@ -242,6 +267,15 @@ input {
 }
 
 .input select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fffaf3;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.input textarea {
+  min-height: 180px;
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid var(--line);

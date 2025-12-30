@@ -19,26 +19,28 @@ export default function StudentSchedulePage() {
         <h3>My timetable</h3>
         <button className="button secondary">Sync calendar</button>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Session</th>
-            <th>Day</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sessions.map((session) => (
-            <tr key={session._id}>
-              <td>{session.title}</td>
-              <td>{days[session.dayOfWeek]}</td>
-              <td>
-                {session.startTime} - {session.endTime}
-              </td>
+      <div className="table-wrap">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Session</th>
+              <th>Day</th>
+              <th>Time</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sessions.map((session) => (
+              <tr key={session._id}>
+                <td>{session.title}</td>
+                <td>{days[session.dayOfWeek]}</td>
+                <td>
+                  {session.startTime} - {session.endTime}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

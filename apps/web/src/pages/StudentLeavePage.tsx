@@ -41,7 +41,7 @@ export default function StudentLeavePage() {
         <div className="section-title">
           <h3>Request leave</h3>
         </div>
-        <form onSubmit={handleSubmit} className="grid">
+        <form onSubmit={handleSubmit} className="form-grid">
           <label className="input">
             Session
             <select value={sessionId} onChange={(event) => setSessionId(event.target.value)}>
@@ -71,24 +71,26 @@ export default function StudentLeavePage() {
         <div className="section-title">
           <h3>My requests</h3>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaveRequests.map((item) => (
-              <tr key={item._id}>
-                <td>{item.date}</td>
-                <td>{item.status}</td>
-                <td>{item.reason}</td>
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Reason</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leaveRequests.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.date}</td>
+                  <td>{item.status}</td>
+                  <td>{item.reason}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
