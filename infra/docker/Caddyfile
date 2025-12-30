@@ -1,11 +1,21 @@
 {
-  auto_https off
+  auto_https disable_redirects
 }
 
 http://vibhaag.localhost {
+  redir https://vibhaag.localhost{uri}
+}
+
+https://vibhaag.localhost {
+  tls internal
   reverse_proxy web:5173
 }
 
 http://api.vibhaag.localhost {
+  redir https://api.vibhaag.localhost{uri}
+}
+
+https://api.vibhaag.localhost {
+  tls internal
   reverse_proxy api:4000
 }
