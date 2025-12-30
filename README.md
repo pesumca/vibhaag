@@ -32,24 +32,50 @@ Seeded credentials (demo logins):
 - Student: ira@vibhaag.dev / student123
 - Student: meera@vibhaag.dev / student123
 
+## UX Structure (Mermaid)
+```mermaid
+flowchart TB
+  subgraph Entry
+    Admin[Admin Web]
+    Student[Student Web]
+    Faculty[Faculty Mobile]
+  end
+
+  subgraph Web
+    Admin --> AdminDash[Admin Dashboard]
+    Student --> StudentHub[Student Hub]
+  end
+
+  subgraph Mobile
+    Faculty --> FacultyCheckIn[Check-ins]
+  end
+
+  AdminDash --> API[API]
+  StudentHub --> API
+  FacultyCheckIn --> API
+  API --> DB[(MongoDB)]
+
+  Caddy[Caddy Proxy] --> AdminDash
+  Caddy --> StudentHub
+  Caddy --> API
+```
+
 ## Demo Walkthrough (Docker)
-1) Start the stack:
+- Step 1: Start the stack
 ```bash
 docker compose up --build -d
 ```
-2) First-time setup (choose one):
-   - Quick demo data:
+- Step 2: First-time setup (choose one)
+   - Quick demo data
 ```bash
 docker compose exec api bun src/seed.ts
 ```
-   - Fresh school setup:
+   - Fresh school setup
      - Open http://vibhaag.localhost (or http://localhost:5173)
      - Create the first admin account (bootstrap screen)
-3) Log in to the web app at http://localhost:5173
+- Step 3: Log in to the web app at http://localhost:5173
    - Use `admin@vibhaag.dev` / `admin123` if seeded
-3) Log in to the web app at http://localhost:5173
-    - Use `admin@vibhaag.dev` / `admin123`
-4) Explore:
+- Step 4: Explore
    - Overview: attendance rate + sessions summary
    - Attendance: check in to a session and refresh recent activity
    - Timetable: seeded sessions are visible
@@ -66,13 +92,13 @@ docker compose up --build -d
 Then open http://vibhaag.localhost to create the first admin account.
 
 ## Admin Onboarding (Real School Flow)
-1) Create the first admin account on the bootstrap screen.
-2) Go to **People**:
+- Step 1: Create the first admin account on the bootstrap screen.
+- Step 2: Go to **People**
    - Add faculty/staff one-by-one, or use the CSV import.
    - Add students with roll numbers and batch mapping.
-3) Go to **Timetable**:
+- Step 3: Go to **Timetable**
    - Create courses and sessions for each batch.
-4) Go to **Engagement**:
+- Step 4: Go to **Engagement**
    - Publish announcements.
    - Review leave requests.
    - Read student feedback.
@@ -92,15 +118,28 @@ Notes:
 - `batchName` maps to Batch name (e.g., CSE 2026).
 
 ## Student Demo
-1) Log in to the web app at http://localhost:5173
+- Step 1: Log in to the web app at http://localhost:5173
    - Use `ira@vibhaag.dev` / `student123`
-2) Explore:
+- Step 2: Explore
    - My Hub: overview with attendance rate + announcements
    - Schedule: personal timetable
    - My Attendance: check in to a session
    - Announcements: campus + batch updates
    - Leave Requests: submit a leave request
    - Session Feedback: rate a session
+
+## How-To: Use the App
+Admin daily flow:
+- Step 1: Review **Overview** for attendance health and signals.
+- Step 2: Use **Timetable** to add or update sessions.
+- Step 3: Use **People** to add staff, students, or run CSV import.
+- Step 4: Use **Engagement** to post announcements and resolve leave requests.
+
+Student daily flow:
+- Step 1: Open **My Hub** to see announcements and attendance rate.
+- Step 2: Use **My Attendance** to check in.
+- Step 3: Use **Leave Requests** for absences.
+- Step 4: Use **Session Feedback** after class.
 
 ## Local Dev (Bun)
 ```bash
