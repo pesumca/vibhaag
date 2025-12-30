@@ -58,6 +58,9 @@ typings/
 # dotenv environment variables file
 .env
 
+playwright-report/
+test-results/
+
 # Expo
 apps/mobile/.expo/
 
