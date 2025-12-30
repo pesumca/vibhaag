@@ -58,6 +58,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# Expo
+apps/mobile/.expo/
+
 # next.js build output
 .next
 
