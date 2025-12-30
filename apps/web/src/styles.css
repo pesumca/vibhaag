@@ -311,14 +311,57 @@ input {
     grid-template-columns: 1fr;
   }
   .sidebar {
-    flex-direction: row;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand logout"
+      "nav nav";
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .sidebar > div {
+    grid-area: brand;
+  }
+  .sidebar .nav-group {
+    grid-area: nav;
+  }
+  .sidebar > button {
+    grid-area: logout;
+    justify-self: end;
+  }
+  .nav-group {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .nav-link {
+    white-space: nowrap;
   }
 }
 
 @media (max-width: 600px) {
+  .sidebar {
+    padding: 16px;
+  }
+  .sidebar h1 {
+    font-size: 16px;
+  }
+  .sidebar p {
+    display: none;
+  }
+  .nav-link {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .button.secondary {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
   .main {
     padding: 24px;
   }
