@@ -1,0 +1,36 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - vibhaag-mongo:/data/db
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    environment:
+      - PORT=4000
+      - MONGO_URL=mongodb://mongo:27017/vibhaag
+      - JWT_SECRET=change-me
+      - CORS_ORIGIN=http://localhost:5173
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+    environment:
+      - VITE_API_URL=http://localhost:4000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  vibhaag-mongo:
