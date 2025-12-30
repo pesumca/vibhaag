@@ -130,6 +130,23 @@ bun run test
 
 For CI, tests use `MONGO_URL=mongodb://localhost:27017/vibhaag_test`.
 
+## UI Visual Checks (Playwright)
+Quick visual regression snapshots for layout consistency:
+```bash
+bun run ui:install
+bun run test:ui
+```
+
+If this is the first run, approve snapshots:
+```bash
+bun run test:ui:update
+```
+
+By default, tests hit `http://vibhaag.localhost`. Override with:
+```bash
+UI_BASE_URL=http://localhost:5173 bun run test:ui
+```
+
 ## Mobile App (Expo)
 ```bash
 bun --cwd apps/mobile install
