@@ -5,5 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    host: true,
+    allowedHosts: ["vibhaag.localhost", "localhost", "127.0.0.1", "web"],
   },
 });

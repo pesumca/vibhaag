@@ -32,6 +32,12 @@ button {
   font-family: inherit;
 }
 
+textarea,
+select,
+input {
+  font-family: inherit;
+}
+
 .app-shell {
   display: grid;
   grid-template-columns: 240px 1fr;

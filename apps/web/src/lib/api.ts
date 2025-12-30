@@ -32,6 +32,19 @@ export function logout() {
   localStorage.removeItem("vibhaag-token");
 }
 
+export async function fetchAuthStatus() {
+  return apiFetch<{ hasUsers: boolean }>("/auth/status");
+}
+
+export async function bootstrapAdmin(name: string, email: string, password: string) {
+  const data = await apiFetch<AuthResponse>("/auth/bootstrap", {
+    method: "POST",
+    body: JSON.stringify({ name, email, password, role: "admin" }),
+  });
+  localStorage.setItem("vibhaag-token", data.token);
+  return data.user;
+}
+
 export async function fetchMe() {
   return apiFetch<{ id: string; name: string; email: string; role: string }>("/auth/me");
 }
@@ -50,6 +63,10 @@ export async function fetchSessions() {
   return apiFetch<Array<{ _id: string; title: string; dayOfWeek: number; startTime: string; endTime: string }>>(
     "/sessions"
   );
+}
+
+export async function fetchCourses() {
+  return apiFetch<Array<{ _id: string; name: string; code: string; departmentId: string }>>("/courses");
 }
 
 export async function fetchAttendance(from?: string, to?: string) {
@@ -134,6 +151,70 @@ export async function fetchDepartments() {
 
 export async function fetchBatches() {
   return apiFetch<Array<{ _id: string; name: string; year: number }>>("/batches");
+}
+
+export async function createDepartment(name: string, code: string) {
+  return apiFetch("/departments", {
+    method: "POST",
+    body: JSON.stringify({ name, code }),
+  });
+}
+
+export async function createBatch(name: string, year: number, departmentId: string) {
+  return apiFetch("/batches", {
+    method: "POST",
+    body: JSON.stringify({ name, year, departmentId }),
+  });
+}
+
+export async function createCourse(name: string, code: string, departmentId: string) {
+  return apiFetch("/courses", {
+    method: "POST",
+    body: JSON.stringify({ name, code, departmentId }),
+  });
+}
+
+export async function createSession(payload: {
+  title: string;
+  courseId: string;
+  batchId: string;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  room?: string;
+}) {
+  return apiFetch("/sessions", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function fetchUsers() {
+  return apiFetch<
+    Array<{ _id: string; name: string; email: string; role: string; rollNumber: string | null }>
+  >("/users");
+}
+
+export async function createUser(payload: {
+  name: string;
+  email: string;
+  role: "admin" | "faculty" | "staff" | "student";
+  departmentId?: string;
+  batchId?: string;
+  rollNumber?: string;
+  password: string;
+}) {
+  return apiFetch("/users", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function importUsers(csv: string) {
+  return apiFetch("/users/import", {
+    method: "POST",
+    body: JSON.stringify({ csv }),
+  });
 }
 
 export async function checkIn(sessionId: string) {

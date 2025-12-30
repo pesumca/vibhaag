@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { BarChart3, CalendarDays, Layers, LogOut, Megaphone, ShieldCheck, Users } from "lucide-react";
 
-import { fetchMe, login, logout } from "./lib/api";
+import { bootstrapAdmin, fetchAuthStatus, fetchMe, login, logout } from "./lib/api";
 import AdminEngagementPage from "./pages/AdminEngagementPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AttendancePage from "./pages/AttendancePage";
@@ -79,14 +79,72 @@ function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
   );
 }
 
+function SetupScreen({ onSuccess }: { onSuccess: () => void }) {
+  const [name, setName] = useState("Campus Admin");
+  const [email, setEmail] = useState("admin@vibhaag.dev");
+  const [password, setPassword] = useState("admin123");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      await bootstrapAdmin(name, email, password);
+      onSuccess();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Setup failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="login-shell">
+      <form className="login-card fade-in" onSubmit={handleSubmit}>
+        <div>
+          <h2>Welcome to Vibhaag</h2>
+          <p>Set up your first admin account to get started.</p>
+        </div>
+        <label className="input">
+          Admin name
+          <input value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label className="input">
+          Admin email
+          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label className="input">
+          Password
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </label>
+        {error ? <div className="notice">{error}</div> : null}
+        <button className="button" type="submit" disabled={loading}>
+          {loading ? "Creating..." : "Create admin"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export default function App() {
   const [user, setUser] = useState<{ name: string; role: string } | null>(null);
   const [booting, setBooting] = useState(true);
+  const [needsSetup, setNeedsSetup] = useState(false);
 
   useEffect(() => {
-    fetchMe()
-      .then((user) => setUser({ name: user.name, role: user.role }))
-      .catch(() => setUser(null))
+    fetchAuthStatus()
+      .then((status) => {
+        if (!status.hasUsers) {
+          setNeedsSetup(true);
+          setUser(null);
+          return;
+        }
+        return fetchMe()
+          .then((user) => setUser({ name: user.name, role: user.role }))
+          .catch(() => setUser(null));
+      })
       .finally(() => setBooting(false));
   }, []);
 
@@ -98,6 +156,9 @@ export default function App() {
   const mainContent = useMemo(() => {
     if (booting) {
       return <div className="login-shell">Loading...</div>;
+    }
+    if (needsSetup) {
+      return <SetupScreen onSuccess={() => fetchMe().then((user) => setUser({ name: user.name, role: user.role }))} />;
     }
     if (!user) {
       return <LoginScreen onSuccess={() => fetchMe().then((user) => setUser({ name: user.name, role: user.role }))} />;
@@ -174,7 +235,7 @@ export default function App() {
         </main>
       </div>
     );
-  }, [booting, user]);
+  }, [booting, needsSetup, user]);
 
   return <BrowserRouter>{mainContent}</BrowserRouter>;
 }
