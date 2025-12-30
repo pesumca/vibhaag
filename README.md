@@ -22,6 +22,7 @@ Open:
 - API (direct): http://localhost:4000/health
 - Web (proxy): http://vibhaag.localhost
 - API (proxy): http://api.vibhaag.localhost/health
+- API Docs (Swagger): http://api.vibhaag.localhost/docs/
 
 Seeded credentials (demo logins):
 - Admin: admin@vibhaag.dev / admin123
