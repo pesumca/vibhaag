@@ -13,7 +13,8 @@
     "dev:mobile": "cd apps/mobile && bun run start",
     "build": "cd apps/web && bun run build",
     "seed": "cd apps/api && bun run seed",
-    "lint": "cd apps/api && bun run lint && cd ../web && bun run lint"
+    "lint": "cd apps/api && bun run lint && cd ../web && bun run lint",
+    "test": "cd apps/api && bun run test"
   },
   "dependencies": {
     "concurrently": "^9.2.1"

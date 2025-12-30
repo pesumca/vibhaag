@@ -14,6 +14,10 @@ export default [
       globals: {
         console: "readonly",
         process: "readonly",
+        expect: "readonly",
+        test: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
       },
     },
     plugins: {
