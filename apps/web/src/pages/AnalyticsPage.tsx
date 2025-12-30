@@ -6,7 +6,9 @@ export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<{
     totalSessions: number;
     totalFaculty: number;
+    totalStudents: number;
     last7Days: { totalRecords: number; checkedOut: number; attendanceRate: number };
+    signals: { pendingLeaves: number; feedbackAvg: number };
   } | null>(null);
 
   useEffect(() => {
@@ -29,6 +31,21 @@ export default function AnalyticsPage() {
         <h3>Pending sessions</h3>
         <div className="kpi">{analytics ? analytics.totalSessions - analytics.last7Days.checkedOut : "--"}</div>
         <p>Estimated sessions without full checkout yet.</p>
+      </div>
+      <div className="card">
+        <h3>Student headcount</h3>
+        <div className="kpi">{analytics?.totalStudents ?? 0}</div>
+        <p>Active student profiles in the system.</p>
+      </div>
+      <div className="card">
+        <h3>Feedback average</h3>
+        <div className="kpi">{analytics?.signals.feedbackAvg ?? 0}★</div>
+        <p>Average session rating.</p>
+      </div>
+      <div className="card">
+        <h3>Pending leaves</h3>
+        <div className="kpi">{analytics?.signals.pendingLeaves ?? 0}</div>
+        <p>Awaiting faculty approval.</p>
       </div>
     </div>
   );

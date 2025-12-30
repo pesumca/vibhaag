@@ -40,7 +40,9 @@ export async function fetchAnalytics() {
   return apiFetch<{
     totalSessions: number;
     totalFaculty: number;
+    totalStudents: number;
     last7Days: { totalRecords: number; checkedOut: number; attendanceRate: number };
+    signals: { pendingLeaves: number; feedbackAvg: number };
   }>("/analytics/overview");
 }
 
@@ -58,6 +60,80 @@ export async function fetchAttendance(from?: string, to?: string) {
   return apiFetch<
     Array<{ _id: string; date: string; status: string; checkInAt: string | null; durationMinutes: number | null }>
   >(`/attendance/me${query}`);
+}
+
+export async function fetchAnnouncements() {
+  return apiFetch<
+    Array<{ _id: string; title: string; body: string; audience: string; createdAt: string }>
+  >("/announcements");
+}
+
+export async function createAnnouncement(payload: {
+  title: string;
+  body: string;
+  audience: "all" | "department" | "batch";
+  audienceRef?: string;
+}) {
+  return apiFetch("/announcements", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function fetchStudentSchedule() {
+  return apiFetch<Array<{ _id: string; title: string; dayOfWeek: number; startTime: string; endTime: string }>>(
+    "/student/schedule"
+  );
+}
+
+export async function fetchStudentAttendance() {
+  return apiFetch<
+    Array<{ _id: string; date: string; status: string; checkInAt: string | null }>
+  >("/student/attendance");
+}
+
+export async function studentCheckIn(sessionId: string) {
+  return apiFetch("/student/attendance/check-in", {
+    method: "POST",
+    body: JSON.stringify({ sessionId }),
+  });
+}
+
+export async function createLeaveRequest(sessionId: string, date: string, reason: string) {
+  return apiFetch("/leave-requests", {
+    method: "POST",
+    body: JSON.stringify({ sessionId, date, reason }),
+  });
+}
+
+export async function fetchLeaveRequests() {
+  return apiFetch<Array<{ _id: string; date: string; status: string; reason: string }>>("/leave-requests");
+}
+
+export async function updateLeaveRequest(id: string, status: "approved" | "denied") {
+  return apiFetch(`/leave-requests/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
+}
+
+export async function submitFeedback(sessionId: string, rating: number, comment?: string) {
+  return apiFetch("/feedback", {
+    method: "POST",
+    body: JSON.stringify({ sessionId, rating, comment }),
+  });
+}
+
+export async function fetchFeedback() {
+  return apiFetch<Array<{ _id: string; rating: number; comment: string | null; createdAt: string }>>("/feedback");
+}
+
+export async function fetchDepartments() {
+  return apiFetch<Array<{ _id: string; name: string; code: string }>>("/departments");
+}
+
+export async function fetchBatches() {
+  return apiFetch<Array<{ _id: string; name: string; year: number }>>("/batches");
 }
 
 export async function checkIn(sessionId: string) {

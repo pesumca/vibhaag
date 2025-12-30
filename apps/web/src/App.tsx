@@ -1,20 +1,37 @@
 import { useEffect, useMemo, useState } from "react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
-import { BarChart3, CalendarDays, Layers, LogOut, ShieldCheck, Users } from "lucide-react";
+import { BarChart3, CalendarDays, Layers, LogOut, Megaphone, ShieldCheck, Users } from "lucide-react";
 
 import { fetchMe, login, logout } from "./lib/api";
+import AdminEngagementPage from "./pages/AdminEngagementPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AttendancePage from "./pages/AttendancePage";
 import DashboardPage from "./pages/DashboardPage";
 import PeoplePage from "./pages/PeoplePage";
 import SessionsPage from "./pages/SessionsPage";
+import StudentAnnouncementsPage from "./pages/StudentAnnouncementsPage";
+import StudentAttendancePage from "./pages/StudentAttendancePage";
+import StudentFeedbackPage from "./pages/StudentFeedbackPage";
+import StudentHomePage from "./pages/StudentHomePage";
+import StudentLeavePage from "./pages/StudentLeavePage";
+import StudentSchedulePage from "./pages/StudentSchedulePage";
 
 const navItems = [
   { to: "/", label: "Overview", icon: BarChart3 },
   { to: "/attendance", label: "Attendance", icon: ShieldCheck },
   { to: "/sessions", label: "Timetable", icon: CalendarDays },
   { to: "/people", label: "People", icon: Users },
+  { to: "/engagement", label: "Engagement", icon: Megaphone },
   { to: "/analytics", label: "Analytics", icon: Layers },
+];
+
+const studentNavItems = [
+  { to: "/", label: "My Hub", icon: BarChart3 },
+  { to: "/schedule", label: "Schedule", icon: CalendarDays },
+  { to: "/attendance", label: "My Attendance", icon: ShieldCheck },
+  { to: "/announcements", label: "Announcements", icon: Layers },
+  { to: "/leave", label: "Leave Requests", icon: Users },
+  { to: "/feedback", label: "Session Feedback", icon: BarChart3 },
 ];
 
 function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
@@ -63,34 +80,71 @@ function LoginScreen({ onSuccess }: { onSuccess: () => void }) {
 }
 
 export default function App() {
-  const [userName, setUserName] = useState<string | null>(null);
+  const [user, setUser] = useState<{ name: string; role: string } | null>(null);
   const [booting, setBooting] = useState(true);
 
   useEffect(() => {
     fetchMe()
-      .then((user) => setUserName(user.name))
-      .catch(() => setUserName(null))
+      .then((user) => setUser({ name: user.name, role: user.role }))
+      .catch(() => setUser(null))
       .finally(() => setBooting(false));
   }, []);
 
   const handleLogout = () => {
     logout();
-    setUserName(null);
+    setUser(null);
   };
 
   const mainContent = useMemo(() => {
     if (booting) {
       return <div className="login-shell">Loading...</div>;
     }
-    if (!userName) {
-      return <LoginScreen onSuccess={() => fetchMe().then((user) => setUserName(user.name))} />;
+    if (!user) {
+      return <LoginScreen onSuccess={() => fetchMe().then((user) => setUser({ name: user.name, role: user.role }))} />;
+    }
+    if (user.role === "student") {
+      return (
+        <div className="app-shell fade-in">
+          <aside className="sidebar">
+            <div>
+              <h1>Vibhaag</h1>
+              <p>{user.name}</p>
+            </div>
+            <nav className="nav-group">
+              {studentNavItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+                >
+                  <item.icon size={18} />
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+            <button className="button secondary" onClick={handleLogout}>
+              <LogOut size={16} /> Logout
+            </button>
+          </aside>
+          <main className="main">
+            <Routes>
+              <Route path="/" element={<StudentHomePage />} />
+              <Route path="/schedule" element={<StudentSchedulePage />} />
+              <Route path="/attendance" element={<StudentAttendancePage />} />
+              <Route path="/announcements" element={<StudentAnnouncementsPage />} />
+              <Route path="/leave" element={<StudentLeavePage />} />
+              <Route path="/feedback" element={<StudentFeedbackPage />} />
+            </Routes>
+          </main>
+        </div>
+      );
     }
     return (
       <div className="app-shell fade-in">
         <aside className="sidebar">
           <div>
             <h1>Vibhaag</h1>
-            <p>{userName}</p>
+            <p>{user.name}</p>
           </div>
           <nav className="nav-group">
             {navItems.map((item) => (
@@ -114,12 +168,13 @@ export default function App() {
             <Route path="/attendance" element={<AttendancePage />} />
             <Route path="/sessions" element={<SessionsPage />} />
             <Route path="/people" element={<PeoplePage />} />
+            <Route path="/engagement" element={<AdminEngagementPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
           </Routes>
         </main>
       </div>
     );
-  }, [booting, userName]);
+  }, [booting, user]);
 
   return <BrowserRouter>{mainContent}</BrowserRouter>;
 }

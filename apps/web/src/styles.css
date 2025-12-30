@@ -235,6 +235,14 @@ button {
   font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
+.input select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fffaf3;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
 .notice {
   background: #1e6f5c;
   color: #fff;
