@@ -2,8 +2,10 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
 
 import { config } from "./config";
+import { swaggerSpec } from "./swagger";
 import authRoutes from "./routes/auth";
 import attendanceRoutes from "./routes/attendance";
 import batchRoutes from "./routes/batches";
@@ -25,6 +27,7 @@ export function createApp() {
   app.use(morgan("dev"));
 
   app.get("/health", (_req, res) => res.json({ status: "ok" }));
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   app.use("/auth", authRoutes);
   app.use("/departments", departmentRoutes);

@@ -22,6 +22,29 @@ const registerSchema = z.object({
   rollNumber: z.string().optional(),
 });
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: Login with email and password
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ */
 router.post("/login", async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {

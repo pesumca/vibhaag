@@ -52,4 +52,15 @@ router.post("/", requireAuth, requireRole(["admin", "faculty", "staff"]), async 
   return res.status(201).json(announcement);
 });
 
+/**
+ * @openapi
+ * /announcements:
+ *   get:
+ *     summary: List announcements
+ *     tags:
+ *       - Announcements
+ *     responses:
+ *       200:
+ *         description: Announcements list
+ */
 export default router;
