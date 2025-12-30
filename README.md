@@ -112,6 +112,14 @@ Run seeds locally:
 bun run seed
 ```
 
+## Tests
+API tests (requires MongoDB running):
+```bash
+bun run test
+```
+
+For CI, tests use `MONGO_URL=mongodb://localhost:27017/vibhaag_test`.
+
 ## Mobile App (Expo)
 ```bash
 bun --cwd apps/mobile install
