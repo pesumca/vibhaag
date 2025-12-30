@@ -119,6 +119,7 @@ Environment variables are supported and safe to commit via examples:
 - `apps/web/.env.example`
 
 Copy these to `.env` files in each app and adjust values for your deployment (API base URL, CORS origin, JWT secret, etc.).
+If `.env` is missing, the apps fall back to `.env.example` for local defaults.
 
 ## Tests
 API tests (requires MongoDB running):
