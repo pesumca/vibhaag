@@ -18,8 +18,10 @@ docker compose exec api bun src/seed.ts
 ```
 
 Open:
-- Web: http://localhost:5173
-- API: http://localhost:4000/health
+- Web (direct): http://localhost:5173
+- API (direct): http://localhost:4000/health
+- Web (proxy): http://vibhaag.localhost
+- API (proxy): http://api.vibhaag.localhost/health
 
 Seeded credentials (demo logins):
 - Admin: admin@vibhaag.dev / admin123
@@ -39,7 +41,7 @@ docker compose up --build -d
 docker compose exec api bun src/seed.ts
 ```
 3) Log in to the web app at http://localhost:5173
-   - Use `admin@vibhaag.dev` / `admin123`
+    - Use `admin@vibhaag.dev` / `admin123`
 4) Explore:
    - Overview: attendance rate + sessions summary
    - Attendance: check in to a session and refresh recent activity
@@ -83,7 +85,7 @@ Web app:
 ```bash
 docker compose up --build -d
 ```
-Open http://localhost:5173
+Open http://vibhaag.localhost (or http://localhost:5173)
 
 Mobile app in browser (Expo web):
 ```bash
@@ -97,6 +99,13 @@ Mobile app on a simulator:
 - Android Emulator: run `bun --cwd apps/mobile run android`
 
 For web/simulator, keep API URL as `http://localhost:4000`. If it fails, replace with your machine IP.
+
+## Local Dev Domains (Caddy)
+This setup includes a Caddy reverse proxy so you can use friendly local URLs:
+- http://vibhaag.localhost
+- http://api.vibhaag.localhost/health
+
+`*.localhost` resolves automatically on most systems, so no hosts file edits are required.
 
 ## Services
 - `apps/api`: REST API, auth, attendance, analytics

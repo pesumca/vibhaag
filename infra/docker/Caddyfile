@@ -1,0 +1,11 @@
+{
+  auto_https off
+}
+
+vibhaag.localhost {
+  reverse_proxy web:5173
+}
+
+api.vibhaag.localhost {
+  reverse_proxy api:4000
+}
