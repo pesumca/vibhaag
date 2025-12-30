@@ -25,6 +25,9 @@ Seeded credentials (demo logins):
 - Admin: admin@vibhaag.dev / admin123
 - Faculty: rhea@vibhaag.dev / faculty123
 - Faculty: arjun@vibhaag.dev / faculty123
+- Faculty: nisha@vibhaag.dev / faculty123
+- Student: ira@vibhaag.dev / student123
+- Student: meera@vibhaag.dev / student123
 
 ## Demo Walkthrough (Docker)
 1) Start the stack:
@@ -41,8 +44,20 @@ docker compose exec api bun src/seed.ts
    - Overview: attendance rate + sessions summary
    - Attendance: check in to a session and refresh recent activity
    - Timetable: seeded sessions are visible
+   - Engagement: publish announcements, review leave requests, read feedback
 
 If you want to re-seed from scratch, re-run the seed command. It clears existing data.
+
+## Student Demo
+1) Log in to the web app at http://localhost:5173
+   - Use `ira@vibhaag.dev` / `student123`
+2) Explore:
+   - My Hub: overview with attendance rate + announcements
+   - Schedule: personal timetable
+   - My Attendance: check in to a session
+   - Announcements: campus + batch updates
+   - Leave Requests: submit a leave request
+   - Session Feedback: rate a session
 
 ## Local Dev (Bun)
 ```bash
@@ -94,6 +109,10 @@ For web/simulator, keep API URL as `http://localhost:4000`. If it fails, replace
 - Attendance check-in and check-out
 - Timetable sessions
 - Analytics summary for last 7 days
+- Announcements with audience targeting
+- Student attendance check-ins
+- Leave requests with approvals
+- Session feedback ratings
 - Dockerized local stack
 
 ## Notes
