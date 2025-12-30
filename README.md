@@ -1,26 +1,61 @@
-# Vibhaag
-A college attendance, analytics and management application built on the MERN Stack as a part of MCA Mini Project
+# Vibhaag (Rebuild)
+A modern college attendance, analytics, and timetable platform on the MERN stack, with a React Native companion app for faculty check-ins.
 
-# DevOps
-[![start with why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action) 
-[![Build Status](https://travis-ci.org/pesumca/vibhaag.svg?branch=master)](https://travis-ci.org/pesumca/vibhaag) 
-[![HitCount](http://hits.dwyl.io/pesumca/vibhaag.svg)](http://hits.dwyl.io/pesumca/vibhaag) 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/pesumca/vibhaag/issues) 
-[![Version](https://img.shields.io/npm/v/npm.svg)](https://img.shields.io/npm/v/npm.svg)
+## Stack
+- Web: React + Vite + TypeScript
+- API: Node (Bun runtime) + Express + MongoDB + TypeScript
+- Mobile: React Native (Expo)
+- Infra: Docker Compose
 
-# Description
-An all in one college management Software as A Service (SaaS) built on the MongoDB, Express.js, React.js, Node.js (MERN) stack. The application consists of two components, one being the mobile application for Android and iOS devices that acts as a companion and authentication for this web application. The mobile application is a separate abstract entitled as “Vigbhaag App”. Further details of the mobile application are provided in the other abstract. The application helps colleges to keep track of their employees’ participation. It provides customizable options for creating users with role management and secure authentication. Faculties can register their participation using their mobile apps. The application also provides facilities such as daily, weekly, monthly abstracts for every individual along with the ability to customize time tables and sessions. 
+## Quickstart (Docker Compose)
+```bash
+docker compose up --build
+```
 
-# Key Features
-* Creating and managing college departments, teachers and other faculties
-* Custom time table for every batch and its sessions
-* Faculties can register their attendance and time taken for a session using mobile apps
-* Ability to change the time table and re-allocate faculties as per requirement
-* Ability to extract meaningful insights such as daily and weekly abstracts
+Seed sample data:
+```bash
+docker compose exec api bun src/seed.ts
+```
 
-# Authors
-* Sudhanva
-* Karthik
-* Shreedhar
-* Aadarsha
-* Harsha
+Open:
+- Web: http://localhost:5173
+- API: http://localhost:4000/health
+
+Seeded credentials:
+- Admin: admin@vibhaag.dev / admin123
+- Faculty: rhea@vibhaag.dev / faculty123
+
+## Local Dev (Bun)
+```bash
+bun install
+bun run dev
+```
+
+Run seeds locally:
+```bash
+bun run seed
+```
+
+## Mobile App (Expo)
+```bash
+bun --cwd apps/mobile install
+bun --cwd apps/mobile run start
+```
+
+Update the API URL in the mobile app to point at your dev machine (e.g. http://192.168.0.42:4000).
+
+## Services
+- `apps/api`: REST API, auth, attendance, analytics
+- `apps/web`: Dashboard UI
+- `apps/mobile`: Faculty check-in app
+- `packages/shared`: shared types and schemas
+
+## Key Features
+- Role-based login (admin/faculty/staff)
+- Attendance check-in and check-out
+- Timetable sessions
+- Analytics summary for last 7 days
+- Dockerized local stack
+
+## Notes
+This rebuild intentionally avoids the legacy theme while keeping a strong visual aesthetic.
