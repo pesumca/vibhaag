@@ -20,8 +20,8 @@ docker compose exec api bun src/seed.ts
 Open:
 - Web (direct): http://localhost:5173
 - API (direct): http://localhost:4000/health
-- Web (proxy): http://vibhaag.localhost
-- API (proxy): http://api.vibhaag.localhost/health
+- Web (proxy): https://vibhaag.localhost
+- API (proxy): https://api.vibhaag.localhost/health
 
 Seeded credentials (demo logins):
 - Admin: admin@vibhaag.dev / admin123
@@ -125,7 +125,7 @@ Web app:
 ```bash
 docker compose up --build -d
 ```
-Open http://vibhaag.localhost (or http://localhost:5173)
+Open https://vibhaag.localhost (or http://localhost:5173)
 
 Mobile app in browser (Expo web):
 ```bash
@@ -140,12 +140,20 @@ Mobile app on a simulator:
 
 For web/simulator, keep API URL as `http://localhost:4000`. If it fails, replace with your machine IP.
 
-## Local Dev Domains (Caddy)
-This setup includes a Caddy reverse proxy so you can use friendly local URLs:
-- http://vibhaag.localhost
-- http://api.vibhaag.localhost/health
+## Local Dev Domains (Caddy + HTTPS)
+This setup includes a Caddy reverse proxy with HTTPS so you can use friendly local URLs:
+- https://vibhaag.localhost
+- https://api.vibhaag.localhost/health
 
 `*.localhost` resolves automatically on most systems, so no hosts file edits are required.
+
+### Trust the local HTTPS certificate
+Caddy generates a local CA for HTTPS. To trust it:
+```bash
+docker compose exec caddy sh -c "cat /data/caddy/pki/authorities/local/root.crt" > ./caddy-local-ca.crt
+```
+Then install `./caddy-local-ca.crt` in your OS trust store and refresh the browser.
+If you skip this, you can still use HTTPS but your browser will show a warning.
 
 ## Services
 - `apps/api`: REST API, auth, attendance, analytics
