@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27017:27017
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +27,11 @@ jobs:
 
       - name: Lint
         run: bun run lint
+
+      - name: Test API
+        env:
+          MONGO_URL: mongodb://localhost:27017/vibhaag_test
+        run: bun run test
 
       - name: Build web
         run: bun --cwd apps/web run build
