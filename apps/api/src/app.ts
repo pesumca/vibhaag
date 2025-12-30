@@ -22,7 +22,17 @@ import userRoutes from "./routes/users";
 export function createApp() {
   const app = express();
   app.use(helmet());
-  app.use(cors({ origin: config.corsOrigin, credentials: true }));
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || config.corsOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+      },
+      credentials: true,
+    })
+  );
   app.use(express.json({ limit: "1mb" }));
   app.use(morgan("dev"));
 

@@ -25,7 +25,7 @@ services:
       - PORT=4000
       - MONGO_URL=mongodb://mongo:27017/vibhaag
       - JWT_SECRET=change-me
-      - CORS_ORIGIN=http://vibhaag.localhost
+      - CORS_ORIGIN=http://vibhaag.localhost,http://localhost:5173
     ports:
       - "4000:4000"
     depends_on:
