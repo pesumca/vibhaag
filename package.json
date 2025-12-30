@@ -16,6 +16,6 @@
     "lint": "cd apps/api && bun run lint && cd ../web && bun run lint"
   },
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^9.2.1"
   }
 }
