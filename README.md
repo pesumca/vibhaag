@@ -67,6 +67,56 @@ flowchart TB
   Caddy --> API
 ```
 
+## Developer Architecture
+
+```mermaid
+flowchart LR
+  Web[apps/web (React + Vite)]
+  API[apps/api (Bun + Express)]
+  Mobile[apps/mobile (Expo)]
+  Shared[packages/shared]
+  Mongo[(MongoDB)]
+  Caddy[Caddy Proxy]
+
+  Web --> Shared
+  API --> Shared
+  Mobile --> Shared
+  Web --> API
+  Mobile --> API
+  API --> Mongo
+  Caddy --> Web
+  Caddy --> API
+```
+
+## User Journeys
+
+```mermaid
+sequenceDiagram
+  actor Admin
+  actor Student
+  participant Web
+  participant API
+  participant DB
+
+  Admin->>Web: Sign in
+  Web->>API: POST /auth/login
+  API->>DB: Verify user
+  DB-->>API: User + role
+  API-->>Web: Token + profile
+
+  Admin->>Web: Create session
+  Web->>API: POST /sessions
+  API->>DB: Save session
+  DB-->>API: Session created
+  API-->>Web: Success
+
+  Student->>Web: Check in
+  Web->>API: POST /student/attendance/check-in
+  API->>DB: Save check-in
+  DB-->>API: Record created
+  API-->>Web: Success
+```
+
 ## Demo Walkthrough (Docker)
 
 - Step 1: Start the stack
@@ -200,6 +250,37 @@ bun run test
 ```
 
 For CI, tests use `MONGO_URL=mongodb://localhost:27017/vibhaag_test`.
+
+## CI + Release
+
+CI runs lint, API tests, and Playwright UI checks on every push and pull request.
+
+Docker images are published to GHCR on `master` and on version tags:
+- `ghcr.io/<owner>/vibhaag-api`
+- `ghcr.io/<owner>/vibhaag-web`
+
+Release automation uses Release Please:
+- `feat:` bumps minor
+- `fix:` bumps patch
+- `feat!:` or `BREAKING CHANGE:` bumps major
+
+Release flow:
+- Step 1: Merge the Release Please PR on `master`.
+- Step 2: A tag like `v1.2.3` is created automatically.
+- Step 3: Docker images are published with the new tag.
+
+## CI Pipeline (Mermaid)
+
+```mermaid
+flowchart LR
+  Commit[Commit or PR] --> CI[CI Workflow]
+  CI --> Lint[Lint]
+  CI --> APITests[API Tests]
+  CI --> UITests[UI Tests]
+  CI --> Docker[Build + Push Images]
+  Docker --> GHCR[GHCR Packages]
+  CI --> Release[Release Please]
+```
 
 ## UI Visual Checks (Playwright)
 
