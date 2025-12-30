@@ -36,10 +36,16 @@ Seeded credentials (demo logins):
 ```bash
 docker compose up --build -d
 ```
-2) Seed the database:
+2) First-time setup (choose one):
+   - Quick demo data:
 ```bash
 docker compose exec api bun src/seed.ts
 ```
+   - Fresh school setup:
+     - Open http://vibhaag.localhost (or http://localhost:5173)
+     - Create the first admin account (bootstrap screen)
+3) Log in to the web app at http://localhost:5173
+   - Use `admin@vibhaag.dev` / `admin123` if seeded
 3) Log in to the web app at http://localhost:5173
     - Use `admin@vibhaag.dev` / `admin123`
 4) Explore:
@@ -49,6 +55,40 @@ docker compose exec api bun src/seed.ts
    - Engagement: publish announcements, review leave requests, read feedback
 
 If you want to re-seed from scratch, re-run the seed command. It clears existing data.
+
+## Fresh Start (Reset Everything)
+To wipe the database and start from scratch:
+```bash
+docker compose down -v
+docker compose up --build -d
+```
+Then open http://vibhaag.localhost to create the first admin account.
+
+## Admin Onboarding (Real School Flow)
+1) Create the first admin account on the bootstrap screen.
+2) Go to **People**:
+   - Add faculty/staff one-by-one, or use the CSV import.
+   - Add students with roll numbers and batch mapping.
+3) Go to **Timetable**:
+   - Create courses and sessions for each batch.
+4) Go to **Engagement**:
+   - Publish announcements.
+   - Review leave requests.
+   - Read student feedback.
+
+### Bulk Import CSV (People)
+Paste CSV in the People → Bulk Import panel with these headers:
+```
+name,email,role,departmentCode,batchName,rollNumber,password
+```
+Example:
+```
+Sam Rao,sam@school.edu,faculty,CSE,,,
+Ira Sharma,ira@school.edu,student,CSE,CSE 2026,CSE26-014,student123
+```
+Notes:
+- `departmentCode` maps to Department code (e.g., CSE, DM, BS).
+- `batchName` maps to Batch name (e.g., CSE 2026).
 
 ## Student Demo
 1) Log in to the web app at http://localhost:5173
@@ -122,6 +162,8 @@ This setup includes a Caddy reverse proxy so you can use friendly local URLs:
 - Student attendance check-ins
 - Leave requests with approvals
 - Session feedback ratings
+- Admin onboarding + staff/student directory management
+- Bulk user import (CSV)
 - Dockerized local stack
 
 ## Notes
