@@ -16,7 +16,10 @@ const registerSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.enum(["admin", "faculty", "staff"]).default("faculty"),
+  role: z.enum(["admin", "faculty", "staff", "student"]).default("faculty"),
+  departmentId: z.string().optional(),
+  batchId: z.string().optional(),
+  rollNumber: z.string().optional(),
 });
 
 router.post("/login", async (req, res) => {
@@ -77,6 +80,9 @@ router.post("/register", requireAuth, requireRole(["admin"]), async (req, res) =
     email: parsed.data.email,
     passwordHash,
     role: parsed.data.role,
+    departmentId: parsed.data.departmentId ?? null,
+    batchId: parsed.data.batchId ?? null,
+    rollNumber: parsed.data.rollNumber ?? null,
   });
   return res.status(201).json({
     user: { id: user.id, name: user.name, email: user.email, role: user.role },
