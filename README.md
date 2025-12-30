@@ -71,9 +71,9 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-  Web[apps/web (React + Vite)]
-  API[apps/api (Bun + Express)]
-  Mobile[apps/mobile (Expo)]
+  Web["apps/web: React + Vite"]
+  API["apps/api: Bun + Express"]
+  Mobile["apps/mobile: Expo"]
   Shared[packages/shared]
   Mongo[(MongoDB)]
   Caddy[Caddy Proxy]
