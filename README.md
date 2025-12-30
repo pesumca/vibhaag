@@ -113,6 +113,13 @@ Run seeds locally:
 bun run seed
 ```
 
+## Configuration (Deployable URLs)
+Environment variables are supported and safe to commit via examples:
+- `apps/api/.env.example`
+- `apps/web/.env.example`
+
+Copy these to `.env` files in each app and adjust values for your deployment (API base URL, CORS origin, JWT secret, etc.).
+
 ## Tests
 API tests (requires MongoDB running):
 ```bash
