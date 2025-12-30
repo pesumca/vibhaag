@@ -370,3 +370,29 @@ input {
     align-items: flex-start;
   }
 }
+
+@media (max-width: 700px) {
+  .table thead {
+    display: none;
+  }
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+  .table tr + tr {
+    border-top: 1px solid var(--line);
+  }
+  .table td {
+    padding: 10px 12px;
+  }
+  .table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+}

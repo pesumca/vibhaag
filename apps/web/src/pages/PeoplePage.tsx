@@ -250,10 +250,10 @@ export default function PeoplePage() {
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>{user.rollNumber ?? "--"}</td>
+                  <td data-label="Name">{user.name}</td>
+                  <td data-label="Email">{user.email}</td>
+                  <td data-label="Role">{user.role}</td>
+                  <td data-label="Roll no">{user.rollNumber ?? "--"}</td>
                 </tr>
               ))}
             </tbody>

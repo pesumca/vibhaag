@@ -31,9 +31,9 @@ export default function StudentSchedulePage() {
           <tbody>
             {sessions.map((session) => (
               <tr key={session._id}>
-                <td>{session.title}</td>
-                <td>{days[session.dayOfWeek]}</td>
-                <td>
+                <td data-label="Session">{session.title}</td>
+                <td data-label="Day">{days[session.dayOfWeek]}</td>
+                <td data-label="Time">
                   {session.startTime} - {session.endTime}
                 </td>
               </tr>

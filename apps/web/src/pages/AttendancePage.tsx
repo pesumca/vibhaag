@@ -59,9 +59,9 @@ export default function AttendancePage() {
             <tbody>
               {attendance.map((row) => (
                 <tr key={row._id}>
-                  <td>{row.date}</td>
-                  <td>{row.status}</td>
-                  <td>{row.checkInAt ? new Date(row.checkInAt).toLocaleTimeString() : "--"}</td>
+                  <td data-label="Date">{row.date}</td>
+                  <td data-label="Status">{row.status}</td>
+                  <td data-label="Check-in">{row.checkInAt ? new Date(row.checkInAt).toLocaleTimeString() : "--"}</td>
                 </tr>
               ))}
             </tbody>

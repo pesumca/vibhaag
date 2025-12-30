@@ -147,10 +147,10 @@ export default function AdminEngagementPage() {
             <tbody>
               {leaveRequests.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.date}</td>
-                  <td>{item.status}</td>
-                  <td>{item.reason}</td>
-                  <td>
+                  <td data-label="Date">{item.date}</td>
+                  <td data-label="Status">{item.status}</td>
+                  <td data-label="Reason">{item.reason}</td>
+                  <td data-label="Action">
                     <div className="button-group">
                       <button className="button" onClick={() => handleDecision(item._id, "approved")}>
                         Approve
@@ -182,8 +182,8 @@ export default function AdminEngagementPage() {
             <tbody>
               {feedback.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.rating}★</td>
-                  <td>{item.comment ?? "--"}</td>
+                  <td data-label="Rating">{item.rating}★</td>
+                  <td data-label="Comment">{item.comment ?? "--"}</td>
                 </tr>
               ))}
             </tbody>

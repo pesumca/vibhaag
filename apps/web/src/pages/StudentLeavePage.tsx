@@ -83,9 +83,9 @@ export default function StudentLeavePage() {
             <tbody>
               {leaveRequests.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.date}</td>
-                  <td>{item.status}</td>
-                  <td>{item.reason}</td>
+                  <td data-label="Date">{item.date}</td>
+                  <td data-label="Status">{item.status}</td>
+                  <td data-label="Reason">{item.reason}</td>
                 </tr>
               ))}
             </tbody>
