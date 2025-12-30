@@ -14,9 +14,15 @@
     "build": "cd apps/web && bun run build",
     "seed": "cd apps/api && bun run seed",
     "lint": "cd apps/api && bun run lint && cd ../web && bun run lint",
-    "test": "cd apps/api && bun run test"
+    "test": "cd apps/api && bun run test",
+    "ui:install": "playwright install --with-deps",
+    "test:ui": "playwright test",
+    "test:ui:update": "playwright test --update-snapshots"
   },
   "dependencies": {
     "concurrently": "^9.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1"
   }
 }
