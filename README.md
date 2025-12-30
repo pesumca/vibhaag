@@ -231,6 +231,14 @@ bun --cwd apps/mobile run start
 
 Update the API URL in the mobile app to point at your dev machine (e.g. <http://192.168.0.42:4000>).
 
+Mobile check-in supports both faculty and students:
+- Step 1: Select Faculty or Student on the role toggle.
+- Step 2: Sign in with the seeded credentials.
+- Step 3: Paste a session ID or use Scan QR.
+
+QR format:
+- `session:<sessionId>` (plain text in a QR code works too).
+
 ## Run Web + Mobile (No Physical Phone Required)
 
 Web app:
