@@ -15,6 +15,7 @@ import feedbackRoutes from "./routes/feedback";
 import leaveRequestRoutes from "./routes/leaveRequests";
 import sessionRoutes from "./routes/sessions";
 import studentRoutes from "./routes/student";
+import userRoutes from "./routes/users";
 
 export function createApp() {
   const app = express();
@@ -36,6 +37,7 @@ export function createApp() {
   app.use("/leave-requests", leaveRequestRoutes);
   app.use("/feedback", feedbackRoutes);
   app.use("/student", studentRoutes);
+  app.use("/users", userRoutes);
 
   return app;
 }

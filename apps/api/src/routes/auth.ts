@@ -65,6 +65,11 @@ router.post("/bootstrap", async (req, res) => {
   });
 });
 
+router.get("/status", async (_req, res) => {
+  const hasUsers = (await User.countDocuments()) > 0;
+  return res.json({ hasUsers });
+});
+
 router.post("/register", requireAuth, requireRole(["admin"]), async (req, res) => {
   const parsed = registerSchema.safeParse(req.body);
   if (!parsed.success) {
