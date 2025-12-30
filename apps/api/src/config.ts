@@ -1,6 +1,14 @@
+import fs from "node:fs";
+
 import dotenv from "dotenv";
 
-dotenv.config();
+const envPath =
+  process.env.DOTENV_FILE ??
+  (fs.existsSync(".env") ? ".env" : fs.existsSync(".env.example") ? ".env.example" : undefined);
+
+if (envPath) {
+  dotenv.config({ path: envPath });
+}
 
 export const config = {
   port: Number(process.env.PORT ?? 4000),
