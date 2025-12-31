@@ -22,15 +22,21 @@ jobs:
       - run: MONGO_URL=mongodb://localhost:27017/vibhaag_test bun run test
       - run: bun run ui:install
       - run: |
-          MONGO_URL=mongodb://localhost:27017/vibhaag CORS_ORIGIN=http://localhost:5173,http://127.0.0.1:5173 JWT_SECRET=ci-secret bun --cwd apps/api run start > /tmp/api.log 2>&1 &
+          for i in {1..30}; do
+            nc -z 127.0.0.1 27017 && break
+            sleep 2
+          done
+          MONGO_URL=mongodb://127.0.0.1:27017/vibhaag CORS_ORIGIN=http://localhost:5173,http://127.0.0.1:5173 JWT_SECRET=ci-secret bun --cwd apps/api run start > /tmp/api.log 2>&1 &
           VITE_API_URL=http://127.0.0.1:4000 bun --cwd apps/web run dev -- --host 0.0.0.0 --port 5173 > /tmp/web.log 2>&1 &
           for i in {1..30}; do
             curl -sSf http://127.0.0.1:4000/health && break
             sleep 2
           done
+          curl -sSf http://127.0.0.1:4000/health || (cat /tmp/api.log && exit 1)
           for i in {1..30}; do
             curl -sSf http://localhost:5173 && break
             sleep 2
           done
+          curl -sSf http://localhost:5173 || (cat /tmp/web.log && exit 1)
       - run: MONGO_URL=mongodb://localhost:27017/vibhaag bun run seed
       - run: UI_BASE_URL=http://localhost:5173 API_BASE_URL=http://127.0.0.1:4000 bun run test:ui
