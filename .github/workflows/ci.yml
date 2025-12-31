@@ -26,8 +26,14 @@ jobs:
             nc -z 127.0.0.1 27017 && break
             sleep 2
           done
-          MONGO_URL=mongodb://127.0.0.1:27017/vibhaag CORS_ORIGIN=http://localhost:5173,http://127.0.0.1:5173 JWT_SECRET=ci-secret bun --cwd apps/api run start > /tmp/api.log 2>&1 &
-          VITE_API_URL=http://127.0.0.1:4000 bun --cwd apps/web run dev -- --host 0.0.0.0 --port 5173 > /tmp/web.log 2>&1 &
+          (
+            cd apps/api
+            PORT=4000 MONGO_URL=mongodb://127.0.0.1:27017/vibhaag CORS_ORIGIN=http://localhost:5173,http://127.0.0.1:5173 JWT_SECRET=ci-secret bun run start
+          ) > /tmp/api.log 2>&1 &
+          (
+            cd apps/web
+            VITE_API_URL=http://127.0.0.1:4000 bun run dev -- --host 0.0.0.0 --port 5173
+          ) > /tmp/web.log 2>&1 &
           for i in {1..30}; do
             curl -sSf http://127.0.0.1:4000/health && break
             sleep 2
