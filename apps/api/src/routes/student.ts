@@ -42,7 +42,7 @@ router.post("/attendance/check-in", requireAuth, requireRole(["student"]), async
   const attendance = await StudentAttendance.findOneAndUpdate(
     { sessionId: parsed.data.sessionId, studentId: req.user?.id, date },
     { sessionId: parsed.data.sessionId, studentId: req.user?.id, date, status: "present", checkInAt: now },
-    { upsert: true, new: true }
+    { upsert: true, returnDocument: "after" }
   );
   return res.status(201).json(attendance);
 });

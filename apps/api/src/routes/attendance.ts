@@ -46,7 +46,7 @@ router.post("/check-in", requireAuth, requireRole(["faculty", "admin", "staff"])
       status: "checked-in",
       checkInAt: now,
     },
-    { upsert: true, new: true }
+    { upsert: true, returnDocument: "after" }
   );
   return res.status(201).json(attendance);
 });

@@ -21,9 +21,9 @@
     "test:ui:update": "playwright test --update-snapshots"
   },
   "dependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^10.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.1"
+    "@playwright/test": "^1.60.0"
   }
 }
